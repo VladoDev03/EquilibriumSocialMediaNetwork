@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Data.Migrations
 {
     [DbContext(typeof(EquilibriumDbContext))]
-    [Migration("20220201183935_Entities08")]
-    partial class Entities08
+    [Migration("20220202190841_EntitiesAdded")]
+    partial class EntitiesAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

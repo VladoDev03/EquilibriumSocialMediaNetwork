@@ -1,5 +1,7 @@
 using Data;
 using Data.Entities;
+using JsonManager;
+using JsonManager.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Services;
+using Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +34,11 @@ namespace App
         {
             services.AddDbContext<EquilibriumDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection")));   
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddScoped<IUserServices, UserServices>();
+            services.AddScoped<IJsonUserManager, JsonUserManager>();
 
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<EquilibriumDbContext>();
