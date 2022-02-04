@@ -14,7 +14,11 @@ namespace JsonManager
     {
         public string UserToJson(UserSearchView user)
         {
-            string result = JsonSerializer.Serialize(user);
+            string result = JsonSerializer.Serialize(user, new JsonSerializerOptions()
+            {
+                WriteIndented = true
+            });
+
             return result;
         }
 
@@ -26,7 +30,11 @@ namespace JsonManager
 
         public string AllUsersToJson(List<UserSearchView> users)
         {
-            string result = JsonSerializer.Serialize(users);
+            string result = JsonSerializer.Serialize(users, new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
+
             return result;
         }
 
