@@ -76,7 +76,18 @@ namespace App.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new User { UserName = Input.Email, Email = Input.Email };
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
+                if (_userManager.Users.Count() == 1)
+                {
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                }
+                else
+                {
+                    await _userManager.AddToRoleAsync(user, "User");
+                }
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
