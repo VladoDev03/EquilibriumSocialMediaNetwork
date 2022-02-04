@@ -41,6 +41,7 @@ namespace App
             services.AddScoped<IJsonUserManager, JsonUserManager>();
 
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<EquilibriumDbContext>();
             services.AddControllersWithViews();
         }
@@ -48,6 +49,8 @@ namespace App
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            SeedDatabase(app);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -74,6 +77,26 @@ namespace App
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+        }
+
+        private void SeedDatabase(IApplicationBuilder app)
+        {
+            using (IServiceScope scope = app.ApplicationServices.CreateScope())
+            {
+                using (EquilibriumDbContext dbContext = scope.ServiceProvider.GetRequiredService<EquilibriumDbContext>())
+                {
+                    if (!dbContext.Roles.Any())
+                    {
+                        IdentityRole adminRole = new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" };
+                        IdentityRole userRole = new IdentityRole { Name = "User", NormalizedName = "USER" };
+
+                        dbContext.Roles.Add(adminRole);
+                        dbContext.Roles.Add(userRole);
+                    }
+
+                    dbContext.SaveChanges();
+                }
+            }
         }
     }
 }
