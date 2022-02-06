@@ -6,10 +6,14 @@ let users = []
 
 searchInput.addEventListener("input", (e) => {
     const value = e.target.value.toLowerCase()
+
     users.forEach(user => {
         const isVisible = user.name.toLowerCase().includes(value)
+            || user.username.toLowerCase().includes(value)
+
         user.element.classList.toggle("hide", !isVisible)
     })
+
     console.log(users)
 })
 
@@ -19,9 +23,17 @@ fetch("https://localhost:44366/users")
         users = data.map(user => {
             const card = userCardTemplate.content.cloneNode(true).children[0]
             const header = card.querySelector("[data-header]")
-            header.textContent = user.UserName
+            const body = card.querySelector("[data-body]")
+
+            let wholeName = `${user.FirstName} ${user.LastName}`
+
+            header.textContent = wholeName
+            body.textContent = user.UserName
+
             userCardContainer.append(card)
+
             console.log(user)
-            return { name: user.UserName, id: user.UserName, element: card}
+
+            return { name: wholeName, username: user.UserName, element: card }
         })
     })
