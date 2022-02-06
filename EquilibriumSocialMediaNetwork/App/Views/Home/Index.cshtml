@@ -15,11 +15,6 @@
     <input type="search" id="search" data-search>
 </div>
 
-@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-{
-    <p>Hello Vladko Sladko Marmaladko</p>
-}
-
 <div class="user-cards" data-user-cards-container></div>
 <template data-user-template>
     <div class="card">
