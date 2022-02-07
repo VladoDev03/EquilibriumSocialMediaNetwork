@@ -35,7 +35,7 @@ namespace Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=aspnet-App-2C0D8167-A6B0-4849-AE32-4A55A302DB49;Trusted_Connection=True;MultipleActiveResultSets=true");
+                optionsBuilder.UseMySQL("server=localhost;port=3306;user=root;password=T0rta@s@marmaladi7;database=equilibrium;");
             }
 
             base.OnConfiguring(optionsBuilder);

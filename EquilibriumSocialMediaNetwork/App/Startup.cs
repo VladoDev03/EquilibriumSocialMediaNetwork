@@ -33,8 +33,8 @@ namespace App
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<EquilibriumDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));   
+                options.UseMySQL(
+                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddScoped<IUserServices, UserServices>();
