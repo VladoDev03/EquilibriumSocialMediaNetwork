@@ -9,6 +9,8 @@ namespace Data
 {
     public class EquilibriumDbContext : IdentityDbContext<User>
     {
+        //string connectionString = "server=127.0.0.1;port=3306;user=root;password=Bibi3103.;database=aspnet-App-2C0D8167-A6B0-4849-AE32-4A55A302DB49";
+
         public EquilibriumDbContext()
         {
 
@@ -35,7 +37,8 @@ namespace Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=(Server=127.0.0.1,1433;Database=aspnet-App-2C0D8167-A6B0-4849-AE32-4A55A302DB49;Trusted_Connection=false;User=sa;Password=Bibicen3103.;");
+                optionsBuilder.UseMySQL("server=127.0.0.1;port=3306;user=root;password=Bibicen3103.;database=aspnet-App-2C0D8167-A6B0-4849-AE32-4A55A302DB49");
+       
             }
 
             base.OnConfiguring(optionsBuilder);

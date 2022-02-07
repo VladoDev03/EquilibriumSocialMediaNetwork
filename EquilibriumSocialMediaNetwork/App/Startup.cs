@@ -29,7 +29,7 @@ namespace App
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<EquilibriumDbContext>(options =>
-                options.UseSqlServer(
+                options.UseMySQL(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
