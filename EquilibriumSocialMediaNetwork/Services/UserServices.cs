@@ -32,24 +32,25 @@ namespace Services
             this.database.SaveChanges();
         }
 
-        public void DeleteComment(Comment deleteComment)
+        public void DeleteComment(string id)
         {
-            throw new NotImplementedException();
+            Comment comment = this.database.Comments.FirstOrDefault(x => x.Id == id);
+            this.database.Comments.Remove(comment);
+            this.database.SaveChanges();
         }
 
-        public void DeleteComment(int id)
+        public void DeleteDescription(string id)
         {
-            throw new NotImplementedException();
+            Description description = this.database.Descriptions.FirstOrDefault(x => x.Id == id);
+            this.database.Remove(description);
+            this.database.SaveChanges();
         }
 
-        public void DeleteDescription(int id)
+        public void DeletePost(string id)
         {
-            throw new NotImplementedException();
-        }
-
-        public void DeletePost(int id)
-        {
-            throw new NotImplementedException();
+            Post post = this.database.Posts.FirstOrDefault(x => x.Id == id);
+            this.database.Remove(post);
+            this.database.SaveChanges();
         }
 
         public void UpdateComment(Comment updateComment)
