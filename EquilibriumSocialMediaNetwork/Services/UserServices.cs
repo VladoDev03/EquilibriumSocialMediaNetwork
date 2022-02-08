@@ -1,6 +1,8 @@
 ﻿using Data;
 using Data.Entities;
 using Services.Contracts;
+using Services.Mappers;
+using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +20,11 @@ namespace Services
             this.db = db;
         }
 
-        public List<User> GetUsers()
+        public List<UserServiceModel> GetUsers()
         {
-            return db.Users.ToList();
+            return db.Users
+                .Select(u => u.ToUserServiceModel())
+                .ToList();
         }
     }
 }

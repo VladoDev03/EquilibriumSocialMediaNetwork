@@ -1,4 +1,5 @@
 ﻿using Data.Entities;
+using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Services.Contracts
 {
     public interface IUserServices
     {
-        List<User> GetUsers();
+        List<UserServiceModel> GetUsers();
     }
 }
