@@ -48,7 +48,8 @@ namespace App.Controllers
             {
                 UserName = u.UserName,
                 FirstName = u.FirstName,
-                LastName = u.LastName
+                LastName = u.LastName,
+                Email = u.Email
             }).ToList();
 
             string result = userJsonServices.AllUsersToJson(users);
