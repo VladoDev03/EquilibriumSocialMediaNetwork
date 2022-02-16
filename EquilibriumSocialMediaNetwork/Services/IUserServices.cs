@@ -9,18 +9,18 @@ namespace Services
 
         void UpdatePost(Post updatePost);
 
-        void DeletePost(int id);
+        void DeletePost(string id);
 
         void AddDescription(Description description);
 
         void UpdateDescription(Description updateDescription);
 
-        void DeleteDescription(int id);
+        void DeleteDescription(string id);
 
         void AddComment(Comment comment);
 
         void UpdateComment(Comment updateComment);
 
-        void DeleteComment(int id);
+        void DeleteComment(string id);
     }
 }
