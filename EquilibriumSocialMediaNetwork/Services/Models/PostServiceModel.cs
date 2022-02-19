@@ -12,6 +12,7 @@ namespace Services.Models
         public PostServiceModel()
         {
             Comments = new HashSet<CommentServiceModel>();
+            Reactions = new HashSet<ReactionServiceModel>();
         }
 
         public string Content { get; set; }
@@ -22,8 +23,6 @@ namespace Services.Models
 
         public User User { get; set; }
 
-        public string ReactionId { get; set; }
-
-        public ReactionServiceModel Reaction { get; set; }
+        public virtual ICollection<ReactionServiceModel> Reactions { get; set; }
     }
 }

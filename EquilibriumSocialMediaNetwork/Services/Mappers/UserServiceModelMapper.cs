@@ -22,5 +22,18 @@ namespace Services.Mappers
 
             return result;
         }
+
+        public static User ToUser(this UserServiceModel user)
+        {
+            User result = new User()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                UserName = user.UserName
+            };
+
+            return result;
+        }
     }
 }

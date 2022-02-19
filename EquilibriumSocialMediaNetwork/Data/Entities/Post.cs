@@ -11,6 +11,7 @@ namespace Data.Entities
         public Post()
         {
             Comments = new HashSet<Comment>();
+            Reactions = new HashSet<Reaction>();
         }
 
         public string Content { get; set; }
@@ -21,8 +22,6 @@ namespace Data.Entities
 
         public User User { get; set; }
 
-        public string ReactionId { get; set; }
-
-        public Reaction Reaction { get; set; }
+        public ICollection<Reaction> Reactions { get; set; }
     }
 }
