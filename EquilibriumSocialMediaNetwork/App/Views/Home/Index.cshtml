@@ -1,14 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    @model List<PostServiceModel>
 }
 
 <script src="~/js/search.js" defer></script>
 <link href="~/css/search.css" rel="stylesheet" />
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
 
 <div class="search-wrapper">
     <label for="search">Search User</label>
@@ -21,3 +17,8 @@
         <div class="body" data-body></div>
     </div>
 </template>
+
+@foreach (var item in Model)
+{
+    <div class="m-5">@item.Content</div>
+}

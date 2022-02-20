@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services;
 using Services.Contracts;
+using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,15 +21,18 @@ namespace App.Controllers
 
         private IUserServices userServices;
         private IJsonUserManager userJsonServices;
+        private IPostServices postServices;
 
         public HomeController(
             ILogger<HomeController> logger,
             IUserServices userServices,
-            IJsonUserManager userJsonServices)
+            IJsonUserManager userJsonServices,
+            IPostServices postServices)
         {
             _logger = logger;
             this.userServices = userServices;
             this.userJsonServices = userJsonServices;
+            this.postServices = postServices;
         }
 
         public IActionResult Index()
@@ -38,7 +42,9 @@ namespace App.Controllers
                 return Redirect("/Identity/Account/Login");
             }
 
-            return View();
+            List<PostServiceModel> posts = postServices.GetAllPosts();
+
+            return View(posts);
         }
 
         [HttpGet("users")]

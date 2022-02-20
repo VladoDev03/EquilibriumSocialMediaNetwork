@@ -28,7 +28,7 @@ namespace Services
             return post;
         }
 
-        public List<PostServiceModel> GetAllPosts(PostServiceModel post)
+        public List<PostServiceModel> GetAllPosts()
         {
             List<PostServiceModel> posts = db.Posts
                 .Select(p => p.ToPostServiceModel())

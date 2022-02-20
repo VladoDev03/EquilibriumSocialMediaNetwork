@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace App.Controllers
 {
+
     public class PostController : Controller
     {
         private readonly UserManager<User> _userManager;

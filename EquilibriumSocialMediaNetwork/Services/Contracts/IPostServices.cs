@@ -9,7 +9,7 @@ namespace Services.Contracts
 {
     public interface IPostServices
     {
-        List<PostServiceModel> GetAllPosts(PostServiceModel post);
+        List<PostServiceModel> GetAllPosts();
 
         PostServiceModel AddPost(PostServiceModel post);
 
