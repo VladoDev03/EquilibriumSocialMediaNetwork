@@ -21,7 +21,11 @@ namespace Services
 
         public PostServiceModel AddPost(PostServiceModel post)
         {
-            throw new NotImplementedException();
+            db.Posts.Add(post.ToPost());
+
+            db.SaveChanges();
+
+            return post;
         }
 
         public List<PostServiceModel> GetAllPosts(PostServiceModel post)
@@ -35,7 +39,19 @@ namespace Services
 
         public PostServiceModel GetPostById(string id)
         {
-            throw new NotImplementedException();
+            PostServiceModel post = db.Posts.FirstOrDefault(p => p.Id == id)
+                .ToPostServiceModel();
+
+            return post;
+        }
+
+        public void DeletePost(string id)
+        {
+            PostServiceModel post = GetPostById(id);
+
+            db.Posts.Remove(post.ToPost());
+
+            db.SaveChanges();
         }
     }
 }
