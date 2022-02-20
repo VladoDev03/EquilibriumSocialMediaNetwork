@@ -39,6 +39,7 @@ namespace App
 
             services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<IJsonUserManager, JsonUserManager>();
+            services.AddScoped<IPostServices, PostServices>();
 
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
