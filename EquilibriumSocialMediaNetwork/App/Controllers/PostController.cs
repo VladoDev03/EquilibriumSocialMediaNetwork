@@ -1,17 +1,18 @@
 ﻿using Data.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
 using Services.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace App.Controllers
 {
-
     public class PostController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -34,10 +35,11 @@ namespace App.Controllers
 
         [Authorize(Roles = "User, Admin")]
         [HttpPost]
-        public async Task<IActionResult> Create(PostServiceModel post)
+        public async Task<IActionResult> Create(PostServiceModel post, IFormFile pic)
         {
             User user = await _userManager.GetUserAsync(User);
             post.User = user;
+            post.Image = pic.Name;
             postServices.AddPost(post);
 
             return RedirectToAction("Index", "Home");

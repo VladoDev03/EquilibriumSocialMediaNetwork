@@ -17,6 +17,8 @@ namespace Services.Models
 
         public string Content { get; set; }
 
+        public string Image { get; set; }
+
         public virtual ICollection<CommentServiceModel> Comments { get; set; }
 
         public string UserId { get; set; }

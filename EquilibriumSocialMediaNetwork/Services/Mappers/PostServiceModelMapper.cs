@@ -16,6 +16,7 @@ namespace Services.Mappers
             {
                 Comments = post.Comments.Select(x => x.ToCommentServiceModel()).ToList(),
                 Content = post.Content,
+                Image = post.Image,
                 Id = post.Id,
                 User = post.User,
                 Reactions = post.Reactions.Select(x => x.ToReactionServiceModel()).ToList()
@@ -30,6 +31,7 @@ namespace Services.Mappers
             {
                 Comments = post.Comments.Select(x => x.ToComment()).ToList(),
                 Content = post.Content,
+                Image = post.Image,
                 Id = post.Id,
                 User = post.User,
                 Reactions = post.Reactions.Select(x => x.ToReaction()).ToList()
