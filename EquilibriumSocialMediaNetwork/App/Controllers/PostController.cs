@@ -39,7 +39,12 @@ namespace App.Controllers
         {
             User user = await _userManager.GetUserAsync(User);
             post.User = user;
-            post.Image = pic.Name;
+
+            if (pic != null)
+            {
+                post.Image = pic.Name;
+            }
+
             postServices.AddPost(post);
 
             return RedirectToAction("Index", "Home");
