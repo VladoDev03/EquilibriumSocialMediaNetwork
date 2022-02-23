@@ -34,12 +34,14 @@ namespace App
         {
             services.AddDbContext<EquilibriumDbContext>(options =>
                 options.UseMySQL(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection"))
+                                 /*.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)*/);
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<IJsonUserManager, JsonUserManager>();
             services.AddScoped<IPostServices, PostServices>();
+            services.AddScoped<ICommentServices, CommentServices>();
 
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()

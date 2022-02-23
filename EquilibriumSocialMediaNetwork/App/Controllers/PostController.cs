@@ -17,13 +17,16 @@ namespace App.Controllers
     {
         private readonly UserManager<User> _userManager;
         private IPostServices postServices;
+        private ICommentServices commentServices;
 
         public PostController(
             IPostServices postServices,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            ICommentServices commentServices)
         {
             _userManager = userManager;
             this.postServices = postServices;
+            this.commentServices = commentServices;
         }
 
         [Authorize(Roles = "User, Admin")]
@@ -46,6 +49,24 @@ namespace App.Controllers
             }
 
             postServices.AddPost(post);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CommentOnPost(string id, string content)
+        {
+            User user = await _userManager.GetUserAsync(User);
+            PostServiceModel post = postServices.GetPostById(id);
+
+            CommentServiceModel commentToAdd = new CommentServiceModel()
+            {
+                Content = content,
+                PostId = id,
+                UserId = user.Id
+            };
+
+            commentServices.AddComment(post, commentToAdd);
 
             return RedirectToAction("Index", "Home");
         }

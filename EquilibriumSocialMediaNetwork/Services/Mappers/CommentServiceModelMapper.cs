@@ -16,9 +16,9 @@ namespace Services.Mappers
             {
                 Content = comment.Content,
                 PostId = comment.PostId,
-                Post = comment.Post.ToPostServiceModel(),
+                //Post = comment.Post.ToPostServiceModel(),
                 UserId = comment.UserId,
-                User = comment.User,
+                //User = comment.User,
                 Replies = comment.Replies.Select(x => x.ToReplyServiceModel()).ToList()
             };
 
@@ -31,9 +31,9 @@ namespace Services.Mappers
             {
                 Content = comment.Content,
                 PostId = comment.PostId,
-                Post = comment.Post.ToPost(),
+                //Post = comment.Post.ToPost(),
                 UserId = comment.UserId,
-                User = comment.User,
+                //User = comment.User,
                 Replies = comment.Replies.Select(x => x.ToReplyServiceModel()).ToList()
             };
 

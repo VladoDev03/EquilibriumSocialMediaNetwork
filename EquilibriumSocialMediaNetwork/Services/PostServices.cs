@@ -1,4 +1,5 @@
 ﻿using Data;
+using Microsoft.EntityFrameworkCore;
 using Services.Contracts;
 using Services.Mappers;
 using Services.Models;
@@ -31,6 +32,7 @@ namespace Services
         public List<PostServiceModel> GetAllPosts()
         {
             List<PostServiceModel> posts = db.Posts
+                .Include(c => c.Comments)
                 .Select(p => p.ToPostServiceModel())
                 .ToList();
 

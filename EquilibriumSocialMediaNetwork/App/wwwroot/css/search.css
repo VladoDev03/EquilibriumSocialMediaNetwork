@@ -29,3 +29,7 @@ input {
 .hide {
     display: none;
 }
+
+.tab {
+    margin-left: 10px;
+}
