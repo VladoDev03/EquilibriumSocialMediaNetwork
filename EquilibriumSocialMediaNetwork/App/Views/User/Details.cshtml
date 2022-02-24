@@ -1,0 +1,14 @@
+﻿@model UserViewModel
+
+<h1>@Model.FirstName @Model.LastName</h1>
+<h2>@Model.UserName</h2>
+
+@foreach (var item in Model.Posts)
+{
+    <h3>@item.Content</h3>
+
+    @foreach (var comment in item.Comments)
+    {
+        <p>@comment.Content</p>
+    }
+}

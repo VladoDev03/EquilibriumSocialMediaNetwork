@@ -20,11 +20,12 @@
 
 @foreach (var item in Model)
 {
-    <div class="m-5">@item.Content</div>
+    <a class="m-5" type="button" asp-controller="User" asp-action="Details" asp-route-id="@item.UserId">@item.User.FirstName @item.User.LastName - @item.User.UserName</a>
+    <div class="m-5 bg-success">@item.Content</div>
 
     @foreach (var comment in item.Comments)
     {
-        <div class="tab">@comment.Content</div>
+        <div class="tab bg-info">@comment.Content</div>
     }
 
     <form asp-action="CommentOnPost" asp-controller="Post" method="post">

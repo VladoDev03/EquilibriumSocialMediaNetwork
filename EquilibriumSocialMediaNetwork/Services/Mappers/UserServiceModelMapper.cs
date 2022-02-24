@@ -1,4 +1,5 @@
 ﻿using Data.Entities;
+using Data.ViewModels;
 using Services.Models;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,19 @@ namespace Services.Mappers
                 LastName = user.LastName,
                 Email = user.Email,
                 UserName = user.UserName
+            };
+
+            return result;
+        }
+
+        public static UserViewModel ToUserViewModel(this UserServiceModel user)
+        {
+            UserViewModel result = new UserViewModel()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Posts = new List<PostViewModel>()
             };
 
             return result;

@@ -34,6 +34,7 @@ namespace Services
         {
             List<PostServiceModel> posts = db.Posts
                 .Include(c => c.Comments)
+                .Include(u => u.User)
                 .Select(p => p.ToPostServiceModel())
                 .ToList();
 

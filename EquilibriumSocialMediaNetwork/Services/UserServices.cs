@@ -26,5 +26,12 @@ namespace Services
                 .Select(u => u.ToUserServiceModel())
                 .ToList();
         }
+
+        public UserServiceModel GetUserById(string id)
+        {
+            return db.Users
+                .FirstOrDefault(u => u.Id == id)
+                .ToUserServiceModel();
+        }
     }
 }

@@ -11,5 +11,7 @@ namespace Services.Contracts
     public interface IUserServices
     {
         List<UserServiceModel> GetUsers();
+
+        UserServiceModel GetUserById(string id);
     }
 }

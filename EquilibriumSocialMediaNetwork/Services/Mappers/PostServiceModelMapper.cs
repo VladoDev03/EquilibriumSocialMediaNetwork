@@ -20,6 +20,7 @@ namespace Services.Mappers
                 Image = post.Image,
                 Id = post.Id,
                 User = post.User,
+                UserId = post.UserId,
                 Reactions = post.Reactions.Select(x => x.ToReactionServiceModel()).ToList()
             };
 
@@ -48,6 +49,7 @@ namespace Services.Mappers
                 Comments = post.Comments.Select(x => x.ToCommentView()).ToList(),
                 Content = post.Content,
                 Image = post.Image,
+                UserId = post.UserId
             };
 
             return result;
