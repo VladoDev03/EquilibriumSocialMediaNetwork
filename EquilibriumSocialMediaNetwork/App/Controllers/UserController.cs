@@ -8,6 +8,7 @@ using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace App.Controllers
@@ -51,8 +52,15 @@ namespace App.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(string id)
+        public async Task<IActionResult> Details(string id)
         {
+            User loggedUser = await _userManager.GetUserAsync(User);
+
+            if (loggedUser.Id == id)
+            {
+                return RedirectToAction(nameof(Profile));
+            }
+
             UserServiceModel user = userServices
                 .GetUserById(id);
 
