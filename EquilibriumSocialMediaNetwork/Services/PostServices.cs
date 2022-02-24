@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Services.Contracts;
 using Services.Mappers;
@@ -54,6 +55,17 @@ namespace Services
             db.Posts.Remove(post.ToPost());
 
             db.SaveChanges();
+        }
+
+        public List<PostServiceModel> GetUserPosts(string userId)
+        {
+            List<PostServiceModel> posts = db.Posts
+                .Include(p => p.Comments)
+                .Where(p => p.UserId == userId)
+                .Select(p => p.ToPostServiceModel())
+                .ToList();
+
+            return posts;
         }
     }
 }

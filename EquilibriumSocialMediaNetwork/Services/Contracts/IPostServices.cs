@@ -14,5 +14,7 @@ namespace Services.Contracts
         PostServiceModel AddPost(PostServiceModel post);
 
         PostServiceModel GetPostById(string id);
+
+        List<PostServiceModel> GetUserPosts(string userId);
     }
 }

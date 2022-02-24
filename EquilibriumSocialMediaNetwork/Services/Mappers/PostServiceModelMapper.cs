@@ -1,4 +1,5 @@
 ﻿using Data.Entities;
+using Data.ViewModels;
 using Services.Models;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,18 @@ namespace Services.Mappers
                 Id = post.Id,
                 User = post.User,
                 Reactions = post.Reactions.Select(x => x.ToReaction()).ToList()
+            };
+
+            return result;
+        }
+
+        public static PostViewModel ToPostViewModel(this PostServiceModel post)
+        {
+            PostViewModel result = new PostViewModel()
+            {
+                Comments = post.Comments.Select(x => x.ToCommentView()).ToList(),
+                Content = post.Content,
+                Image = post.Image,
             };
 
             return result;

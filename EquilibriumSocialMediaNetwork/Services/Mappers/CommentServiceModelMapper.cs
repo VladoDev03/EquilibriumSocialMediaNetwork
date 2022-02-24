@@ -1,4 +1,5 @@
 ﻿using Data.Entities;
+using Data.ViewModels;
 using Services.Models;
 using System;
 using System.Collections.Generic;
@@ -31,10 +32,20 @@ namespace Services.Mappers
             {
                 Content = comment.Content,
                 PostId = comment.PostId,
-                //Post = comment.Post.ToPost(),
                 UserId = comment.UserId,
-                //User = comment.User,
                 Replies = comment.Replies.Select(x => x.ToReplyServiceModel()).ToList()
+                //Post = comment.Post.ToPost(),
+                //User = comment.User,
+            };
+
+            return result;
+        }
+
+        public static CommentViewModel ToCommentView(this CommentServiceModel comment)
+        {
+            CommentViewModel result = new CommentViewModel()
+            {
+                Content = comment.Content,
             };
 
             return result;

@@ -1,0 +1,14 @@
+﻿@model UserViewModel
+
+<h1>@Model.FirstName @Model.LastName</h1>
+<h2>@Model.UserName</h2>
+
+@foreach (var item in Model.Posts)
+{
+    <p class="bg-success">@item.Content</p>
+
+    @foreach (var post in item.Comments)
+    {
+        <p class="bg-info">@post.Content</p>
+    }
+}
