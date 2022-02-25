@@ -46,10 +46,12 @@ namespace Services.Mappers
         {
             PostViewModel result = new PostViewModel()
             {
+                Id = post.Id,
                 Comments = post.Comments.Select(x => x.ToCommentView()).ToList(),
                 Content = post.Content,
                 Image = post.Image,
-                UserId = post.UserId
+                UserId = post.UserId,
+                User = post.User.ToUserViewModel()
             };
 
             return result;

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services;
 using Services.Contracts;
+using Services.Mappers;
 using Services.Models;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,10 @@ namespace App.Controllers
                 return Redirect("/Identity/Account/Login");
             }
 
-            List<PostServiceModel> posts = postServices.GetAllPosts();
+            List<PostViewModel> posts = postServices
+                .GetAllPosts()
+                .Select(p => p.ToPostViewModel())
+                .ToList();
 
             return View(posts);
         }

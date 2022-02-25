@@ -49,5 +49,18 @@ namespace Services.Mappers
 
             return result;
         }
+
+        public static UserViewModel ToUserViewModel(this User user)
+        {
+            UserViewModel result = new UserViewModel()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Posts = new List<PostViewModel>()
+            };
+
+            return result;
+        }
     }
 }
