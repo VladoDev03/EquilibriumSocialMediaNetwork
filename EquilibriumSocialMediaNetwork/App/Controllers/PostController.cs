@@ -63,7 +63,8 @@ namespace App.Controllers
             {
                 Content = content,
                 PostId = id,
-                UserId = user.Id
+                UserId = user.Id,
+                User = user
             };
 
             commentServices.AddComment(post, commentToAdd);

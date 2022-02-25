@@ -7,8 +7,13 @@
 {
     <p class="bg-success">@item.Content</p>
 
-    @foreach (var post in item.Comments)
+    @foreach (var comment in item.Comments)
     {
-        <p class="bg-info">@post.Content</p>
+        @if (comment.User != null)
+        {
+            <a class="bg-danger" type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId">@comment.User.FirstName</a>
+        }
+
+        <p class="bg-info">@comment.Content</p>
     }
 }

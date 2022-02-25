@@ -21,7 +21,6 @@ namespace Services
 
         public CommentServiceModel AddComment(PostServiceModel post, CommentServiceModel comment)
         {
-            //post.Comments.Add(comment);
             db.Comments.Add(comment.ToComment());
 
             db.SaveChanges();

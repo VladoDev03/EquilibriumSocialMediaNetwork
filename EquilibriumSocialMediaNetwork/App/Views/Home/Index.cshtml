@@ -25,6 +25,11 @@
 
     @foreach (var comment in item.Comments)
     {
+        if (comment.User != null)
+        {
+            <a class="m-5" type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId">@comment.User.FirstName</a>
+        }
+
         <div class="tab bg-info">@comment.Content</div>
     }
 

@@ -17,9 +17,8 @@ namespace Services.Mappers
             {
                 Content = comment.Content,
                 PostId = comment.PostId,
-                //Post = comment.Post.ToPostServiceModel(),
                 UserId = comment.UserId,
-                //User = comment.User,
+                User = comment.User,
                 Replies = comment.Replies.Select(x => x.ToReplyServiceModel()).ToList()
             };
 
@@ -33,9 +32,8 @@ namespace Services.Mappers
                 Content = comment.Content,
                 PostId = comment.PostId,
                 UserId = comment.UserId,
+                User = comment.User,
                 Replies = comment.Replies.Select(x => x.ToReplyServiceModel()).ToList()
-                //Post = comment.Post.ToPost(),
-                //User = comment.User,
             };
 
             return result;
@@ -46,6 +44,8 @@ namespace Services.Mappers
             CommentViewModel result = new CommentViewModel()
             {
                 Content = comment.Content,
+                UserId = comment.UserId,
+                User = comment.User
             };
 
             return result;

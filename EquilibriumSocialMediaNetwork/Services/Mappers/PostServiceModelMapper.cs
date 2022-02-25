@@ -35,6 +35,7 @@ namespace Services.Mappers
                 Content = post.Content,
                 Image = post.Image,
                 Id = post.Id,
+                UserId = post.UserId,
                 User = post.User,
                 Reactions = post.Reactions.Select(x => x.ToReaction()).ToList()
             };
