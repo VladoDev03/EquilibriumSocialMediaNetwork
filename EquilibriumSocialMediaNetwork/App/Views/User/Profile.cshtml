@@ -11,7 +11,7 @@
     {
         @if (comment.User != null)
         {
-            <a class="bg-danger" type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId">@comment.User.FirstName</a>
+            <a class="m-5" type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId">@comment.User.FirstName @comment.User.LastName - @comment.User.UserName</a>
         }
 
         <p class="bg-info">@comment.Content</p>

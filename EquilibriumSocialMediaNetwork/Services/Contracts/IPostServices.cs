@@ -11,6 +11,8 @@ namespace Services.Contracts
     {
         List<PostServiceModel> GetAllPosts();
 
+        List<CommentServiceModel> GetPostComments(string postId);
+
         PostServiceModel AddPost(PostServiceModel post);
 
         PostServiceModel GetPostById(string id);

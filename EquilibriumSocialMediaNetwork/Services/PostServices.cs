@@ -33,12 +33,35 @@ namespace Services
         public List<PostServiceModel> GetAllPosts()
         {
             List<PostServiceModel> posts = db.Posts
-                .Include(c => c.Comments)
                 .Include(u => u.User)
                 .Select(p => p.ToPostServiceModel())
                 .ToList();
 
+            foreach (PostServiceModel post in posts)
+            {
+                List <CommentServiceModel> comments = GetPostComments(post.Id);
+
+                foreach (CommentServiceModel comment in comments)
+                {
+                    if (post.Comments.FirstOrDefault(c => c.Id == comment.Id) == null)
+                    {
+                        post.Comments.Add(comment);
+                    }
+                }
+            }
+
             return posts;
+        }
+
+        public List<CommentServiceModel> GetPostComments(string postId)
+        {
+            List<CommentServiceModel> comments = db.Comments
+                .Include(u => u.User)
+                .Where(c => c.PostId == postId)
+                .Select(c => c.ToCommentServiceModel())
+                .ToList();
+
+            return comments;
         }
 
         public PostServiceModel GetPostById(string id)
@@ -60,10 +83,8 @@ namespace Services
 
         public List<PostServiceModel> GetUserPosts(string userId)
         {
-            List<PostServiceModel> posts = db.Posts
-                .Include(p => p.Comments)
+            List<PostServiceModel> posts = GetAllPosts()
                 .Where(p => p.UserId == userId)
-                .Select(p => p.ToPostServiceModel())
                 .ToList();
 
             return posts;

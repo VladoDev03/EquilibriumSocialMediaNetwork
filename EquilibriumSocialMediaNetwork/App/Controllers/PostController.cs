@@ -67,7 +67,7 @@ namespace App.Controllers
                 User = user
             };
 
-            commentServices.AddComment(post, commentToAdd);
+            CommentServiceModel c = commentServices.AddComment(post, commentToAdd);
 
             return RedirectToAction("Index", "Home");
         }
