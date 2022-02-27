@@ -33,6 +33,11 @@ namespace App.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+
             User user = await _userManager.GetUserAsync(User);
 
             List<PostViewModel> posts = postServices
@@ -54,6 +59,11 @@ namespace App.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+
             User loggedUser = await _userManager.GetUserAsync(User);
 
             if (loggedUser.Id == id)
