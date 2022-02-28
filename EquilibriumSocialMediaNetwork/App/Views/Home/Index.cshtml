@@ -33,9 +33,9 @@
         <div class="tab bg-info">@comment.Content</div>
     }
 
-    <form asp-action="CommentOnPost" asp-controller="Post" method="post">
+    <form asp-action="Create" asp-controller="Comment" method="post">
         <input type="text" name="content" />
-        <input class="hide" type="text" name="id" value="@item.Id" />
+        <input class="hide" type="text" name="postId" value="@item.Id" />
         <button type="submit">Comment</button>
     </form>
     <hr />

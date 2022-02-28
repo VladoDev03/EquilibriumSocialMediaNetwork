@@ -1,4 +1,6 @@
-﻿using Data.Entities;
+﻿using App.Models.Comments;
+using App.Models.Posts;
+using Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -17,16 +19,13 @@ namespace App.Controllers
     {
         private readonly UserManager<User> _userManager;
         private IPostServices postServices;
-        private ICommentServices commentServices;
 
         public PostController(
-            IPostServices postServices,
             UserManager<User> userManager,
-            ICommentServices commentServices)
+            IPostServices postServices)
         {
             _userManager = userManager;
             this.postServices = postServices;
-            this.commentServices = commentServices;
         }
 
         [Authorize(Roles = "User, Admin")]
@@ -38,36 +37,21 @@ namespace App.Controllers
 
         [Authorize(Roles = "User, Admin")]
         [HttpPost]
-        public async Task<IActionResult> Create(PostServiceModel post, IFormFile pic)
+        public async Task<IActionResult> Create(CreatePostBindingModel post)
         {
-            User user = await _userManager.GetUserAsync(User);
-            post.User = user;
+            PostServiceModel postToAdd = new PostServiceModel();
 
-            if (pic != null)
+            postToAdd.Content = post.Content;
+
+            User user = await _userManager.GetUserAsync(User);
+            postToAdd.User = user;
+
+            if (post.Image != null)
             {
-                post.Image = pic.Name;
+                postToAdd.Image = post.Image.Name;
             }
 
-            postServices.AddPost(post);
-
-            return RedirectToAction("Index", "Home");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CommentOnPost(string id, string content)
-        {
-            User user = await _userManager.GetUserAsync(User);
-            PostServiceModel post = postServices.GetPostById(id);
-
-            CommentServiceModel commentToAdd = new CommentServiceModel()
-            {
-                Content = content,
-                PostId = id,
-                UserId = user.Id,
-                User = user
-            };
-
-            CommentServiceModel c = commentServices.AddComment(post, commentToAdd);
+            postServices.AddPost(postToAdd);
 
             return RedirectToAction("Index", "Home");
         }
