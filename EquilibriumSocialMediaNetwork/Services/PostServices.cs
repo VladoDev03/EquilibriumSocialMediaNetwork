@@ -89,5 +89,18 @@ namespace Services
 
             return posts;
         }
+
+        public PostServiceModel UpdatePost(PostServiceModel updatedPost)
+        {
+            Post post = db.Posts.FirstOrDefault(x => x.Id == updatedPost.Id);
+
+            if (post.Content != null)
+            {
+                post.Content = updatedPost.Content;
+                db.SaveChanges();
+            }
+
+            return post.ToPostServiceModel();
+        }
     }
 }
