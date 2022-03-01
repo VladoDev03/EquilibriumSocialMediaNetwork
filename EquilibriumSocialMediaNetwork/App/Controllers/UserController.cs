@@ -95,6 +95,13 @@ namespace App.Controllers
             return View(result);
         }
 
+        public IActionResult DeletePost(string id)
+        {
+            postServices.DeletePost(id);
+
+            return RedirectToAction(nameof(Profile));
+        }
+
         public IActionResult DeleteComment(string id)
         {
             commentServices.DeleteComment(id);

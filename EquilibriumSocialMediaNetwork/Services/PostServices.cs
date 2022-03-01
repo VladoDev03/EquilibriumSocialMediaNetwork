@@ -74,9 +74,27 @@ namespace Services
 
         public void DeletePost(string id)
         {
-            PostServiceModel post = GetPostById(id);
+            DeletePostComments(id);
 
-            db.Posts.Remove(post.ToPost());
+            //Post post = GetPostById(id).ToPost();
+
+            Post post = db.Posts.FirstOrDefault(p => p.Id == id);
+
+            db.Posts.Remove(post);
+
+            db.SaveChanges();
+        }
+
+        public void DeletePostComments(string id)
+        {
+            //List<Comment> commentsToRemove = GetPostComments(id)
+            //    .Select(c => c.ToComment());
+            
+            List<Comment> commentsToRemove = db.Comments
+                .Where(c => c.PostId == id)
+                .ToList();
+
+            db.Comments.RemoveRange(commentsToRemove);
 
             db.SaveChanges();
         }

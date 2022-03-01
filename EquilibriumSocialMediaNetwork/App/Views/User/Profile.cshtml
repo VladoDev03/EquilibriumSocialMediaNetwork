@@ -5,6 +5,7 @@
 
 @foreach (var item in Model.Posts)
 {
+    <a type="button" asp-controller="User" asp-action="DeletePost" asp-route-id="@item.Id">Remove</a>
     <p class="bg-success">@item.Content</p>
 
     @foreach (var comment in item.Comments)
