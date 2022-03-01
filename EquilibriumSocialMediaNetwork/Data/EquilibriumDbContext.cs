@@ -37,8 +37,12 @@ namespace Data
         {
             if (!optionsBuilder.IsConfigured)
             {
+<<<<<<< Updated upstream
                 optionsBuilder.UseMySQL("server=127.0.0.1;port=3306;user=root;password=Bibicen3103.;database=aspnet-App-2C0D8167-A6B0-4849-AE32-4A55A302DB49");
        
+=======
+                optionsBuilder.UseMySQL("server=127.0.0.1;port=3306;user=root;password=Bibicen3103.;database=equilibrium;");
+>>>>>>> Stashed changes
             }
 
             base.OnConfiguring(optionsBuilder);
