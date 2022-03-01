@@ -19,15 +19,18 @@ namespace App.Controllers
         private readonly UserManager<User> _userManager;
         private IPostServices postServices;
         private IUserServices userServices;
+        private ICommentServices commentServices;
 
         public UserController(
             IPostServices postServices,
             UserManager<User> userManager,
-            IUserServices userServices)
+            IUserServices userServices,
+            ICommentServices commentServices)
         {
             _userManager = userManager;
             this.postServices = postServices;
             this.userServices = userServices;
+            this.commentServices = commentServices;
         }
 
         [HttpGet]
@@ -90,6 +93,13 @@ namespace App.Controllers
             };
 
             return View(result);
+        }
+
+        public IActionResult DeleteComment(string id)
+        {
+            commentServices.DeleteComment(id);
+
+            return RedirectToAction(nameof(Profile));
         }
     }
 }
