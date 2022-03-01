@@ -66,7 +66,9 @@ namespace Services
 
         public PostServiceModel GetPostById(string id)
         {
-            PostServiceModel post = db.Posts.FirstOrDefault(p => p.Id == id)
+            PostServiceModel post = db.Posts
+                .Include(p => p.User)
+                .FirstOrDefault(p => p.Id == id)
                 .ToPostServiceModel();
 
             return post;

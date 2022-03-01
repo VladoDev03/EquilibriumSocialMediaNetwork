@@ -1,11 +1,13 @@
 ﻿using App.Models.Comments;
 using App.Models.Posts;
 using Data.Entities;
+using Data.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
+using Services.Mappers;
 using Services.Models;
 using System;
 using System.Collections.Generic;
@@ -54,6 +56,37 @@ namespace App.Controllers
             postServices.AddPost(postToAdd);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult DeletePost(string id)
+        {
+            postServices.DeletePost(id);
+
+            return RedirectToAction("Profile", "User");
+        }
+
+        [HttpGet]
+        public IActionResult Update(EditPostBindingModel newData)
+        {
+            PostViewModel post = postServices
+                .GetPostById(newData.Id)
+                .ToPostViewModel();
+
+            return View(post);
+        }
+
+        [HttpPost]
+        public IActionResult UpdatePost(EditPostBindingModel newData)
+        {
+            PostServiceModel post = new PostServiceModel()
+            {
+                Id = newData.Id,
+                Content = newData.Content
+            };
+
+            postServices.UpdatePost(post);
+
+            return RedirectToAction("Profile", "User");
         }
     }
 }

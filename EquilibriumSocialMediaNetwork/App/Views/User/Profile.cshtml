@@ -5,14 +5,16 @@
 
 @foreach (var item in Model.Posts)
 {
-    <a type="button" asp-controller="User" asp-action="DeletePost" asp-route-id="@item.Id">Remove</a>
+    <a class="bg-danger" type="button" asp-controller="Post" asp-action="DeletePost" asp-route-id="@item.Id">Remove</a>
+    <a class="bg-info" type="button" asp-controller="Post" asp-action="Update" asp-route-id="@item.Id">Edit</a>
+
     <p class="bg-success">@item.Content</p>
 
     @foreach (var comment in item.Comments)
     {
         @if (comment.User != null)
         {
-            <a type="button" asp-controller="User" asp-action="DeleteComment" asp-route-id="@comment.Id">Delete</a>
+            <a type="button" asp-controller="Comment" asp-action="DeleteComment" asp-route-id="@comment.Id">Delete</a>
             <a class="m-5" type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId">@comment.User.FirstName @comment.User.LastName - @comment.User.UserName</a>
         }
 
