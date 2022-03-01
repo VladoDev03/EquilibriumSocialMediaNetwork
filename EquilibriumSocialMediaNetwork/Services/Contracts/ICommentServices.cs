@@ -10,5 +10,9 @@ namespace Services.Contracts
     public interface ICommentServices
     {
         CommentServiceModel AddComment(PostServiceModel post, CommentServiceModel comment);
+
+        CommentServiceModel UpdateComment(CommentServiceModel updatedComment);
+
+        void DeleteComment(string id);
     }
 }

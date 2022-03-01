@@ -18,5 +18,9 @@ namespace Services.Contracts
         PostServiceModel GetPostById(string id);
 
         List<PostServiceModel> GetUserPosts(string userId);
+
+        PostServiceModel UpdatePost(PostServiceModel updatedPost);
+
+        void DeletePost(string id);
     }
 }

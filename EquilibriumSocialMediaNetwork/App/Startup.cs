@@ -44,6 +44,7 @@ namespace App
             services.AddScoped<IJsonUserManager, JsonUserManager>();
             services.AddScoped<IPostServices, PostServices>();
             services.AddScoped<ICommentServices, CommentServices>();
+            services.AddScoped<IDescriptionServices, DescriptionServices>();
 
             services.AddDefaultIdentity<User>(options =>
             {
