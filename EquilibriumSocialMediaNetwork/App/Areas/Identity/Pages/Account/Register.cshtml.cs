@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Services.Contracts;
 
 namespace App.Areas.Identity.Pages.Account
 {
@@ -24,9 +25,11 @@ namespace App.Areas.Identity.Pages.Account
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IUserServices userServices;
 
         public RegisterModel(
             UserManager<User> userManager,
+            IUserServices userServices,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
@@ -35,6 +38,7 @@ namespace App.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            this.userServices = userServices;
         }
 
         [BindProperty]
@@ -85,7 +89,10 @@ namespace App.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid)
+
+            bool isValidEmail = !userServices.IsExistingEmail(Input.Email);
+
+            if (ModelState.IsValid && isValidEmail)
             {
                 var user = new User
                 {

@@ -33,5 +33,13 @@ namespace Services
                 .FirstOrDefault(u => u.Id == id)
                 .ToUserServiceModel();
         }
+
+        public bool IsExistingEmail(string email)
+        {
+            bool result = db.Users
+                .FirstOrDefault(u => u.Email == email) != null;
+
+            return result;
+        }
     }
 }
