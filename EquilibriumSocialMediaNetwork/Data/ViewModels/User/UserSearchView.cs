@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.ViewModels
+namespace Data.ViewModels.User
 {
     public class UserSearchView
     {

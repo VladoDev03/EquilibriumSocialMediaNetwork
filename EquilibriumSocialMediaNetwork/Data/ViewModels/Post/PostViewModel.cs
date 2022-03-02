@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Data.ViewModels.Comment;
+using Data.ViewModels.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.ViewModels
+namespace Data.ViewModels.Post
 {
     public class PostViewModel
     {

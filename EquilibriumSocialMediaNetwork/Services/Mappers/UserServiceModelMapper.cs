@@ -1,5 +1,7 @@
 ﻿using Data.Entities;
 using Data.ViewModels;
+using Data.ViewModels.Post;
+using Data.ViewModels.User;
 using Services.Models;
 using System;
 using System.Collections.Generic;

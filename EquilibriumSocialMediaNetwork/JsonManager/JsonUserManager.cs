@@ -1,5 +1,6 @@
 ﻿using Data.Entities;
 using Data.ViewModels;
+using Data.ViewModels.User;
 using JsonManager.Contracts;
 using System;
 using System.Collections.Generic;

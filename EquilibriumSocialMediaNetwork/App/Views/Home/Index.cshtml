@@ -5,6 +5,7 @@
 
 <script src="~/js/search.js" defer></script>
 <link href="~/css/search.css" rel="stylesheet" />
+<link href="~/css/site.css" rel="stylesheet" />
 
 <div class="search-wrapper">
     <label for="search">Search User</label>
@@ -22,6 +23,11 @@
 {
     <a class="m-5" type="button" asp-controller="User" asp-action="Details" asp-route-id="@item.UserId">@item.User.FirstName @item.User.LastName - @item.User.UserName</a>
     <div class="m-5 bg-success">@item.Content</div>
+
+    @if (item.Image != null)
+    {
+        <img src="~/Images/Posts/@item.Image" alt="Image" asp-append-version="true" />
+    }
 
     @foreach (var comment in item.Comments)
     {

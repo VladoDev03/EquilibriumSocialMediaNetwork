@@ -10,6 +10,11 @@
 
     <p class="bg-success">@item.Content</p>
 
+    @if (item.Image != null)
+    {
+        <img src="~/Images/Posts/@item.Image" alt="Image" asp-append-version="true" />
+    }
+
     @foreach (var comment in item.Comments)
     {
         @if (comment.User != null)
