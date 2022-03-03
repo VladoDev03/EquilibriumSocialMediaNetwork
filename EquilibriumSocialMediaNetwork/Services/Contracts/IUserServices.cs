@@ -13,7 +13,5 @@ namespace Services.Contracts
         List<UserServiceModel> GetUsers();
 
         UserServiceModel GetUserById(string id);
-
-        bool IsExistingEmail(string email);
     }
 }

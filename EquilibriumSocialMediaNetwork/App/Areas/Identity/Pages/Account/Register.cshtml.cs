@@ -90,9 +90,7 @@ namespace App.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            bool isValidEmail = !userServices.IsExistingEmail(Input.Email);
-
-            if (ModelState.IsValid && isValidEmail)
+            if (ModelState.IsValid)
             {
                 var user = new User
                 {
