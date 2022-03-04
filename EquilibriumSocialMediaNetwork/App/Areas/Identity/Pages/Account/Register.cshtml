@@ -12,17 +12,21 @@
 </div>
 <div class='login-page'>
     <div class="form-box">
-        <h1>Nice to meet you!</h1>
-        <p>Or maybe I already <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">know you</a>?</p>
-        <form asp-route-returnUrl="@Model.ReturnUrl" class='input-group-login' method="post">
+        <h1>SignUp Free</h1>
+        <p>May I already <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">know you</a>?</p>
+        <form asp-route-returnUrl="@Model.ReturnUrl" id='login' class='input-group-login' method="post">
             @*<div asp-validation-summary="All" class="text-danger"></div>*@
 
-            <input asp-for="Input.FirstName" class='input-field' placeholder='First Name'>
-            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-
-            <input asp-for="Input.LastName" class='input-field' placeholder='Last Name'>
-            <span asp-validation-for="Input.LastName" class="text-danger"></span>
-
+            <div class="user-name">
+                <div style="position: relative;">
+                    <input asp-for="Input.FirstName" class='input-field name' placeholder='First Name'>
+                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                </div>
+                <div style="position: relative; margin-right: 0% !important">
+                    <input asp-for="Input.LastName" class='input-field name' placeholder='Last Name'>
+                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                </div>
+            </div>
             <input id="username" asp-for="Input.UserName" class='input-field' placeholder='Username'>
             <span asp-validation-for="Input.UserName" class="text-danger"></span>
             <div id="username-error" class="text-danger"></div>
@@ -34,10 +38,13 @@
             <input asp-for="Input.Password" class='input-field' placeholder='Password'>
             <span asp-validation-for="Input.Password" class="text-danger"></span>
 
-            <input asp-for="Input.ConfirmPassword" class='input-field' placeholder='Confirm Email'>
+            <input asp-for="Input.ConfirmPassword" class='input-field' placeholder='Confirm Password'>
             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
 
-            <button id="submit" type="submit">Register</button>
+            <div class="checkbox">
+                <input type='checkbox' class='check-box' />Accept Privacy Policy
+            </div>
+            <button type='submit' class='submit-btn'>Register</button>
         </form>
     </div>
 </div>
