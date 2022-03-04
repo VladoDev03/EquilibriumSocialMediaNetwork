@@ -23,53 +23,31 @@
     padding-top: 50px;
 }
 
-nav {
-    flex: 1;
-    text-align: right;
-}
-
-    nav ul {
-        display: inline-block;
-        list-style: none;
-    }
-
-        nav ul li {
-            display: inline-block;
-            margin-right: 70px;
-        }
-
-            nav ul li a {
-                text-decoration: none;
-                font-size: 20px;
-                color: white;
-                font-family: sans-serif;
-            }
-
-            nav ul li button {
-                font-size: 20px;
-                color: white;
-                outline: none;
-                border: none;
-                background: transparent;
-                cursor: pointer;
-                font-family: sans-serif;
-            }
-
-                nav ul li button:hover {
-                    color: aqua;
-                }
-
-            nav ul li a:hover {
-                color: aqua;
-            }
-
 a {
     text-decoration: none;
     color: palevioletred;
-    font-size: 28px;
+    font-size: 15px;
+}
+
+h1 {
+    color: #5fc3be;
+    font-size: 34px;
+    margin-top: 50px;
+    position: relative;
+    text-align: center;
+    font-family: 'Dancing Script';
+}
+p {
+    font-style: italic;
+    text-align: center;
+    color: #8bc7c3;
+}
+a {
+    color: #bee2e0;
 }
 
 .form-box {
+    color: #fff;
     width: 380px;
     height: 480px;
     position: relative;
@@ -77,6 +55,7 @@ a {
     background: rgba(0,0,0,0.4);
     padding: 10px;
     overflow: hidden;
+    cursor: default;
 }
 
 .button-box {
@@ -149,6 +128,18 @@ a {
     border-radius: 30px;
 }
 
+.help-btns {
+    width: 78%;
+    padding: 8px 30px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    background: rgba(0,0,0,0.0);
+    color: white;
+    border: 0;
+    outline: #fff;
+}
+
 .check-box {
     margin: 30px 10px 34px 0;
 }
@@ -177,3 +168,44 @@ span {
         color: white;
         font-size: 15px;
     }
+
+
+/*nav {
+    flex: 1;
+    text-align: right;
+}
+
+    nav ul {
+        display: inline-block;
+        list-style: none;
+    }
+
+        nav ul li {
+            display: inline-block;
+            margin-right: 70px;
+        }
+
+            nav ul li a {
+                text-decoration: none;
+                font-size: 20px;
+                color: white;
+                font-family: sans-serif;
+            }
+
+            nav ul li button {
+                font-size: 20px;
+                color: white;
+                outline: none;
+                border: none;
+                background: transparent;
+                cursor: pointer;
+                font-family: sans-serif;
+            }
+
+                nav ul li button:hover {
+                    color: aqua;
+                }
+
+            nav ul li a:hover {
+                color: aqua;
+            }*/
