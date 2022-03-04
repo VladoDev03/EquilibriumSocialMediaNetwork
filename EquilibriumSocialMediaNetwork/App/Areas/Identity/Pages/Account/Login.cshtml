@@ -2,34 +2,35 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Log In";
+
+    Layout = "/Views/Shared/_AuthenticateLayout.cshtml";
 }
 
 <div class="navbar">
-    <div> <a style="color: #3aafa9;">Equiliam</a> </div>
-    <nav>
-        <ul id='MenuItems'>
-            @*<li><a href='#'>Contact us</a></li>*@
-        </ul>
-    </nav>
+    <div> <a style="color: #3aafa9; font-family: 'Dancing Script'; font-size: 34px;">Equiliam</a> </div>
 </div>
 <div class='login-page'>
     <div class="form-box">
-        <h1 style="text-align: center; margin-top: 50px; position: relative; color: #5fc3be">Log In</h1>
-
+        <h1>Welcome Back!</h1>
+        <p>Or maybe you are a <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">new user</a>?</p>
         <form id='login' class='input-group-login' method="post">
 
-            @*<label asp-for="Input.Email"></label>
-            <input asp-for="Input.Email" class="form-control" />
-            <span asp-validation-for="Input.Email" class="text-danger"></span>*@
-
             <input asp-for="Input.Email" class='input-field' placeholder='Email'>
+            <span asp-validation-for="Input.Email" style="color: red;"></span>
+
             <input asp-for="Input.Password" class='input-field' placeholder='Password'>
+            <span asp-validation-for="Input.Password" style="color: red;"></span>
+
             <div class="checkbox">
-                <input asp-for="Input.RememberMe" type='checkbox' class='check-box'><span>Remember Password</span>
-                
+                <input asp-for="Input.RememberMe" type='checkbox' class='check-box' />Remember Me?
             </div>
-            <button type='submit' class='submit-btn' name="check">Log in</button>
+
+            <button type='submit' class='submit-btn'>Log in</button>
+            <br />
+            <button class="help-btns" id="forgot-password" asp-page="./ForgotPassword">Forgotten password</button>
+            <button class="help-btns" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</button>
+            <br />
         </form>
     </div>
 </div>
@@ -37,6 +38,6 @@
 
 <script src="~/js/site.js" asp-append-version="true"></script>
 
-@section Scripts {
+@*@section Scripts {
     <partial name="_ValidationScriptsPartial" />
-}
+}*@
