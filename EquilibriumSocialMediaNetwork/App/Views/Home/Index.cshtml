@@ -6,18 +6,23 @@
 <script src="~/js/search.js" defer></script>
 <link href="~/css/search.css" rel="stylesheet" />
 <link href="~/css/site.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" />
 
-<div class="search-wrapper">
-    <label for="search">Search User</label>
-    <input type="search" id="search" data-search>
-</div>
-<div class="user-cards" data-user-cards-container></div>
-<template data-user-template>
-    <div class="card">
-        <div class="header" data-header></div>
-        <div class="body" data-body></div>
+<button id="search-button" class="search-btn" style="background-color: #ace29e; color: #ffffff; border-radius: 50%; margin: 23px 10px 29px 0; text-align: center; width: 35px; height: 35px; padding: 5px; user-select: none;"><i class="fas fa-search"></i></button>
+
+<div id="searchbar" class="hide">
+    <div class="search-wrapper">
+        <label for="search">Search user</label>
+        <input type="search" id="search" data-search>
     </div>
-</template>
+    <div class="user-cards" data-user-cards-container></div>
+    <template data-user-template>
+        <div class="card">
+            <div class="header" data-header></div>
+            <div class="body" data-body></div>
+        </div>
+    </template>
+</div>
 
 @foreach (var item in Model)
 {
@@ -26,7 +31,10 @@
 
     @if (item.Image != null)
     {
-        <img src="~/Images/Posts/@item.Image" alt="Image" asp-append-version="true" />
+        string directory = $"/Images/Posts/{@item.Image}";
+
+        <a href=@directory download="image">Save post</a>
+        <img src=~@directory alt="image" asp-append-version="true" />
     }
 
     @foreach (var comment in item.Comments)

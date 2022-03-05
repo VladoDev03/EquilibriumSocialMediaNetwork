@@ -67,10 +67,14 @@ namespace App.Controllers
         public IActionResult DeletePost(string id)
         {
             PostServiceModel post = postServices.GetPostById(id);
-            string path = Path.Combine(environment.WebRootPath, "Images", "Posts", post.Image);
 
             postServices.DeletePost(id);
-            System.IO.File.Delete(path);
+
+            if (post.Image != null)
+            {
+                string path = Path.Combine(environment.WebRootPath, "Images", "Posts", post.Image);
+                System.IO.File.Delete(path);
+            }
 
             return RedirectToAction("Profile", "User");
         }

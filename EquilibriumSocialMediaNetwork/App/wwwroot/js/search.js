@@ -1,7 +1,10 @@
 ﻿const userCardTemplate = document.querySelector("[data-user-template]")
 const userCardContainer = document.querySelector("[data-user-cards-container]")
 const searchInput = document.querySelector("[data-search]")
+const search = document.getElementById('search-button')
+const searchbar = document.getElementById('searchbar')
 
+let isHidden = true;
 let users = []
 
 searchInput.addEventListener("input", (e) => {
@@ -37,3 +40,13 @@ fetch("https://localhost:44366/users")
             return { name: wholeName, username: user.UserName, element: card }
         })
     })
+
+search.addEventListener('click', () => {
+    if (!isHidden) {
+        searchbar.classList.add('hide')
+    } else {
+        searchbar.classList.remove('hide')
+    }
+
+    isHidden = !isHidden
+})

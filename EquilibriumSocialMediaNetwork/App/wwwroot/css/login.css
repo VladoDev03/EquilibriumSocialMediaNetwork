@@ -159,3 +159,24 @@ span {
         color: white;
         font-size: 15px;
     }
+
+.or-box {
+    position: center;
+    padding-left: 115px;
+    padding-top: 3px;
+}
+
+.or-btn {
+    font-family: 'Dancing Script', cursive;
+    background: rgba(0,0,0,0.5);
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 18px;
+    margin: 23px 10px 29px 0;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    user-select: none;
+    pointer-events: none;
+}
