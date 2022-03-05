@@ -7,9 +7,9 @@
     Layout = "/Views/Shared/_AuthenticateLayout.cshtml";
 }
 
-
 <h1>Welcome Back!</h1>
 <p>Or maybe you are a <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">new user</a>?</p>
+
 <form id='login' class='input-group-login' method="post">
 
     <input asp-for="Input.Email" class='input-field' placeholder='Email'>
@@ -32,5 +32,5 @@
 <script src="~/js/site.js" asp-append-version="true"></script>
 
 @*@section Scripts {
-        <partial name="_ValidationScriptsPartial" />
-    }*@
+    <partial name="_ValidationScriptsPartial" />
+}*@

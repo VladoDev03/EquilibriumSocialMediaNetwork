@@ -9,32 +9,33 @@
 
 <h1>SignUp Free</h1>
 <p>May I already <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">know you</a>?</p>
+
 <form id='login' class='input-group-login' method="post">
 
     <div class="user-name">
         <div style="position: relative;">
             <input asp-for="Input.FirstName" class='input-field name' placeholder='First Name'>
-            <span asp-validation-for="Input.FirstName" style="color: red;"></span>
+            @*<span asp-validation-for="Input.FirstName" style="color: red;"></span>*@
         </div>
         <div style="position: relative; margin-right: 0%">
             <input asp-for="Input.LastName" class='input-field name' placeholder='Last Name'>
-            <span asp-validation-for="Input.LastName" style="color: red;"></span>
+            @*<span asp-validation-for="Input.LastName" style="color: red;"></span>*@
         </div>
     </div>
 
     <input id="username" asp-for="Input.UserName" class='input-field' placeholder='Username'>
     <span asp-validation-for="Input.UserName" style="color: red;"></span>
-    <div id="username-error" style="color: red;"></div>
+    @*<div id="username-error" style="color: red;"></div>*@
 
     <input id="email" asp-for="Input.Email" class='input-field' placeholder='Email'>
     <span asp-validation-for="Input.Email" style="color: red;"></span>
-    <div id="email-error" style="color: red;"></div>
+    @*<div id="email-error" style="color: red;"></div>*@
 
     <input asp-for="Input.Password" class='input-field' placeholder='Password'>
-    <span asp-validation-for="Input.Password" style="color: red;"></span>
+    @*<span asp-validation-for="Input.Password" style="color: red;"></span>*@
 
     <input asp-for="Input.ConfirmPassword" class='input-field' placeholder='Confirm Password'>
-    <span asp-validation-for="Input.ConfirmPassword" style="color: red;"></span>
+    @*<span asp-validation-for="Input.ConfirmPassword" style="color: red;"></span>*@
 
     <div class="checkbox">
         <input type='checkbox' class='check-box' />Accept Privacy Policy

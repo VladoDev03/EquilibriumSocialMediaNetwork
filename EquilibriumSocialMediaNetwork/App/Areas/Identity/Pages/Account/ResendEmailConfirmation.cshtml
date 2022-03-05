@@ -1,0 +1,29 @@
+﻿@page
+@model ResendEmailConfirmationModel
+
+@{
+    ViewData["Title"] = "Resend email confirmation";
+
+    Layout = "/Views/Shared/_AuthenticateLayout.cshtml";
+}
+
+<h1>Email confirmation</h1>
+<p>Let's try again!</p>
+
+<form id="login" class='input-group-login' method="post">
+
+    <input asp-for="Input.Email" class='input-field name' placeholder='Еnter your email' />
+    @*<span asp-validation-for="Input.Email" class="text-danger"></span>*@
+
+    <button type="submit" class="submit-btn" style="margin: 20px;">Resend</button>
+    <div class="or-box">
+        <button class="or-btn">
+            OR
+        </button>
+    </div>
+    <button class="help-btns" asp-page="./Login">Log In</button>
+    <button class="help-btns" asp-page="./Register">Registrate</button>
+    <button class="help-btns" asp-page="./ForgotPassword">Forgotten password</button>
+</form>
+
+
