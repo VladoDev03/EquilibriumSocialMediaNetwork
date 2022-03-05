@@ -5,14 +5,12 @@
 
 <script src="~/js/search.js" defer></script>
 <link href="~/css/search.css" rel="stylesheet" />
-<link href="~/css/site.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" />
 
 <button id="search-button" class="search-btn" style="background-color: #ace29e; color: #ffffff; border-radius: 50%; margin: 23px 10px 29px 0; text-align: center; width: 35px; height: 35px; padding: 5px; user-select: none;"><i class="fas fa-search"></i></button>
 
 <div id="searchbar" class="hide">
     <div class="search-wrapper">
-        <label for="search">Search user</label>
+        <label for="search">Search User</label>
         <input type="search" id="search" data-search>
     </div>
     <div class="user-cards" data-user-cards-container></div>
@@ -24,33 +22,51 @@
     </template>
 </div>
 
+<style>
+    .hide {
+        display: none;
+    }
+</style>
+
+<br />
 @foreach (var item in Model)
 {
-    <a class="m-5" type="button" asp-controller="User" asp-action="Details" asp-route-id="@item.UserId">@item.User.FirstName @item.User.LastName - @item.User.UserName</a>
-    <div class="m-5 bg-success">@item.Content</div>
+    <div style="padding: 10px;">
+        <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@item.UserId">@item.User.FirstName @item.User.LastName (@item.User.UserName)</a>
+        <div class="bg-success">@item.Content</div>
 
-    @if (item.Image != null)
-    {
-        string directory = $"/Images/Posts/{@item.Image}";
-
-        <a href=@directory download="image">Save post</a>
-        <img src=~@directory alt="image" asp-append-version="true" />
-    }
-
-    @foreach (var comment in item.Comments)
-    {
-        if (comment.User != null)
+        @if (item.Image != null)
         {
-            <a class="m-5" type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId">@comment.User.FirstName @comment.User.LastName - @comment.User.UserName</a>
+            string directory = $"/Images/Posts/{@item.Image}";
+
+            <a href=@directory download="image">Save post</a>
+            <img src=~@directory alt="image" asp-append-version="true" />
         }
 
-        <div class="tab bg-info">@comment.Content</div>
-    }
+        <div style="padding: 3px;">
+            <div style="border: 2px;">
+                @foreach (var comment in item.Comments)
+                {
+                    <div style="border: 2px solid #808080; padding: 3px">
 
-    <form asp-action="Create" asp-controller="Comment" method="post">
-        <input type="text" name="content" />
-        <input class="hide" type="text" name="postId" value="@item.Id" />
-        <button type="submit">Comment</button>
-    </form>
-    <hr />
+                        @if (comment.User != null)
+                        {
+                            <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId" style="color:green;text-decoration:none;">@comment.User.FirstName @comment.User.LastName (@comment.User.UserName)</a>
+                        }
+
+                        <div style="padding-top: 4px;">@comment.Content</div>
+                    </div>
+                }
+            </div>
+
+            <div style="padding-top: 5px;">
+                <form asp-action="Create" asp-controller="Comment" method="post">
+                    <input type="text" name="content" />
+                    <input class="hide" type="text" name="postId" value="@item.Id" />
+                    <button type="submit">Comment</button>
+                </form>
+                <hr />
+            </div>
+        </div>
+    </div>
 }

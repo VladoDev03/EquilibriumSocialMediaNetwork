@@ -46,6 +46,12 @@ namespace App.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreatePostBindingModel post)
         {
+            if (post.Content == null && post.Image == null)
+            {
+                ViewData.Add("NotEmptyContent", "You can't create empty posts.");
+                return View();
+            }
+
             PostServiceModel postToAdd = new PostServiceModel();
 
             postToAdd.Content = post.Content;

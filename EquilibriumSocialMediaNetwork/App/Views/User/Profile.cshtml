@@ -1,28 +1,44 @@
 ﻿@model UserViewModel
+@{
+    ViewData["Title"] = @Model.UserName;
+}
 
 <h1>@Model.FirstName @Model.LastName</h1>
 <h2>@Model.UserName</h2>
 
 @foreach (var item in Model.Posts)
 {
-    <a class="bg-danger" type="button" asp-controller="Post" asp-action="DeletePost" asp-route-id="@item.Id">Remove</a>
-    <a class="bg-info" type="button" asp-controller="Post" asp-action="Update" asp-route-id="@item.Id">Edit</a>
+    <a type="button" asp-controller="Post" asp-action="DeletePost" asp-route-id="@item.Id" style="color:red;text-decoration:none;">Remove</a>
+    <a type="button" asp-controller="Post" asp-action="Update" asp-route-id="@item.Id" style="color:deepskyblue;text-decoration:none;">Edit</a>
 
-    <p class="bg-success">@item.Content</p>
+    <div style="padding: 10px;">
+        <p class="bg-success">@item.Content</p>
 
-    @if (item.Image != null)
-    {
-        <img src="~/Images/Posts/@item.Image" alt="Image" asp-append-version="true" />
-    }
-
-    @foreach (var comment in item.Comments)
-    {
-        @if (comment.User != null)
+        @if (item.Image != null)
         {
-            <a type="button" asp-controller="Comment" asp-action="DeleteComment" asp-route-id="@comment.Id">Delete</a>
-            <a class="m-5" type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId">@comment.User.FirstName @comment.User.LastName - @comment.User.UserName</a>
+            string directory = $"/Images/Posts/{@item.Image}";
+
+            <a href=@directory download="image">Save post</a>
+            <img src=~@directory alt="image" asp-append-version="true" />
         }
 
-        <p class="bg-info">@comment.Content</p>
-    }
+        <div style="padding: 3px;">
+            <div style="border: 2px;">
+                @foreach (var comment in item.Comments)
+                {
+                    <div style="border: 2px solid #808080; padding: 3px">
+
+                        @if (comment.User != null)
+                        {
+                            <a type="button" asp-controller="Comment" asp-action="DeleteComment" asp-route-id="@comment.Id" style="color:red;text-decoration:none;">Delete</a>
+                            <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId" style="color:green;text-decoration:none;">@comment.User.FirstName @comment.User.LastName (@comment.User.UserName)</a>
+                        }
+
+                        <div style="padding-top: 4px;">@comment.Content</div>
+                    </div>
+                }
+            </div>
+            <br />
+        </div>
+    </div>
 }

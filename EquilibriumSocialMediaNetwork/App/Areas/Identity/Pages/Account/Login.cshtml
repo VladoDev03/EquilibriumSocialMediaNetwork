@@ -12,7 +12,7 @@
 <p>Or maybe you are a <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">new user</a>?</p>
 <form id='login' class='input-group-login' method="post">
 
-    <input asp-for="Input.Email" class='input-field' placeholder='Email'>
+    <input asp-for="Input.Email" class='input-field' placeholder='Username or email'>
     @*<span asp-validation-for="Input.Email" style="color: red;"></span>*@
 
     <input asp-for="Input.Password" class='input-field' placeholder='Password'>
