@@ -6,37 +6,64 @@
 <script src="~/js/search.js" defer></script>
 <link href="~/css/search.css" rel="stylesheet" />
 
-<div class="search-wrapper">
-    <label for="search">Search User</label>
-    <input type="search" id="search" data-search>
-</div>
-<div class="user-cards" data-user-cards-container></div>
-<template data-user-template>
-    <div class="card">
-        <div class="header" data-header></div>
-        <div class="body" data-body></div>
-    </div>
-</template>
+<button class="search-btn" style="background-color: #ace29e; color: #ffffff; border-radius: 50%; margin: 23px 10px 29px 0; text-align: center; width: 35px; height: 35px; padding: 5px; user-select: none;" onclick="openSearch"><i class="fas fa-search"></i></button>
 
+<div id="search-content" class="hide">
+    <div class="search-wrapper">
+        <label for="search">Search User</label>
+        <input type="search" id="search" data-search>
+    </div>
+    <div class="user-cards" data-user-cards-container></div>
+    <template data-user-template>
+        <div class="card">
+            <div class="header" data-header></div>
+            <div class="body" data-body></div>
+        </div>
+    </template>
+</div>
+
+<style>
+    .hide {
+        display: none;
+    }
+</style>
+
+<br />
 @foreach (var item in Model)
 {
-    <a class="m-5" type="button" asp-controller="User" asp-action="Details" asp-route-id="@item.UserId">@item.User.FirstName @item.User.LastName - @item.User.UserName</a>
-    <div class="m-5 bg-success">@item.Content</div>
+    <div style="padding: 10px;">
+        <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@item.UserId">@item.User.FirstName @item.User.LastName (@item.User.UserName)</a>
+        <div class="bg-success">@item.Content</div>
 
-    @foreach (var comment in item.Comments)
-    {
-        if (comment.User != null)
-        {
-            <a class="m-5" type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId">@comment.User.FirstName @comment.User.LastName - @comment.User.UserName</a>
-        }
+        <div style="padding: 3px;">
+            <div style="border: 2px;">
+                @foreach (var comment in item.Comments)
+                {
+                    <div style="border: 2px solid #808080; padding: 3px">
 
-        <div class="tab bg-info">@comment.Content</div>
-    }
+                        @if (comment.User != null)
+                        {
+                            <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId" style="color:green;text-decoration:none;">@comment.User.FirstName @comment.User.LastName (@comment.User.UserName)</a>
+                        }
 
-    <form asp-action="Create" asp-controller="Comment" method="post">
-        <input type="text" name="content" />
-        <input class="hide" type="text" name="postId" value="@item.Id" />
-        <button type="submit">Comment</button>
-    </form>
-    <hr />
+                        <div style="padding-top: 4px;">@comment.Content</div>
+                    </div>
+                }
+            </div>
+
+            <div style="padding-top: 5px;">
+                <form asp-action="Create" asp-controller="Comment" method="post">
+                    <input type="text" name="content" />
+                    <input class="hide" type="text" name="postId" value="@item.Id" />
+                    <button type="submit">Comment</button>
+                </form>
+                <hr />
+            </div>
+        </div>
+    </div>
 }
+<script>
+    function openSearch() {
+        document.getElementById("search-content").classList.remove("hide");
+    };
+</script>

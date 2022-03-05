@@ -1,19 +1,33 @@
 ﻿@model UserViewModel
+@{
+    ViewData["Title"] = @Model.UserName;
+}
 
 <h1>@Model.FirstName @Model.LastName</h1>
 <h2>@Model.UserName</h2>
 
 @foreach (var item in Model.Posts)
 {
-    <p class="bg-success">@item.Content</p>
+    <div style="padding: 10px;">
+        <p class="bg-success">@item.Content</p>
 
-    @foreach (var comment in item.Comments)
-    {
-        @if (comment.User != null)
-        {
-            <a class="m-5" type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId">@comment.User.FirstName @comment.User.LastName - @comment.User.UserName</a>
-        }
+        <div style="padding: 3px;">
+            <div style="border: 2px;">
+                @foreach (var comment in item.Comments)
+                {
+                    <div style="border: 2px solid #808080; padding: 3px">
 
-        <p class="bg-info">@comment.Content</p>
-    }
+                        @if (comment.User != null)
+                        {
+                            <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId" style="color:green;text-decoration:none;">@comment.User.FirstName @comment.User.LastName (@comment.User.UserName)</a>
+                        }
+
+                        <div style="padding-top: 4px;">@comment.Content</div>
+                    </div>
+
+                }
+            </div>
+            <br />
+        </div>
+    </div>
 }
