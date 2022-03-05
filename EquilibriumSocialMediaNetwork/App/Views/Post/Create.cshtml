@@ -1,11 +1,12 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Add post";
 }
 
+<h1 style="padding-bottom: 20px;">@ViewData["Title"]</h1>
 <form asp-action="Create" asp-controller="Post" method="post" enctype="multipart/form-data">
-    <input type="text" name="content" value="" />
-    <input type="file" name="pic" />
-    <button type="submit">Post</button>
+    <textarea name="content" value="" placeholder="Add some content..." rows="10" cols="35" style=" resize: both;"></textarea>
+    <br />
+    <input type="file" name="pic" style="padding-top: 20px; padding-bottom: 20px; "/>
+    <br />
+    <button type="submit" class="btn btn-secondary btn-lg">Post</button>
 </form>
