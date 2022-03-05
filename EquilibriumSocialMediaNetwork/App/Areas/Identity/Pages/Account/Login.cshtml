@@ -7,37 +7,30 @@
     Layout = "/Views/Shared/_AuthenticateLayout.cshtml";
 }
 
-<div class="navbar">
-    <div> <a style="color: #3aafa9; font-family: 'Dancing Script'; font-size: 34px;">Equiliam</a> </div>
-</div>
-<div class='login-page'>
-    <div class="form-box">
-        <h1>Welcome Back!</h1>
-        <p>Or maybe you are a <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">new user</a>?</p>
-        <form id='login' class='input-group-login' method="post">
 
-            <input asp-for="Input.Email" class='input-field' placeholder='Email'>
-            <span asp-validation-for="Input.Email" style="color: red;"></span>
+<h1>Welcome Back!</h1>
+<p>Or maybe you are a <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">new user</a>?</p>
+<form id='login' class='input-group-login' method="post">
 
-            <input asp-for="Input.Password" class='input-field' placeholder='Password'>
-            <span asp-validation-for="Input.Password" style="color: red;"></span>
+    <input asp-for="Input.Email" class='input-field' placeholder='Email'>
+    @*<span asp-validation-for="Input.Email" style="color: red;"></span>*@
 
-            <div class="checkbox">
-                <input asp-for="Input.RememberMe" type='checkbox' class='check-box' />Remember Me?
-            </div>
+    <input asp-for="Input.Password" class='input-field' placeholder='Password'>
+    @*<span asp-validation-for="Input.Password" style="color: red;"></span>*@
 
-            <button type='submit' class='submit-btn'>Log in</button>
-            <br />
-            <button class="help-btns" id="forgot-password" asp-page="./ForgotPassword">Forgotten password</button>
-            <button class="help-btns" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</button>
-            <br />
-        </form>
+    <div class="checkbox">
+        <input asp-for="Input.RememberMe" type='checkbox' class='check-box' />Remember Me?
     </div>
-</div>
 
+    <button type='submit' class='submit-btn'>Login <i class="fas fa-sign-in-alt"></i></button>
+    <br />
+    <button class="help-btns" id="forgot-password" asp-page="./ForgotPassword">Forgotten password</button>
+    <button class="help-btns" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</button>
+    <br />
+</form>
 
 <script src="~/js/site.js" asp-append-version="true"></script>
 
 @*@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}*@
+        <partial name="_ValidationScriptsPartial" />
+    }*@
