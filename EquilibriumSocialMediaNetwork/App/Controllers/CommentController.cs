@@ -45,5 +45,12 @@ namespace App.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult DeleteComment(string id)
+        {
+            commentServices.DeleteComment(id);
+
+            return RedirectToAction("Profile", "User");
+        }
     }
 }

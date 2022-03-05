@@ -22,5 +22,7 @@ namespace Services.Contracts
         PostServiceModel UpdatePost(PostServiceModel updatedPost);
 
         void DeletePost(string id);
+
+        void DeletePostComments(string id);
     }
 }

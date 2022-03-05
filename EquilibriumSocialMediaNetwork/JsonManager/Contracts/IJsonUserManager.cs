@@ -1,5 +1,6 @@
 ﻿using Data.Entities;
 using Data.ViewModels;
+using Data.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;

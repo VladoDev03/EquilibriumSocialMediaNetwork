@@ -1,5 +1,6 @@
 ﻿using Data.Entities;
 using Data.ViewModels;
+using Data.ViewModels.Comment;
 using Services.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Services.Mappers
         {
             CommentServiceModel result = new CommentServiceModel()
             {
+                Id = comment.Id,
                 Content = comment.Content,
                 PostId = comment.PostId,
                 UserId = comment.UserId,
@@ -29,6 +31,7 @@ namespace Services.Mappers
         {
             Comment result = new Comment()
             {
+                Id = comment.Id,
                 Content = comment.Content,
                 PostId = comment.PostId,
                 UserId = comment.UserId,
@@ -43,6 +46,7 @@ namespace Services.Mappers
         {
             CommentViewModel result = new CommentViewModel()
             {
+                Id = comment.Id,
                 Content = comment.Content,
                 UserId = comment.UserId,
                 User = comment.User

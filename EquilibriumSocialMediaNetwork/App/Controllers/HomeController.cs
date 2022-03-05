@@ -1,6 +1,8 @@
 ﻿using App.Models;
 using Data.Entities;
 using Data.ViewModels;
+using Data.ViewModels.Post;
+using Data.ViewModels.User;
 using JsonManager.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
