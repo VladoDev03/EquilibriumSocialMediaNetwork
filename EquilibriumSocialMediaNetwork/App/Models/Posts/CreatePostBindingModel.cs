@@ -11,5 +11,7 @@ namespace App.Models.Posts
         public string Content { get; set; }
 
         public IFormFile Image { get; set; }
+
+        public string IsDownloadable { get; set; }
     }
 }

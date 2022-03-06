@@ -19,6 +19,7 @@ namespace Services.Mappers
                 Comments = post.Comments.Select(x => x.ToCommentServiceModel()).ToList(),
                 Content = post.Content,
                 Image = post.Image,
+                IsDownloadable = post.IsDownloadable,
                 Id = post.Id,
                 User = post.User,
                 UserId = post.UserId,
@@ -35,6 +36,7 @@ namespace Services.Mappers
                 Comments = post.Comments.Select(x => x.ToComment()).ToList(),
                 Content = post.Content,
                 Image = post.Image,
+                IsDownloadable = post.IsDownloadable,
                 Id = post.Id,
                 UserId = post.UserId,
                 User = post.User,
@@ -52,6 +54,7 @@ namespace Services.Mappers
                 Comments = post.Comments.Select(x => x.ToCommentView()).ToList(),
                 Content = post.Content,
                 Image = post.Image,
+                IsDownloadable = post.IsDownloadable,
                 UserId = post.UserId,
                 User = post.User.ToUserViewModel()
             };

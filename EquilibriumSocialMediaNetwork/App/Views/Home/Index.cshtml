@@ -39,7 +39,11 @@
         {
             string directory = $"/Images/Posts/{@item.Image}";
 
-            <a href=@directory download="image">Save post</a>
+            @if (item.IsDownloadable)
+            {
+                <a href=@directory download="image">Save post</a>
+            }
+
             <img src=~@directory alt="image" asp-append-version="true" />
         }
 

@@ -55,6 +55,7 @@ namespace App.Controllers
             PostServiceModel postToAdd = new PostServiceModel();
 
             postToAdd.Content = post.Content;
+            postToAdd.IsDownloadable = post.IsDownloadable == "checked" ? true : false;
 
             User user = await _userManager.GetUserAsync(User);
             postToAdd.User = user;
