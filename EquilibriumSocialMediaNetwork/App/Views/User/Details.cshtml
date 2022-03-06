@@ -24,7 +24,6 @@
 
                         @if (comment.User != null)
                         {
-                            <a type="button" asp-controller="Comment" asp-action="DeleteComment" asp-route-id="@comment.Id" style="color:red;text-decoration:none;">Delete</a>
                             <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId" style="color:green;text-decoration:none;">@comment.User.FirstName @comment.User.LastName (@comment.User.UserName)</a>
                         }
 
