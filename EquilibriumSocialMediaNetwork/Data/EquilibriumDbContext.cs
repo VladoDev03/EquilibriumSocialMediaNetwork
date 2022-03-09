@@ -18,6 +18,7 @@ namespace Data
         public DbSet<Cover> Covers { get; set; }
         public DbSet<Description> Descriptions { get; set; }
         public DbSet<FriendRequest> FriendRequests { get; set; }
+        public DbSet<UserFriend> UsersFriends { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Reaction> Reactions { get; set; }

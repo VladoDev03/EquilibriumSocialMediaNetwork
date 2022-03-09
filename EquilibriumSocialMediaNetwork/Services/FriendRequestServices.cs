@@ -45,6 +45,16 @@ namespace Services
             FriendRequestServiceModel request = FindFriendRequest(id);
             request.RequestStatus = "Approved";
 
+            UserFriend userFriend = new UserFriend()
+            {
+                User = request.RequestedFrom,
+                Friend = request.RequestedTo,
+                UserId = request.RequestedToId,
+                FriendId = request.RequestedToId
+            };
+
+            db.UsersFriends.Add(userFriend);
+
             db.SaveChanges();
 
             return request;
@@ -54,6 +64,8 @@ namespace Services
         {
             FriendRequestServiceModel request = FindFriendRequest(id);
             request.RequestStatus = "Rejected";
+
+            //Delete request from database?
 
             db.SaveChanges();
 
