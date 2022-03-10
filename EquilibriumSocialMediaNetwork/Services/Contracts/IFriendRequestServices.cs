@@ -14,11 +14,15 @@ namespace Services.Contracts
 
         FriendRequestServiceModel AddToDatabase(FriendRequestServiceModel friendRequest);
 
-        FriendRequestServiceModel SentFriendRequestToUser(User sender, User receiver);
+        FriendRequestServiceModel SentFriendRequestToUser(UserServiceModel sender, UserServiceModel receiver);
 
         FriendRequestServiceModel ApproveFriendRequest(string id);
 
         FriendRequestServiceModel RejectFriendRequest(string id);
+
+        List<FriendRequestServiceModel> GetPendingRequests(string senderId);
+
+        List<FriendRequestServiceModel> GetUserInvitations(string receiverId);
 
         void DeleteFriendRequest(string id);
     }

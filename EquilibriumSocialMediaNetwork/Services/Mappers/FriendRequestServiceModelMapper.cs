@@ -10,9 +10,9 @@ namespace Services.Mappers
 {
     public static class FriendRequestServiceModelMapper
     {
-        public static FriendRequest ToEntity(this FriendRequestServiceModel request)
+        public static FriendRequestServiceModel ToFriendRequestServiceModel(this FriendRequest request)
         {
-            FriendRequest result = new FriendRequest()
+            FriendRequestServiceModel result = new FriendRequestServiceModel()
             {
                 Id = request.Id,
                 RequestStatus = request.RequestStatus,
@@ -25,9 +25,9 @@ namespace Services.Mappers
             return result;
         }
 
-        public static FriendRequestServiceModel ToServiceModel(this FriendRequest request)
+        public static FriendRequest ToFriendRequest(this FriendRequestServiceModel request)
         {
-            FriendRequestServiceModel result = new FriendRequestServiceModel()
+            FriendRequest result = new FriendRequest()
             {
                 Id = request.Id,
                 RequestStatus = request.RequestStatus,

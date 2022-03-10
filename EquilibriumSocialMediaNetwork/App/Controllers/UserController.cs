@@ -17,7 +17,6 @@ namespace App.Controllers
 {
     public class UserController : Controller
     {
-
         private readonly UserManager<User> _userManager;
         private IPostServices postServices;
         private IUserServices userServices;
@@ -79,20 +78,14 @@ namespace App.Controllers
             UserServiceModel user = userServices
                 .GetUserById(id);
 
-            UserViewModel u = user.ToUserViewModel();
+            UserViewModel result = user.ToUserViewModel();
 
             List<PostViewModel> posts = postServices
                 .GetUserPosts(id)
                 .Select(p => p.ToPostViewModel())
                 .ToList();
 
-            UserViewModel result = new UserViewModel()
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                UserName = user.UserName,
-                Posts = posts
-            };
+            result.Posts = posts;
 
             return View(result);
         }

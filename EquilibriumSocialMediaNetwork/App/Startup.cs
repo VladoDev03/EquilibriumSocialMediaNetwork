@@ -45,6 +45,7 @@ namespace App
             services.AddScoped<IPostServices, PostServices>();
             services.AddScoped<ICommentServices, CommentServices>();
             services.AddScoped<IDescriptionServices, DescriptionServices>();
+            services.AddScoped<IFriendRequestServices, FriendRequestServices>();
 
             services.AddDefaultIdentity<User>(options =>
             {

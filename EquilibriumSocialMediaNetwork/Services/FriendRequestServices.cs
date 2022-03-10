@@ -23,15 +23,15 @@ namespace Services
         public FriendRequestServiceModel FindFriendRequest(string id)
         {
             FriendRequestServiceModel request = db.FriendRequests
-                .FirstOrDefault(f => f.Id == id)
-                .ToServiceModel();
+                .FirstOrDefault(fr => fr.Id == id)
+                .ToFriendRequestServiceModel();
 
             return request;
         }
 
         public FriendRequestServiceModel AddToDatabase(FriendRequestServiceModel friendRequest)
         {
-            FriendRequest frReq = friendRequest.ToEntity();
+            FriendRequest frReq = friendRequest.ToFriendRequest();
 
             db.FriendRequests.Add(frReq);
 
@@ -76,23 +76,48 @@ namespace Services
         {
             FriendRequestServiceModel request = FindFriendRequest(id);
 
-            db.FriendRequests.Remove(request.ToEntity());
+            db.FriendRequests.Remove(request.ToFriendRequest());
             db.SaveChanges();
         }
 
-        public FriendRequestServiceModel SentFriendRequestToUser(User sender, User receiver)
+        public FriendRequestServiceModel SentFriendRequestToUser(UserServiceModel sender, UserServiceModel receiver)
         {
             FriendRequestServiceModel request = new FriendRequestServiceModel();
 
-            request.RequestedFrom = sender;
+            //request.RequestedFrom = sender.ToUser();
             request.RequestedFromId = sender.Id;
-            request.RequestedTo = receiver;
-            request.RequestedToId = sender.Id;
+            //request.RequestedTo = receiver.ToUser();
+            request.RequestedToId = receiver.Id;
             request.RequestStatus = "Pending";
 
-            AddToDatabase(request);
+            //AddToDatabase(request)
+
+            FriendRequest frReq = request.ToFriendRequest();
+            db.FriendRequests.Add(frReq);
+
+            db.SaveChanges();
 
             return request;
+        }
+
+        public List<FriendRequestServiceModel> GetPendingRequests(string senderId)
+        {
+            List<FriendRequestServiceModel> requests = db.FriendRequests
+                .Where(fr => fr.RequestedFromId == senderId)
+                .Select(fr => fr.ToFriendRequestServiceModel())
+                .ToList();
+
+            return requests;
+        }
+
+        public List<FriendRequestServiceModel> GetUserInvitations(string receiverId)
+        {
+            List<FriendRequestServiceModel> invitations = db.FriendRequests
+                   .Where(fr => fr.RequestedToId == receiverId)
+                   .Select(fr => fr.ToFriendRequestServiceModel())
+                   .ToList();
+
+            return invitations;
         }
     }
 }

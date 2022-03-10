@@ -17,6 +17,7 @@ namespace Services.Mappers
         {
             UserServiceModel result = new UserServiceModel()
             {
+                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
@@ -30,6 +31,7 @@ namespace Services.Mappers
         {
             User result = new User()
             {
+                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
@@ -43,6 +45,7 @@ namespace Services.Mappers
         {
             UserViewModel result = new UserViewModel()
             {
+                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 UserName = user.UserName,
@@ -56,6 +59,7 @@ namespace Services.Mappers
         {
             UserViewModel result = new UserViewModel()
             {
+                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 UserName = user.UserName,

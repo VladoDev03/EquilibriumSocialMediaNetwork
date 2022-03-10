@@ -1,0 +1,6 @@
+﻿@model List<FriendRequestViewModel>
+
+@foreach (var item in Model)
+{
+    <p>@item.Sender.FirstName @item.Sender.LastName (@item.Sender.UserName)</p>
+}
