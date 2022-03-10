@@ -1,4 +1,5 @@
 ﻿using Data.Entities;
+using Data.ViewModels.FriendRequest;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -41,12 +42,27 @@ namespace App.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AllRequests()
+        public async Task<IActionResult> Invites()
         {
             User currentUser = await _userManager.GetUserAsync(User);
 
-            List<FriendRequestServiceModel> invites = friendRequestServices
-                .GetUserInvitations(currentUser.Id);
+            List<FriendRequestViewModel> invites = friendRequestServices
+                .GetUserInvitations(currentUser.Id)
+                .Select(fr => fr.ToFriendRequestViewModel())
+                .ToList();
+
+            return View(invites);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> PendingRequests()
+        {
+            User currentUser = await _userManager.GetUserAsync(User);
+
+            List<FriendRequestViewModel> invites = friendRequestServices
+                .GetPendingRequests(currentUser.Id)
+                .Select(fr => fr.ToFriendRequestViewModel())
+                .ToList();
 
             return View(invites);
         }

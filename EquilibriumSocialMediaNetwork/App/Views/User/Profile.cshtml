@@ -6,6 +6,9 @@
 <h1>@Model.FirstName @Model.LastName</h1>
 <h2>@Model.UserName</h2>
 
+<a class="nav-link text-dark" asp-area="" asp-controller="FriendRequest" asp-action="Invites">Invites</a>
+<a class="nav-link text-dark" asp-area="" asp-controller="FriendRequest" asp-action="PendingRequests">Pending requests</a>
+
 @foreach (var item in Model.Posts)
 {
     <a type="button" asp-controller="Post" asp-action="DeletePost" asp-route-id="@item.Id" style="color:red;text-decoration:none;">Remove</a>

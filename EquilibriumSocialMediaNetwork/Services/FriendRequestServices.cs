@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services
 {
@@ -103,7 +104,8 @@ namespace Services
         public List<FriendRequestServiceModel> GetPendingRequests(string senderId)
         {
             List<FriendRequestServiceModel> requests = db.FriendRequests
-                .Where(fr => fr.RequestedFromId == senderId)
+                .Include(u => u.RequestedTo)
+                .Where(fr => fr.RequestedFromId == senderId && fr.RequestStatus == "Pending")
                 .Select(fr => fr.ToFriendRequestServiceModel())
                 .ToList();
 
@@ -113,9 +115,10 @@ namespace Services
         public List<FriendRequestServiceModel> GetUserInvitations(string receiverId)
         {
             List<FriendRequestServiceModel> invitations = db.FriendRequests
-                   .Where(fr => fr.RequestedToId == receiverId)
-                   .Select(fr => fr.ToFriendRequestServiceModel())
-                   .ToList();
+                .Include(u => u.RequestedFrom)
+                .Where(fr => fr.RequestedToId == receiverId && fr.RequestStatus == "Pending")
+                .Select(fr => fr.ToFriendRequestServiceModel())
+                .ToList();
 
             return invitations;
         }

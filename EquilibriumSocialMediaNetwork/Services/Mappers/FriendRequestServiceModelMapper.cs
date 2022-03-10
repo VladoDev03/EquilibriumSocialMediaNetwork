@@ -1,4 +1,5 @@
 ﻿using Data.Entities;
+using Data.ViewModels.FriendRequest;
 using Services.Models;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,18 @@ namespace Services.Mappers
                 RequestedFromId = request.RequestedFromId,
                 RequestedTo = request.RequestedTo,
                 RequestedToId = request.RequestedToId
+            };
+
+            return result;
+        }
+
+        public static FriendRequestViewModel ToFriendRequestViewModel(this FriendRequestServiceModel request)
+        {
+            FriendRequestViewModel result = new FriendRequestViewModel()
+            {
+                Id = request.Id,
+                RequestedFrom = request.RequestedFrom.ToUserViewModel(),
+                RequestedTo = request.RequestedTo.ToUserViewModel()
             };
 
             return result;
