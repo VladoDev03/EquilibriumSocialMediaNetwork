@@ -66,5 +66,21 @@ namespace App.Controllers
 
             return View(invites);
         }
+
+        [HttpGet]
+        public IActionResult Accept(string id)
+        {
+            friendRequestServices.ApproveFriendRequest(id);
+
+            return RedirectToAction("Profile", "User");
+        }
+
+        [HttpGet]
+        public IActionResult Reject(string id)
+        {
+            friendRequestServices.RejectFriendRequest(id);
+
+            return RedirectToAction("Profile", "User");
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data.Entities
 {
-    public class UserFriend : BaseEntity
+    public class UserFriend
     {
         public string UserId { get; set; }
 

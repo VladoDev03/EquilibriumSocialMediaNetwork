@@ -20,6 +20,8 @@ namespace Services.Contracts
 
         FriendRequestServiceModel RejectFriendRequest(string id);
 
+        FriendRequestServiceModel UpdateRequestStatus(string id, string newStatus);
+
         List<FriendRequestServiceModel> GetPendingRequests(string senderId);
 
         List<FriendRequestServiceModel> GetUserInvitations(string receiverId);

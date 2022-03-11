@@ -43,34 +43,54 @@ namespace Services
 
         public FriendRequestServiceModel ApproveFriendRequest(string id)
         {
-            FriendRequestServiceModel request = FindFriendRequest(id);
-            request.RequestStatus = "Approved";
+            FriendRequest request = db.FriendRequests
+                .FirstOrDefault(fr => fr.Id == id);
 
-            UserFriend userFriend = new UserFriend()
+            UserFriend user = new UserFriend()
             {
                 User = request.RequestedFrom,
                 Friend = request.RequestedTo,
-                UserId = request.RequestedToId,
+                UserId = request.RequestedFromId,
                 FriendId = request.RequestedToId
             };
 
-            db.UsersFriends.Add(userFriend);
+            UserFriend friend = new UserFriend()
+            {
+                User = request.RequestedTo,
+                Friend = request.RequestedFrom,
+                UserId = request.RequestedToId,
+                FriendId = request.RequestedFromId
+            };
+
+            db.UsersFriends.Add(user);
+            db.UsersFriends.Add(friend);
+
+            FriendRequestServiceModel result = UpdateRequestStatus(id, "Approved");
+
+            db.SaveChanges();
+
+            return result;
+        }
+
+        public FriendRequestServiceModel RejectFriendRequest(string id)
+        {
+            FriendRequestServiceModel request = UpdateRequestStatus(id, "Rejected");
 
             db.SaveChanges();
 
             return request;
         }
 
-        public FriendRequestServiceModel RejectFriendRequest(string id)
+        public FriendRequestServiceModel UpdateRequestStatus(string id, string newStatus)
         {
-            FriendRequestServiceModel request = FindFriendRequest(id);
-            request.RequestStatus = "Rejected";
+            FriendRequest request = db.FriendRequests
+                .FirstOrDefault(fr => fr.Id == id);
 
-            //Delete request from database?
+            request.RequestStatus = newStatus;
 
             db.SaveChanges();
 
-            return request;
+            return request.ToFriendRequestServiceModel();
         }
 
         public void DeleteFriendRequest(string id)

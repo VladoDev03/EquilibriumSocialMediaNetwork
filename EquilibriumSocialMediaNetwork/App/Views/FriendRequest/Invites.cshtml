@@ -3,4 +3,6 @@
 @foreach (var item in Model)
 {
     <p>@item.RequestedFrom.FirstName @item.RequestedFrom.LastName (@item.RequestedFrom.UserName)</p>
+    <a class="nav-link text-dark" asp-area="" asp-controller="FriendRequest" asp-action="Accept" asp-route-id="@item.Id">Accept</a>
+    <a class="nav-link text-dark" asp-area="" asp-controller="FriendRequest" asp-action="Reject" asp-route-id="@item.Id">Reject</a>
 }
