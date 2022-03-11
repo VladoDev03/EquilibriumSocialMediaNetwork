@@ -2,6 +2,7 @@
 
 <h1>@Model.FirstName @Model.LastName</h1>
 <h2>@Model.UserName</h2>
+
 <a type="button" asp-controller="FriendRequest" asp-action="SendRequest" asp-route-id="@Model.Id" style="color:green;text-decoration:none;">Add friend</a>
 
 @foreach (var item in Model.Posts)

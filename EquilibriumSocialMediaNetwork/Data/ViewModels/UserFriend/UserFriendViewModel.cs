@@ -1,20 +1,20 @@
-﻿using Data.Entities;
+﻿using Data.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Models
+namespace Data.ViewModels.UserFriend
 {
-    public class UserFriendServiceModel
+    public class UserFriendViewModel
     {
         public string UserId { get; set; }
 
         public string FriendId { get; set; }
 
-        public User User { get; set; }
+        public UserViewModel User { get; set; }
 
-        public User Friend { get; set; }
+        public UserViewModel Friend { get; set; }
     }
 }

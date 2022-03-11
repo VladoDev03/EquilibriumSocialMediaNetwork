@@ -1,0 +1,8 @@
+﻿@model List<UserFriendViewModel>
+
+@foreach (var friend in Model)
+{
+    string names = $"{friend.Friend.FirstName} {friend.Friend.LastName} {(friend.Friend.UserName)}";
+
+    <a asp-controller="User" asp-action="Details" asp-route-id="@friend.FriendId">@names</a>
+}
