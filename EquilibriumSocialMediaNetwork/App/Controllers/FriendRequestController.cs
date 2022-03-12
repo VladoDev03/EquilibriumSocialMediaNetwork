@@ -82,5 +82,12 @@ namespace App.Controllers
 
             return RedirectToAction("Profile", "User");
         }
+
+        public IActionResult Delete(string id)
+        {
+            friendRequestServices.DeleteFriendRequest(id);
+
+            return RedirectToAction("Profile", "User");
+        }
     }
 }

@@ -3,4 +3,5 @@
 @foreach (var item in Model)
 {
     <p>@item.RequestedTo.FirstName @item.RequestedTo.LastName (@item.RequestedTo.UserName)</p>
+    <a class="text-danger" asp-route-id="@item.Id" asp-controller="FriendRequest" asp-action="Delete">Delete</a>
 }

@@ -95,9 +95,9 @@ namespace Services
 
         public void DeleteFriendRequest(string id)
         {
-            FriendRequestServiceModel request = FindFriendRequest(id);
+            FriendRequest request = db.FriendRequests.FirstOrDefault(fr => fr.Id == id);
 
-            db.FriendRequests.Remove(request.ToFriendRequest());
+            db.FriendRequests.Remove(request);
             db.SaveChanges();
         }
 
