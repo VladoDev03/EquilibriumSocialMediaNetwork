@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Services.Contracts;
 using Services.Mappers;
@@ -29,6 +30,20 @@ namespace Services
                 .ToList();
 
             return friends;
+        }
+
+        public void RemoveUserFriend(string userId, string friendId)
+        {
+            UserFriend friendToRemove = db.UsersFriends
+                .FirstOrDefault(fr => fr.UserId == userId && fr.FriendId == friendId);
+
+            UserFriend userToRemove = db.UsersFriends
+                .FirstOrDefault(fr => fr.UserId == friendId && fr.FriendId == userId);
+
+            db.UsersFriends.Remove(friendToRemove);
+            db.UsersFriends.Remove(userToRemove);
+
+            db.SaveChanges();
         }
     }
 }

@@ -10,5 +10,7 @@ namespace Services.Contracts
     public interface IUserFriendServices
     {
         List<UserFriendServiceModel> GetUserFriends(string userId);
+
+        void RemoveUserFriend(string userId, string friendId);
     }
 }

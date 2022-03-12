@@ -36,5 +36,17 @@ namespace App.Controllers
 
             return View(friends);
         }
+
+        public IActionResult RemoveFriend(string id)
+        {
+            string[] ids = id.Split();
+
+            string userId = ids[0];
+            string friendId = ids[1];
+
+            userFriendServices.RemoveUserFriend(userId, friendId);
+
+            return RedirectToAction(nameof(FriendsList));
+        }
     }
 }
