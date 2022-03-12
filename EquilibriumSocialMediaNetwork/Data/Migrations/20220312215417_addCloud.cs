@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace Data.Migrations
 {
-    public partial class initMySql : Migration
+    public partial class addCloud : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,17 +48,6 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FriendRequests",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FriendRequests", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -119,8 +108,8 @@ namespace Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "varchar(256)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "varchar(256)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
                     UserId = table.Column<string>(type: "varchar(256)", nullable: false)
                 },
@@ -164,8 +153,8 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "varchar(256)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(256)", nullable: false),
                     Value = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -217,18 +206,48 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reactions",
+                name: "FriendRequests",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "varchar(256)", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true),
+                    RequestStatus = table.Column<string>(type: "text", nullable: true),
+                    RequestedFromId = table.Column<string>(type: "varchar(256)", nullable: true),
+                    RequestedToId = table.Column<string>(type: "varchar(256)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FriendRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FriendRequests_AspNetUsers_RequestedFromId",
+                        column: x => x.RequestedFromId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FriendRequests_AspNetUsers_RequestedToId",
+                        column: x => x.RequestedToId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Posts",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Content = table.Column<string>(type: "text", nullable: true),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    ImageDownloadUrl = table.Column<string>(type: "text", nullable: true),
+                    ImagePublicId = table.Column<string>(type: "text", nullable: true),
+                    IsDownloadable = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     UserId = table.Column<string>(type: "varchar(256)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reactions", x => x.Id);
+                    table.PrimaryKey("PK_Posts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reactions_AspNetUsers_UserId",
+                        name: "FK_Posts_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -252,6 +271,30 @@ namespace Data.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UsersFriends",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "varchar(256)", nullable: false),
+                    FriendId = table.Column<string>(type: "varchar(256)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PRIMARY", x => new { x.UserId, x.FriendId });
+                    table.ForeignKey(
+                        name: "FK_UsersFriends_AspNetUsers_FriendId",
+                        column: x => x.FriendId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UsersFriends_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -282,32 +325,6 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Posts",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
-                    Content = table.Column<string>(type: "text", nullable: true),
-                    UserId = table.Column<string>(type: "varchar(256)", nullable: true),
-                    ReactionId = table.Column<string>(type: "varchar(256)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Posts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Posts_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Posts_Reactions_ReactionId",
-                        column: x => x.ReactionId,
-                        principalTable: "Reactions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
@@ -327,6 +344,32 @@ namespace Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Comments_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reactions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<string>(type: "varchar(256)", nullable: true),
+                    PostId = table.Column<string>(type: "varchar(256)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reactions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reactions_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Reactions_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "Id",
@@ -443,14 +486,24 @@ namespace Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Posts_ReactionId",
-                table: "Posts",
-                column: "ReactionId");
+                name: "IX_FriendRequests_RequestedFromId",
+                table: "FriendRequests",
+                column: "RequestedFromId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FriendRequests_RequestedToId",
+                table: "FriendRequests",
+                column: "RequestedToId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Posts_UserId",
                 table: "Posts",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reactions_PostId",
+                table: "Reactions",
+                column: "PostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reactions_UserId",
@@ -481,6 +534,11 @@ namespace Data.Migrations
                 name: "IX_Statuses_UserId",
                 table: "Statuses",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UsersFriends_FriendId",
+                table: "UsersFriends",
+                column: "FriendId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UsersGroups_GroupId1",
@@ -520,6 +578,9 @@ namespace Data.Migrations
                 name: "FriendRequests");
 
             migrationBuilder.DropTable(
+                name: "Reactions");
+
+            migrationBuilder.DropTable(
                 name: "Replies");
 
             migrationBuilder.DropTable(
@@ -527,6 +588,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Statuses");
+
+            migrationBuilder.DropTable(
+                name: "UsersFriends");
 
             migrationBuilder.DropTable(
                 name: "UsersGroups");
@@ -542,9 +606,6 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Posts");
-
-            migrationBuilder.DropTable(
-                name: "Reactions");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -117,7 +117,13 @@ namespace Data.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("text");
 
-                    b.Property<string>("Image")
+                    b.Property<string>("ImageDownloadUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagePublicId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsDownloadable")

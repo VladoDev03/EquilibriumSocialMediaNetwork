@@ -10,16 +10,14 @@
     <div style="padding: 10px;">
         <p class="bg-success">@item.Content</p>
 
-        @if (item.Image != null)
+        @if (item.ImageUrl != null)
         {
-            string directory = $"/Images/Posts/{@item.Image}";
-
             @if (item.IsDownloadable)
             {
-                <a href=@directory download="image">Save post</a>
+                <a href="@item.ImageDownloadUrl" download="image">Save post</a>
             }
 
-            <img src=~@directory alt="image" asp-append-version="true" />
+            <img src="@item.ImageUrl" alt="image" asp-append-version="true" />
         }
 
         <div style="padding: 3px;">

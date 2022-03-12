@@ -35,16 +35,14 @@
         <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@item.UserId">@item.User.FirstName @item.User.LastName (@item.User.UserName)</a>
         <div class="bg-success">@item.Content</div>
 
-        @if (item.Image != null)
+        @if (item.ImageUrl != null)
         {
-            string directory = $"/Images/Posts/{@item.Image}";
-
             @if (item.IsDownloadable)
             {
-                <a href="@directory" download="image">Save post</a>
+                <a href="@item.ImageDownloadUrl" download="image">Save post</a>
             }
 
-            <img src=~@directory alt="image" asp-append-version="true" />
+            <img src="@item.ImageUrl" alt="image" asp-append-version="true" />
         }
 
         <div style="padding: 3px;">

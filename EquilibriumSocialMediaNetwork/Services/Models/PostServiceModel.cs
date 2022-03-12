@@ -17,7 +17,11 @@ namespace Services.Models
 
         public string Content { get; set; }
 
-        public string Image { get; set; }
+        public string ImageUrl { get; set; }
+
+        public string ImageDownloadUrl { get; set; }
+
+        public string ImagePublicId { get; set; }
 
         public bool IsDownloadable { get; set; }
 

@@ -24,15 +24,18 @@ namespace App.Controllers
         private readonly UserManager<User> _userManager;
         private IWebHostEnvironment environment;
         private IPostServices postServices;
+        private ICloudinaryServices cloudinaryServices;
 
         public PostController(
             UserManager<User> userManager,
             IPostServices postServices,
-            IWebHostEnvironment environment)
+            IWebHostEnvironment environment,
+            ICloudinaryServices cloudinaryServices)
         {
             _userManager = userManager;
             this.postServices = postServices;
             this.environment = environment;
+            this.cloudinaryServices = cloudinaryServices;
         }
 
         [Authorize(Roles = "User, Admin")]
@@ -62,8 +65,12 @@ namespace App.Controllers
 
             if (post.Image != null)
             {
-                string path = await SaveImageAsync(post.Image);
-                postToAdd.Image = path;
+                byte[] data = await GetImageBytes(post.Image);
+                string[] imageData = cloudinaryServices.UploadImage(data).Split("*");
+
+                postToAdd.ImageUrl = imageData[0];
+                postToAdd.ImagePublicId = imageData[1];
+                postToAdd.ImageDownloadUrl = cloudinaryServices.GetDownloadLink(imageData[0]);
             }
 
             postServices.AddPost(postToAdd);
@@ -77,10 +84,9 @@ namespace App.Controllers
 
             postServices.DeletePost(id);
 
-            if (post.Image != null)
+            if (post.ImagePublicId != null)
             {
-                string path = Path.Combine(environment.WebRootPath, "Images", "Posts", post.Image);
-                System.IO.File.Delete(path);
+                cloudinaryServices.DeleteImage(post.ImagePublicId);
             }
 
             return RedirectToAction("Profile", "User");
@@ -110,23 +116,14 @@ namespace App.Controllers
             return RedirectToAction("Profile", "User");
         }
 
-        private async Task<string> SaveImageAsync(IFormFile file)
+        private async Task<byte[]> GetImageBytes(IFormFile file)
         {
-            if (file == null || file.Length == 0)
-            {
-                return "";
-            }
-
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 await file.CopyToAsync(memoryStream);
-
                 byte[] img = memoryStream.ToArray();
-                string fileName = $"{Guid.NewGuid()}{file.FileName}";
-                string path = Path.Combine(environment.WebRootPath, "Images", "Posts", fileName);
 
-                await System.IO.File.WriteAllBytesAsync(path, img);
-                return fileName;
+                return img;
             }
         }
     }

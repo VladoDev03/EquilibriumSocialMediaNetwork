@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(EquilibriumDbContext))]
-    [Migration("20220311170501_fixUsersFriends")]
-    partial class fixUsersFriends
+    [Migration("20220312215417_addCloud")]
+    partial class addCloud
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -119,7 +119,13 @@ namespace Data.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("text");
 
-                    b.Property<string>("Image")
+                    b.Property<string>("ImageDownloadUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagePublicId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsDownloadable")
