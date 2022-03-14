@@ -16,13 +16,9 @@ namespace Data.Entities
 
         public string Content { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string ImageId { get; set; }
 
-        public string ImageDownloadUrl { get; set; }
-
-        public string ImagePublicId { get; set; }
-
-        public bool IsDownloadable { get; set; }
+        public Image Image { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
 

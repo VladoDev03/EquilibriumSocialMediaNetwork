@@ -109,13 +109,10 @@ namespace Data.Migrations
                     b.ToTable("Groups");
                 });
 
-            modelBuilder.Entity("Data.Entities.Post", b =>
+            modelBuilder.Entity("Data.Entities.Image", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(256)");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("text");
 
                     b.Property<string>("ImageDownloadUrl")
                         .HasColumnType("text");
@@ -128,6 +125,28 @@ namespace Data.Migrations
 
                     b.Property<bool>("IsDownloadable")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("PostId")
+                        .HasColumnType("varchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId")
+                        .IsUnique();
+
+                    b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("Data.Entities.Post", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImageId")
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .HasColumnType("varchar(256)");
@@ -517,6 +536,15 @@ namespace Data.Migrations
                     b.Navigation("RequestedTo");
                 });
 
+            modelBuilder.Entity("Data.Entities.Image", b =>
+                {
+                    b.HasOne("Data.Entities.Post", "Post")
+                        .WithOne("Image")
+                        .HasForeignKey("Data.Entities.Image", "PostId");
+
+                    b.Navigation("Post");
+                });
+
             modelBuilder.Entity("Data.Entities.Post", b =>
                 {
                     b.HasOne("Data.Entities.User", "User")
@@ -671,6 +699,8 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Post", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Image");
 
                     b.Navigation("Reactions");
                 });

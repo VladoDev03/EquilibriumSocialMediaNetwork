@@ -22,20 +22,20 @@ namespace App.Controllers
     public class PostController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private IWebHostEnvironment environment;
         private IPostServices postServices;
+        private IImageServices imageServices;
         private ICloudinaryServices cloudinaryServices;
 
         public PostController(
             UserManager<User> userManager,
             IPostServices postServices,
-            IWebHostEnvironment environment,
-            ICloudinaryServices cloudinaryServices)
+            ICloudinaryServices cloudinaryServices,
+            IImageServices imageServices)
         {
             _userManager = userManager;
             this.postServices = postServices;
-            this.environment = environment;
             this.cloudinaryServices = cloudinaryServices;
+            this.imageServices = imageServices;
         }
 
         [Authorize(Roles = "User, Admin")]
@@ -56,9 +56,10 @@ namespace App.Controllers
             }
 
             PostServiceModel postToAdd = new PostServiceModel();
+            ImageServiceModel imageToAdd = new ImageServiceModel();
 
             postToAdd.Content = post.Content;
-            postToAdd.IsDownloadable = post.IsDownloadable == "checked" ? true : false;
+            imageToAdd.IsDownloadable = post.IsDownloadable == "checked" ? true : false;
 
             User user = await _userManager.GetUserAsync(User);
             postToAdd.User = user;
@@ -68,12 +69,19 @@ namespace App.Controllers
                 byte[] data = await GetImageBytes(post.Image);
                 string[] imageData = cloudinaryServices.UploadImage(data).Split("*");
 
-                postToAdd.ImageUrl = imageData[0];
-                postToAdd.ImagePublicId = imageData[1];
-                postToAdd.ImageDownloadUrl = cloudinaryServices.GetDownloadLink(imageData[0]);
+                postToAdd.Image = imageToAdd;
+                postToAdd.ImageId = imageToAdd.Id;
+
+                imageToAdd.Post = postToAdd;
+                imageToAdd.PostId = postToAdd.Id;
+
+                imageToAdd.ImageUrl = imageData[0];
+                imageToAdd.ImagePublicId = imageData[1];
+                imageToAdd.ImageDownloadUrl = cloudinaryServices.GetDownloadLink(imageData[0]);
             }
 
             postServices.AddPost(postToAdd);
+            imageServices.AddImage(imageToAdd);
 
             return RedirectToAction("Index", "Home");
         }
@@ -81,12 +89,14 @@ namespace App.Controllers
         public IActionResult DeletePost(string id)
         {
             PostServiceModel post = postServices.GetPostById(id);
+            ImageServiceModel image = imageServices.GetPostImage(post.Id);
 
             postServices.DeletePost(id);
 
-            if (post.ImagePublicId != null)
+            if (post.ImageId != null)
             {
-                cloudinaryServices.DeleteImage(post.ImagePublicId);
+                cloudinaryServices.DeleteImage(image.ImagePublicId);
+                imageServices.RemoveImage(post.ImageId);
             }
 
             return RedirectToAction("Profile", "User");

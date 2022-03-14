@@ -34,6 +34,7 @@ namespace Services
         {
             List<PostServiceModel> posts = db.Posts
                 .Include(u => u.User)
+                .Include(i => i.Image)
                 .Select(p => p.ToPostServiceModel())
                 .ToList();
 
@@ -48,6 +49,9 @@ namespace Services
                         post.Comments.Add(comment);
                     }
                 }
+
+                Image image = db.Images.FirstOrDefault(i => i.PostId == post.Id);
+                post.Image = image.ToImageServiceModel();
             }
 
             return posts;
@@ -68,6 +72,7 @@ namespace Services
         {
             PostServiceModel post = db.Posts
                 .Include(p => p.User)
+                .Include(i => i.Image)
                 .FirstOrDefault(p => p.Id == id)
                 .ToPostServiceModel();
 

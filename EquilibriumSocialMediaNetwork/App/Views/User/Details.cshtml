@@ -10,14 +10,14 @@
     <div style="padding: 10px;">
         <p class="bg-success">@item.Content</p>
 
-        @if (item.ImageUrl != null)
+        @if (item.Image.ImageUrl != null)
         {
-            @if (item.IsDownloadable)
+            @if (item.Image.IsDownloadable)
             {
-                <a href="@item.ImageDownloadUrl" download="image">Save post</a>
+                <a href="@item.Image.ImageDownloadUrl" download="image">Save post</a>
             }
 
-            <img src="@item.ImageUrl" alt="image" asp-append-version="true" />
+            <img src="@item.Image.ImageUrl" alt="image" asp-append-version="true" />
         }
 
         <div style="padding: 3px;">

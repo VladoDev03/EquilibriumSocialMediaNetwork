@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace Data.Migrations
 {
-    public partial class addCloud : Migration
+    public partial class image : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -237,10 +237,7 @@ namespace Data.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(256)", nullable: false),
                     Content = table.Column<string>(type: "text", nullable: true),
-                    ImageUrl = table.Column<string>(type: "text", nullable: true),
-                    ImageDownloadUrl = table.Column<string>(type: "text", nullable: true),
-                    ImagePublicId = table.Column<string>(type: "text", nullable: true),
-                    IsDownloadable = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    ImageId = table.Column<string>(type: "text", nullable: true),
                     UserId = table.Column<string>(type: "varchar(256)", nullable: true)
                 },
                 constraints: table =>
@@ -344,6 +341,28 @@ namespace Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Comments_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    ImageDownloadUrl = table.Column<string>(type: "text", nullable: true),
+                    ImagePublicId = table.Column<string>(type: "text", nullable: true),
+                    IsDownloadable = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    PostId = table.Column<string>(type: "varchar(256)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Images_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "Id",
@@ -496,6 +515,12 @@ namespace Data.Migrations
                 column: "RequestedToId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Images_PostId",
+                table: "Images",
+                column: "PostId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Posts_UserId",
                 table: "Posts",
                 column: "UserId");
@@ -576,6 +601,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "FriendRequests");
+
+            migrationBuilder.DropTable(
+                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "Reactions");

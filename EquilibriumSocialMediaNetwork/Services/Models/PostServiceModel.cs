@@ -17,13 +17,9 @@ namespace Services.Models
 
         public string Content { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string ImageId { get; set; }
 
-        public string ImageDownloadUrl { get; set; }
-
-        public string ImagePublicId { get; set; }
-
-        public bool IsDownloadable { get; set; }
+        public ImageServiceModel Image { get; set; }
 
         public virtual ICollection<CommentServiceModel> Comments { get; set; }
 

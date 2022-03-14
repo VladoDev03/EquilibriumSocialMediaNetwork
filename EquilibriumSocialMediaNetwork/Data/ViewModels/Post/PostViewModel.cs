@@ -1,4 +1,5 @@
 ﻿using Data.ViewModels.Comment;
+using Data.ViewModels.Image;
 using Data.ViewModels.User;
 using System;
 using System.Collections.Generic;
@@ -21,13 +22,9 @@ namespace Data.ViewModels.Post
 
         public string UserId { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string ImageId { get; set; }
 
-        public string ImageDownloadUrl { get; set; }
-
-        public string ImagePublicId { get; set; }
-
-        public bool IsDownloadable { get; set; }
+        public ImageViewModel Image { get; set; }
 
         public UserViewModel User { get; set; }
 

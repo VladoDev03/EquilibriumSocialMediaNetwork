@@ -48,6 +48,7 @@ namespace App
             services.AddScoped<IFriendRequestServices, FriendRequestServices>();
             services.AddScoped<IUserFriendServices, UserFriendServices>();
             services.AddScoped<ICloudinaryServices, CloudinaryServices>();
+            services.AddScoped<IImageServices, ImageServices>();
 
             services.AddDefaultIdentity<User>(options =>
             {

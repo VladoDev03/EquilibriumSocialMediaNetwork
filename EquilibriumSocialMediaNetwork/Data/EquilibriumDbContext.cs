@@ -21,6 +21,7 @@ namespace Data
         public DbSet<UserFriend> UsersFriends { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Image> Images { get; set; }
         public DbSet<Reaction> Reactions { get; set; }
         public DbSet<Reply> Replies { get; set; }
         public DbSet<Report> Reports { get; set; }
@@ -51,6 +52,11 @@ namespace Data
                 entity.HasKey(e => new { e.UserId, e.FriendId })
                     .HasName("PRIMARY");
             });
+
+            builder.Entity<Post>()
+                .HasOne(i => i.Image)
+                .WithOne(p => p.Post)
+                .HasForeignKey<Image>(i => i.PostId);
         }
     }
 }
