@@ -16,8 +16,6 @@ searchInput.addEventListener("input", (e) => {
 
         user.element.classList.toggle("hide", !isVisible)
     })
-
-    console.log(users)
 })
 
 fetch("https://localhost:44366/users")
@@ -34,8 +32,6 @@ fetch("https://localhost:44366/users")
             body.textContent = user.UserName
 
             userCardContainer.append(card)
-
-            console.log(user)
 
             return { name: wholeName, username: user.UserName, element: card }
         })
