@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace Data.Migrations
 {
-    public partial class addCloud : Migration
+    public partial class revert : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

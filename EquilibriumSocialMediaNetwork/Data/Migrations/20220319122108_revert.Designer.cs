@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(EquilibriumDbContext))]
-    [Migration("20220312215417_addCloud")]
-    partial class addCloud
+    [Migration("20220319122108_revert")]
+    partial class revert
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
