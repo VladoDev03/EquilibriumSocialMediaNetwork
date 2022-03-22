@@ -41,12 +41,13 @@ namespace App
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddScoped<IUserServices, UserServices>();
-            services.AddScoped<IJsonUserManager, JsonUserManager>();
             services.AddScoped<IPostServices, PostServices>();
             services.AddScoped<ICommentServices, CommentServices>();
             services.AddScoped<IDescriptionServices, DescriptionServices>();
             services.AddScoped<IFriendRequestServices, FriendRequestServices>();
             services.AddScoped<IUserFriendServices, UserFriendServices>();
+            services.AddScoped<IReactionServices, ReactionServices>();
+            services.AddScoped<IJsonUserManager, JsonUserManager>();
             services.AddScoped<ICloudinaryServices, CloudinaryServices>();
 
             services.AddDefaultIdentity<User>(options =>

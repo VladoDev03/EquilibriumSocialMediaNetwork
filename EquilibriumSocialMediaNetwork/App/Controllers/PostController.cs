@@ -22,19 +22,16 @@ namespace App.Controllers
     public class PostController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private IWebHostEnvironment environment;
         private IPostServices postServices;
         private ICloudinaryServices cloudinaryServices;
 
         public PostController(
             UserManager<User> userManager,
             IPostServices postServices,
-            IWebHostEnvironment environment,
             ICloudinaryServices cloudinaryServices)
         {
             _userManager = userManager;
             this.postServices = postServices;
-            this.environment = environment;
             this.cloudinaryServices = cloudinaryServices;
         }
 

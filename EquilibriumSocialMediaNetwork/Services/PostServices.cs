@@ -34,18 +34,29 @@ namespace Services
         {
             List<PostServiceModel> posts = db.Posts
                 .Include(u => u.User)
+                .Include(u => u.Comments)
+                .Include(u => u.Reactions)
                 .Select(p => p.ToPostServiceModel())
                 .ToList();
 
             foreach (PostServiceModel post in posts)
             {
-                List <CommentServiceModel> comments = GetPostComments(post.Id);
+                List<CommentServiceModel> comments = GetPostComments(post.Id);
+                List<ReactionServiceModel> reactions = GetPostReactions(post.Id);
 
                 foreach (CommentServiceModel comment in comments)
                 {
                     if (post.Comments.FirstOrDefault(c => c.Id == comment.Id) == null)
                     {
                         post.Comments.Add(comment);
+                    }
+                }
+
+                foreach (ReactionServiceModel reaction in reactions)
+                {
+                    if (post.Reactions.FirstOrDefault(r => r.Id == reaction.Id) == null)
+                    {
+                        post.Reactions.Add(reaction);
                     }
                 }
             }
@@ -59,6 +70,17 @@ namespace Services
                 .Include(u => u.User)
                 .Where(c => c.PostId == postId)
                 .Select(c => c.ToCommentServiceModel())
+                .ToList();
+
+            return comments;
+        }
+
+        public List<ReactionServiceModel> GetPostReactions(string postId)
+        {
+            List<ReactionServiceModel> comments = db.Reactions
+                .Include(u => u.User)
+                .Where(c => c.PostId == postId)
+                .Select(c => c.ToReactionServiceModel())
                 .ToList();
 
             return comments;
@@ -91,7 +113,7 @@ namespace Services
         {
             //List<Comment> commentsToRemove = GetPostComments(id)
             //    .Select(c => c.ToComment());
-            
+
             List<Comment> commentsToRemove = db.Comments
                 .Where(c => c.PostId == id)
                 .ToList();

@@ -11,6 +11,10 @@ namespace Services.Models
     {
         public string Name { get; set; }
 
+        public string PostId { get; set; }
+
+        public PostServiceModel Post { get; set; }
+
         public string UserId { get; set; }
 
         public User User { get; set; }

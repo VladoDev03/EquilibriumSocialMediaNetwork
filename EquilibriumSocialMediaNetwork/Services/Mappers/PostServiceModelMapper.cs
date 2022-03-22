@@ -62,7 +62,8 @@ namespace Services.Mappers
                 ImageDownloadUrl = post.ImageDownloadUrl,
                 IsDownloadable = post.IsDownloadable,
                 UserId = post.UserId,
-                User = post.User.ToUserViewModel()
+                User = post.User.ToUserViewModel(),
+                Reactions = post.Reactions.Select(x => x.ToReactionViewModel()).ToList()
             };
 
             return result;

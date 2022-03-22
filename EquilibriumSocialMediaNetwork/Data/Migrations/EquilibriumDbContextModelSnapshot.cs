@@ -528,13 +528,15 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.Reaction", b =>
                 {
-                    b.HasOne("Data.Entities.Post", null)
+                    b.HasOne("Data.Entities.Post", "Post")
                         .WithMany("Reactions")
                         .HasForeignKey("PostId");
 
                     b.HasOne("Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Post");
 
                     b.Navigation("User");
                 });
