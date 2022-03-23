@@ -30,6 +30,12 @@ namespace App.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateCommentBindingModel comment)
         {
+            if (comment.Content == null)
+            {
+                TempData.Add("NotEmptyComment", "You can't create empty comments.");
+                return RedirectToAction("Index", "Home");
+            }
+
             User user = await _userManager.GetUserAsync(User);
             PostServiceModel post = postServices.GetPostById(comment.PostId);
 

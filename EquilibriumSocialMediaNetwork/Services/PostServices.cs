@@ -34,56 +34,54 @@ namespace Services
         {
             List<PostServiceModel> posts = db.Posts
                 .Include(u => u.User)
-                .Include(u => u.Comments)
-                .Include(u => u.Reactions)
                 .Select(p => p.ToPostServiceModel())
                 .ToList();
 
             foreach (PostServiceModel post in posts)
             {
-                List<CommentServiceModel> comments = GetPostComments(post.Id);
-                List<ReactionServiceModel> reactions = GetPostReactions(post.Id);
-
-                foreach (CommentServiceModel comment in comments)
-                {
-                    if (post.Comments.FirstOrDefault(c => c.Id == comment.Id) == null)
-                    {
-                        post.Comments.Add(comment);
-                    }
-                }
-
-                foreach (ReactionServiceModel reaction in reactions)
-                {
-                    if (post.Reactions.FirstOrDefault(r => r.Id == reaction.Id) == null)
-                    {
-                        post.Reactions.Add(reaction);
-                    }
-                }
+                GetPostComments(post);
+                GetPostReactions(post); 
             }
 
             return posts;
         }
 
-        public List<CommentServiceModel> GetPostComments(string postId)
+        public List<CommentServiceModel> GetPostComments(PostServiceModel post)
         {
             List<CommentServiceModel> comments = db.Comments
                 .Include(u => u.User)
-                .Where(c => c.PostId == postId)
+                .Where(c => c.PostId == post.Id)
                 .Select(c => c.ToCommentServiceModel())
                 .ToList();
+
+            foreach (CommentServiceModel comment in comments)
+            {
+                if (post.Comments.FirstOrDefault(c => c.Id == comment.Id) == null)
+                {
+                    post.Comments.Add(comment);
+                }
+            }
 
             return comments;
         }
 
-        public List<ReactionServiceModel> GetPostReactions(string postId)
+        public List<ReactionServiceModel> GetPostReactions(PostServiceModel post)
         {
-            List<ReactionServiceModel> comments = db.Reactions
+            List<ReactionServiceModel> reactions = db.Reactions
                 .Include(u => u.User)
-                .Where(c => c.PostId == postId)
+                .Where(c => c.PostId == post.Id)
                 .Select(c => c.ToReactionServiceModel())
                 .ToList();
 
-            return comments;
+            foreach (ReactionServiceModel reaction in reactions)
+            {
+                if (post.Reactions.FirstOrDefault(r => r.Id == reaction.Id) == null)
+                {
+                    post.Reactions.Add(reaction);
+                }
+            }
+
+            return reactions;
         }
 
         public PostServiceModel GetPostById(string id)
@@ -118,7 +116,12 @@ namespace Services
                 .Where(c => c.PostId == id)
                 .ToList();
 
+            List<Reaction> reactionsToRemove = db.Reactions
+                .Where(r => r.PostId == id)
+                .ToList();
+
             db.Comments.RemoveRange(commentsToRemove);
+            db.Reactions.RemoveRange(reactionsToRemove);
 
             db.SaveChanges();
         }
@@ -143,6 +146,22 @@ namespace Services
             }
 
             return post.ToPostServiceModel();
+        }
+
+        public List<PostServiceModel> GetPostsForUser(string userId)
+        {
+            string[] friendsIds = db.UsersFriends
+                .Where(uf => uf.UserId == userId)
+                .Select(uf => uf.FriendId)
+                .ToArray();
+
+            List<PostServiceModel> posts = GetAllPosts()
+                .Where(p => friendsIds.Contains(p.UserId))
+                .Where(p => p.Reactions.All(r => r.UserId != userId))
+                .Where(p => p.Comments.Where(c => c.UserId == userId).Count() < 1)
+                .ToList();
+
+            return posts;
         }
     }
 }

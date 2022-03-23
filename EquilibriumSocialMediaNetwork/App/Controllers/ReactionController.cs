@@ -14,16 +14,13 @@ namespace App.Controllers
     {
         private readonly UserManager<User> _userManager;
         private IReactionServices reactionServices;
-        private IPostServices postServices;
 
         public ReactionController(
             IReactionServices reactionServices,
-            UserManager<User> userManager,
-            IPostServices postServices)
+            UserManager<User> userManager)
         {
             this.reactionServices = reactionServices;
             _userManager = userManager;
-            this.postServices = postServices;
         }
 
         [Route("/Reaction/AddReaction/{name}/{postId}")]

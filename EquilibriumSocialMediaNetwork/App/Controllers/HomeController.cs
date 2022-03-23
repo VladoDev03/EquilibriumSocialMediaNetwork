@@ -5,6 +5,7 @@ using Data.ViewModels.Post;
 using Data.ViewModels.User;
 using JsonManager.Contracts;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services;
@@ -22,32 +23,37 @@ namespace App.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
+        private readonly UserManager<User> _userManager;
         private IUserServices userServices;
         private IJsonUserManager userJsonServices;
         private IPostServices postServices;
 
         public HomeController(
             ILogger<HomeController> logger,
+            UserManager<User> userManager,
             IUserServices userServices,
             IJsonUserManager userJsonServices,
             IPostServices postServices)
         {
             _logger = logger;
+            _userManager = userManager;
             this.userServices = userServices;
             this.userJsonServices = userJsonServices;
             this.postServices = postServices;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             if (!User.Identity.IsAuthenticated)
             {
                 return Redirect("/Identity/Account/Login");
             }
 
+            User user = await _userManager.GetUserAsync(User);
+            string userId = user.Id;
+
             List<PostViewModel> posts = postServices
-                .GetAllPosts()
+                .GetPostsForUser(userId)
                 .Select(p => p.ToPostViewModel())
                 .ToList();
 

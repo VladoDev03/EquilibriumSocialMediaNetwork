@@ -11,7 +11,11 @@ namespace Services.Contracts
     {
         List<PostServiceModel> GetAllPosts();
 
-        List<CommentServiceModel> GetPostComments(string postId);
+        List<PostServiceModel> GetPostsForUser(string userId);
+
+        List<CommentServiceModel> GetPostComments(PostServiceModel post);
+
+        List<ReactionServiceModel> GetPostReactions(PostServiceModel post);
 
         PostServiceModel AddPost(PostServiceModel post);
 

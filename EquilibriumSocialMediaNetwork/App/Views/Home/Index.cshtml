@@ -74,6 +74,12 @@
             </div>
 
             <div style="padding-top: 5px;">
+
+                @if (TempData["NotEmptyComment"] != null || (string)TempData["NotEmptyComment"] != null)
+                {
+                    <p class="text-danger">@TempData["NotEmptyComment"]</p>
+                }
+
                 <form asp-action="Create" asp-controller="Comment" method="post">
                     <input type="text" name="content" />
                     <input class="hide" type="text" name="postId" value="@item.Id" />
