@@ -1,4 +1,5 @@
 ﻿using Data.Entities;
+using Data.ViewModels.Reaction;
 using Services.Models;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace Services.Mappers
         {
             ReactionServiceModel result = new ReactionServiceModel()
             {
+                Id = reaction.Id,
+                PostId = reaction.PostId,
                 Name = reaction.Name,
                 User = reaction.User,
                 UserId = reaction.UserId
@@ -26,6 +29,21 @@ namespace Services.Mappers
         {
             Reaction result = new Reaction()
             {
+                Id = reaction.Id,
+                PostId = reaction.PostId,
+                Name = reaction.Name,
+                User = reaction.User,
+                UserId = reaction.UserId
+            };
+
+            return result;
+        }
+
+        public static ReactionViewModel ToReactionViewModel(this ReactionServiceModel reaction)
+        {
+            ReactionViewModel result = new ReactionViewModel()
+            {
+                Id = reaction.Id,
                 Name = reaction.Name,
                 User = reaction.User,
                 UserId = reaction.UserId

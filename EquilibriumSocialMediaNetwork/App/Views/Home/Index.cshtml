@@ -59,15 +59,37 @@
                         <div style="padding-top: 4px;">@comment.Content</div>
                     </div>
                 }
+                @foreach (var reaction in item.Reactions)
+                {
+                    <div style="border: 2px solid #808080; padding: 3px">
+
+                        @if (reaction.User != null)
+                        {
+                            <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@reaction.UserId" style="color:green;text-decoration:none;">@reaction.User.FirstName @reaction.User.LastName (@reaction.User.UserName)</a>
+                        }
+
+                        <div style="padding-top: 4px;">@reaction.Name</div>
+                    </div>
+                }
             </div>
 
             <div style="padding-top: 5px;">
+
+                @if (TempData["NotEmptyComment"] != null || (string)TempData["NotEmptyComment"] != null)
+                {
+                    <p class="text-danger">@TempData["NotEmptyComment"]</p>
+                }
+
                 <form asp-action="Create" asp-controller="Comment" method="post">
                     <input type="text" name="content" />
                     <input class="hide" type="text" name="postId" value="@item.Id" />
                     <button type="submit">Comment</button>
                 </form>
                 <hr />
+            </div>
+            <div>
+                <a asp-controller="Reaction" asp-action="AddReaction" asp-route-name="like" asp-route-postId="@item.Id">like</a>
+                <a asp-controller="Reaction" asp-action="AddReaction" asp-route-name="dislike" asp-route-postId="@item.Id">dislike</a>
             </div>
         </div>
     </div>

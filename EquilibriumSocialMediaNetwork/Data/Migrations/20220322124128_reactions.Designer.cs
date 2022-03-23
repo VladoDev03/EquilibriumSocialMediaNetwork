@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(EquilibriumDbContext))]
-    [Migration("20220319122108_revert")]
-    partial class revert
+    [Migration("20220322124128_reactions")]
+    partial class reactions
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -530,13 +530,15 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.Reaction", b =>
                 {
-                    b.HasOne("Data.Entities.Post", null)
+                    b.HasOne("Data.Entities.Post", "Post")
                         .WithMany("Reactions")
                         .HasForeignKey("PostId");
 
                     b.HasOne("Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Post");
 
                     b.Navigation("User");
                 });

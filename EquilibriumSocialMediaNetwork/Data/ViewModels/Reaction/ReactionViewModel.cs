@@ -4,18 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Entities
+namespace Data.ViewModels.Reaction
 {
-    public class Reaction : BaseEntity
+    public class ReactionViewModel
     {
+        public string Id { get; set; }
         public string Name { get; set; }
-
-        public string PostId { get; set; }
-
-        public Post Post { get; set; }
-
         public string UserId { get; set; }
-
-        public User User { get; set; }
+        public Entities.User User { get; set; }
     }
 }

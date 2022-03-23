@@ -1,4 +1,5 @@
 ﻿using Data.ViewModels.Comment;
+using Data.ViewModels.Reaction;
 using Data.ViewModels.User;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Data.ViewModels.Post
         public PostViewModel()
         {
             Comments = new List<CommentViewModel>();
+            Reactions = new List<ReactionViewModel>();
         }
 
         public string Id { get; set; }
@@ -32,5 +34,7 @@ namespace Data.ViewModels.Post
         public UserViewModel User { get; set; }
 
         public List<CommentViewModel> Comments { get; set; }
+
+        public List<ReactionViewModel> Reactions { get; set; }
     }
 }
