@@ -41,6 +41,7 @@ namespace Services
         public QrCodeServiceModel AddQrCode(QrCodeServiceModel qrCode, User user)
         {
             db.QrCodes.Add(qrCode.ToQrCode());
+            user.QrCodeId = qrCode.Id;
 
             db.SaveChanges();
 
