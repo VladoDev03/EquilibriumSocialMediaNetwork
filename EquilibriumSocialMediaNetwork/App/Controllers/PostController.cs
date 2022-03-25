@@ -63,7 +63,7 @@ namespace App.Controllers
             if (post.Image != null)
             {
                 byte[] data = await GetImageBytes(post.Image);
-                string[] imageData = cloudinaryServices.UploadImage(data).Split("*");
+                string[] imageData = cloudinaryServices.UploadImage(data, "Social media images/Posts").Split("*");
 
                 postToAdd.ImageUrl = imageData[0];
                 postToAdd.ImagePublicId = imageData[1];

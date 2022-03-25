@@ -62,14 +62,14 @@ namespace Services
             return result;
         }
 
-        public string UploadImage(byte[] data)
+        public string UploadImage(byte[] data, string path)
         {
             Stream stream = new MemoryStream(data);
 
             ImageUploadParams uploadParams = new ImageUploadParams()
             {
                 File = new FileDescription(Guid.NewGuid().ToString(), stream),
-                Folder = "User posts",
+                Folder = path,
                 PublicId = Guid.NewGuid().ToString()
             };
 

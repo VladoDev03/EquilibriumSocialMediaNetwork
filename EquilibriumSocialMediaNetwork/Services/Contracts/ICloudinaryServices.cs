@@ -8,7 +8,13 @@ namespace Services.Contracts
 {
     public interface ICloudinaryServices
     {
-        string UploadImage(byte[] data);
+        /// <summary>
+        /// Uploads image to cloudinary.
+        /// </summary>
+        /// <param name="data">Image as byte[]</param>
+        /// <param name="path">Path to save the image: Social media images/Posts, Social media images/Qr codes, Social media images/Profile pictures</param>
+        /// <returns></returns>
+        string UploadImage(byte[] data, string path);
 
         void DeleteImage(string publicId);
 

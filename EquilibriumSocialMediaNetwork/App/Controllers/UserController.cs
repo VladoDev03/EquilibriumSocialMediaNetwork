@@ -21,17 +21,26 @@ namespace App.Controllers
         private IPostServices postServices;
         private IUserServices userServices;
         private ICommentServices commentServices;
+        private IQrCodeServices qrCodeServices;
+        private ICloudinaryServices cloudinaryServices;
+        private IImageServices imageServices;
 
         public UserController(
             IPostServices postServices,
             UserManager<User> userManager,
             IUserServices userServices,
-            ICommentServices commentServices)
+            ICommentServices commentServices,
+            IQrCodeServices qrCodeServices,
+            ICloudinaryServices cloudinaryServices,
+            IImageServices imageServices)
         {
             _userManager = userManager;
             this.postServices = postServices;
             this.userServices = userServices;
             this.commentServices = commentServices;
+            this.qrCodeServices = qrCodeServices;
+            this.cloudinaryServices = cloudinaryServices;
+            this.imageServices = imageServices;
         }
 
         [HttpGet]
@@ -88,6 +97,37 @@ namespace App.Controllers
             result.Posts = posts;
 
             return View(result);
+        }
+
+        public async Task<IActionResult> QrCode()
+        {
+            User user = await _userManager.GetUserAsync(User);
+            string userId = user.Id;
+
+            QrCodeViewModel qrCodeViewModel = null;
+            QrCodeServiceModel qrCode = imageServices.GetQrCodeByUserId(userId);
+
+            if (qrCode != null)
+            {
+                qrCodeViewModel = new QrCodeViewModel(qrCode.ImageUrl, qrCode.ImageDownloadUrl);
+                return View(qrCodeViewModel);
+            }
+
+            string dataForCode = $"https://localhost:44366/User/Details/{userId}";
+            byte[] finalImage = qrCodeServices.MakeQrCode(dataForCode);
+            string[] imageData = cloudinaryServices.UploadImage(finalImage, "Social media images/Qr codes").Split("*");
+
+            qrCode = new QrCodeServiceModel();
+
+            qrCode.ImageUrl = imageData[0];
+            qrCode.ImageDownloadUrl = cloudinaryServices.GetDownloadLink(imageData[0]);
+            qrCode.UserId = userId;
+
+            qrCodeViewModel = new QrCodeViewModel(qrCode.ImageUrl, qrCode.ImageDownloadUrl);
+
+            imageServices.AddQrCode(qrCode, user);
+
+            return View(qrCodeViewModel);
         }
     }
 }

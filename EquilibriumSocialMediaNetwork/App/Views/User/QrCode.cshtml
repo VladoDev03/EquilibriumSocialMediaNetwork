@@ -1,0 +1,6 @@
+﻿@model QrCodeViewModel
+
+<h1>Other users can scan this qr code so they can view your profile</h1>
+
+<img src="@Model.Url" alt="Qr code" asp-append-version="true" />
+<a href="@Model.DownloadUrl">Save</a>

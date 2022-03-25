@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(EquilibriumDbContext))]
-    [Migration("20220322124128_reactions")]
-    partial class reactions
+    [Migration("20220325225313_qrcode")]
+    partial class qrcode
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -111,6 +111,34 @@ namespace Data.Migrations
                     b.ToTable("Groups");
                 });
 
+            modelBuilder.Entity("Data.Entities.Image", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("ImageDownloadUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagePublicId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDownloadable")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("Data.Entities.Post", b =>
                 {
                     b.Property<string>("Id")
@@ -139,6 +167,28 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("Data.Entities.QrCode", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("ImageDownloadUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("QrCodes");
                 });
 
             modelBuilder.Entity("Data.Entities.Reaction", b =>
@@ -279,6 +329,12 @@ namespace Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("ProfilePictureId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("QrCodeId")
+                        .HasColumnType("text");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
@@ -418,10 +474,12 @@ namespace Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(256)");
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("varchar(256)");
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("text");
@@ -458,10 +516,12 @@ namespace Data.Migrations
                         .HasColumnType("varchar(256)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(256)");
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("varchar(256)");
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("text");
@@ -519,11 +579,29 @@ namespace Data.Migrations
                     b.Navigation("RequestedTo");
                 });
 
+            modelBuilder.Entity("Data.Entities.Image", b =>
+                {
+                    b.HasOne("Data.Entities.User", "User")
+                        .WithOne("ProfilePicture")
+                        .HasForeignKey("Data.Entities.Image", "UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Data.Entities.Post", b =>
                 {
                     b.HasOne("Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Entities.QrCode", b =>
+                {
+                    b.HasOne("Data.Entities.User", "User")
+                        .WithOne("QrCode")
+                        .HasForeignKey("Data.Entities.QrCode", "UserId");
 
                     b.Navigation("User");
                 });
@@ -677,6 +755,13 @@ namespace Data.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Reactions");
+                });
+
+            modelBuilder.Entity("Data.Entities.User", b =>
+                {
+                    b.Navigation("ProfilePicture");
+
+                    b.Navigation("QrCode");
                 });
 #pragma warning restore 612, 618
         }
