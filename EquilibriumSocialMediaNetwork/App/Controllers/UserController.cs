@@ -171,6 +171,19 @@ namespace App.Controllers
             return RedirectToAction(nameof(Profile));
         }
 
+        public async Task<IActionResult> DeleteProfilePicture()
+        {
+            User user = await _userManager.GetUserAsync(User);
+            string userId = user.Id;
+
+            ImageServiceModel image = imageServices.GetProfilePictureByUserId(userId);
+
+            cloudinaryServices.DeleteImage(image.ImagePublicId);
+            imageServices.DeleteImage(image.Id);
+
+            return RedirectToAction(nameof(Profile));
+        }
+
         public async Task<IActionResult> QrCode()
         {
             User user = await _userManager.GetUserAsync(User);

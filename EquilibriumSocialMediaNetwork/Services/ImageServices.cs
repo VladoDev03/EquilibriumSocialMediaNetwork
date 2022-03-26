@@ -90,6 +90,7 @@ namespace Services
 
         public void DeleteImage(string imageId)
         {
+            User user = db.Users.FirstOrDefault(u => u.ProfilePictureId == imageId);
             Image img = db.Images.FirstOrDefault(i => i.Id == imageId);
 
             if (img == null)
@@ -97,6 +98,7 @@ namespace Services
                 return;
             }
 
+            user.ProfilePictureId = null;
             db.Images.Remove(img);
 
             db.SaveChanges();
