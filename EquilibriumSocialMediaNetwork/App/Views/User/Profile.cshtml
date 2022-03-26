@@ -3,6 +3,23 @@
     ViewData["Title"] = @Model.UserName;
 }
 
+@if (Model.ProfilePicture != null)
+{
+    <img src=@Model.ProfilePicture.ImageUrl alt="Profile picture" asp-append-version="true" />
+
+    @if (Model.ProfilePicture.IsDownloadable)
+    {
+        <a href=@Model.ProfilePicture.ImageDownloadUrl>Save</a>
+        <br />
+    }
+}
+else
+{
+    <img src="~/Images/From app/Default profile picture.jpeg" alt="Alternate Text" />
+}
+
+<a asp-controller="User" asp-action="CreateProfilePicture">Change profile picture</a>
+
 <h1>@Model.FirstName @Model.LastName</h1>
 <h2>@Model.UserName</h2>
 

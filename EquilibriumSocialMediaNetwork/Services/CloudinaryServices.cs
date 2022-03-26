@@ -31,6 +31,7 @@ namespace Services
             DeletionParams param = new DeletionParams(publicId)
             {
                 ResourceType = ResourceType.Image,
+                PublicId = publicId
             };
 
             cloudinary.Destroy(param);

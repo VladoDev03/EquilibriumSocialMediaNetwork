@@ -1,4 +1,5 @@
-﻿using Data.Entities;
+﻿using App.Models.User;
+using Data.Entities;
 using Data.ViewModels;
 using Data.ViewModels.Post;
 using Data.ViewModels.User;
@@ -66,6 +67,21 @@ namespace App.Controllers
                 Posts = posts
             };
 
+            ImageServiceModel image = imageServices.GetProfilePictureByUserId(user.Id);
+            ProfilePictureViewModel profilePicture;
+
+            if (image != null)
+            {
+                profilePicture = new ProfilePictureViewModel()
+                {
+                    ImageDownloadUrl = image.ImageDownloadUrl,
+                    ImageUrl = image.ImageUrl,
+                    IsDownloadable = image.IsDownloadable
+                };
+
+                result.ProfilePicture = profilePicture;
+            }
+
             return View(result);
         }
 
@@ -74,7 +90,7 @@ namespace App.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                return Redirect("/Identity/Account/Login");
+                return RedirectToAction("/Identity/Account/Login");
             }
 
             User loggedUser = await _userManager.GetUserAsync(User);
@@ -94,9 +110,65 @@ namespace App.Controllers
                 .Select(p => p.ToPostViewModel())
                 .ToList();
 
+            ImageServiceModel image = imageServices.GetProfilePictureByUserId(id);
+            ProfilePictureViewModel profilePicture;
+
+            if (image != null)
+            {
+                profilePicture = new ProfilePictureViewModel()
+                {
+                    ImageDownloadUrl = image.ImageDownloadUrl,
+                    ImageUrl = image.ImageUrl,
+                    IsDownloadable = image.IsDownloadable
+                };
+
+                result.ProfilePicture = profilePicture;
+            }
+
             result.Posts = posts;
 
             return View(result);
+        }
+
+        [HttpGet]
+        public IActionResult CreateProfilePicture()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ProfilePictureUpload(UploadProfilePictureBindingModel input)
+        {
+            if (input.ProfilePicture == null)
+            {
+                return RedirectToAction(nameof(Profile));
+            }
+
+            byte[] data = await imageServices.GetImageBytes(input.ProfilePicture);
+            User user = await _userManager.GetUserAsync(User);
+            string userId = user.Id;
+
+            ImageServiceModel profilePicture = imageServices.GetProfilePictureByUserId(userId);
+
+            if (profilePicture != null)
+            {
+                cloudinaryServices.DeleteImage(profilePicture.ImagePublicId);
+                imageServices.DeleteImage(profilePicture.Id);
+            }
+
+            string[] imageData = cloudinaryServices.UploadImage(data, "Social media images/Profile pictures").Split("*");
+
+            profilePicture = new ImageServiceModel();
+
+            profilePicture.ImageUrl = imageData[0];
+            profilePicture.ImagePublicId = imageData[1];
+            profilePicture.IsDownloadable = input.IsDownloadable == "checked" ? true : false;
+            profilePicture.ImageDownloadUrl = cloudinaryServices.GetDownloadLink(imageData[0]);
+            profilePicture.UserId = userId;
+
+            imageServices.AddProfilePicture(profilePicture, user);
+
+            return RedirectToAction(nameof(Profile));
         }
 
         public async Task<IActionResult> QrCode()

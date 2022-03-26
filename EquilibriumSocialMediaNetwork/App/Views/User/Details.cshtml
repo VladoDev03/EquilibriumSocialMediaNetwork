@@ -1,5 +1,19 @@
 ﻿@model UserViewModel
 
+@if (Model.ProfilePicture != null)
+{
+    <img src=@Model.ProfilePicture.ImageUrl alt="Profile picture" asp-append-version="true" />
+
+    @if (Model.ProfilePicture.IsDownloadable)
+    {
+        <a href=@Model.ProfilePicture.ImageDownloadUrl>Save</a>
+    }
+}
+else
+{
+    <img src="~/Images/From app/Default profile picture.jpeg" alt="Alternate Text" />
+}
+
 <h1>@Model.FirstName @Model.LastName</h1>
 <h2>@Model.UserName</h2>
 

@@ -24,15 +24,18 @@ namespace App.Controllers
         private readonly UserManager<User> _userManager;
         private IPostServices postServices;
         private ICloudinaryServices cloudinaryServices;
+        private IImageServices imageServices;
 
         public PostController(
             UserManager<User> userManager,
             IPostServices postServices,
-            ICloudinaryServices cloudinaryServices)
+            ICloudinaryServices cloudinaryServices,
+            IImageServices imageServices)
         {
             _userManager = userManager;
             this.postServices = postServices;
             this.cloudinaryServices = cloudinaryServices;
+            this.imageServices = imageServices;
         }
 
         [Authorize(Roles = "User, Admin")]
@@ -62,7 +65,7 @@ namespace App.Controllers
 
             if (post.Image != null)
             {
-                byte[] data = await GetImageBytes(post.Image);
+                byte[] data = await imageServices.GetImageBytes(post.Image);
                 string[] imageData = cloudinaryServices.UploadImage(data, "Social media images/Posts").Split("*");
 
                 postToAdd.ImageUrl = imageData[0];
@@ -111,17 +114,6 @@ namespace App.Controllers
             postServices.UpdatePost(post);
 
             return RedirectToAction("Profile", "User");
-        }
-
-        private async Task<byte[]> GetImageBytes(IFormFile file)
-        {
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                await file.CopyToAsync(memoryStream);
-                byte[] img = memoryStream.ToArray();
-
-                return img;
-            }
         }
     }
 }
