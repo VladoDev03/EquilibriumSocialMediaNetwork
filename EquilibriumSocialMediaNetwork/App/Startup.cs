@@ -49,6 +49,8 @@ namespace App
             services.AddScoped<IReactionServices, ReactionServices>();
             services.AddScoped<IJsonUserManager, JsonUserManager>();
             services.AddScoped<ICloudinaryServices, CloudinaryServices>();
+            services.AddScoped<IQrCodeServices, QrCodeServices>();
+            services.AddScoped<IProfilePictureServices, ProfilePictureServices>();
 
             services.AddDefaultIdentity<User>(options =>
             {

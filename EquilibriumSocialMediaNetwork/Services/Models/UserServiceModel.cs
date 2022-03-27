@@ -15,5 +15,9 @@ namespace Services.Models
         public string UserName { get; set; }
 
         public string Email { get; set; }
+
+        public string QrCodeId { get; set; }
+
+        public string ProfilePictureId { get; set; }
     }
 }

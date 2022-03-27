@@ -1,4 +1,5 @@
-﻿using Data.ViewModels.Post;
+﻿using Data.Entities;
+using Data.ViewModels.Post;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace Data.ViewModels.User
         public string LastName { get; set; }
 
         public string UserName { get; set; }
+
+        public ProfilePictureViewModel ProfilePicture { get; set; }
 
         public List<PostViewModel> Posts { get; set; }
     }

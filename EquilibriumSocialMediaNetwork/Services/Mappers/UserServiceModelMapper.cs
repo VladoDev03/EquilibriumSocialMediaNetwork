@@ -21,7 +21,9 @@ namespace Services.Mappers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                UserName = user.UserName
+                UserName = user.UserName,
+                ProfilePictureId = user.ProfilePictureId,
+                QrCodeId = user.QrCodeId
             };
 
             return result;
@@ -35,7 +37,9 @@ namespace Services.Mappers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                UserName = user.UserName
+                UserName = user.UserName,
+                ProfilePictureId = user.ProfilePictureId,
+                QrCodeId = user.QrCodeId
             };
 
             return result;

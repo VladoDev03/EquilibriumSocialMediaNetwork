@@ -14,5 +14,13 @@ namespace Data.Entities
         public string LastName { get; set; }
 
         public int Age { get; set; }
+
+        public string QrCodeId { get; set; }
+
+        public string ProfilePictureId { get; set; }
+
+        public QrCode QrCode { get; set; }
+
+        public ProfilePicture ProfilePicture { get; set; }
     }
 }

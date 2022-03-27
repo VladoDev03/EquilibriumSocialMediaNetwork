@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace Data.Migrations
 {
-    public partial class reactions : Migration
+    public partial class ProfilePicture : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,6 +30,8 @@ namespace Data.Migrations
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     LastName = table.Column<string>(type: "text", nullable: true),
                     Age = table.Column<int>(type: "int", nullable: false),
+                    QrCodeId = table.Column<string>(type: "text", nullable: true),
+                    ProfilePictureId = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
@@ -108,8 +110,8 @@ namespace Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "varchar(256)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "varchar(256)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
                     UserId = table.Column<string>(type: "varchar(256)", nullable: false)
                 },
@@ -153,8 +155,8 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "varchar(256)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "varchar(256)", nullable: false),
-                    Name = table.Column<string>(type: "varchar(256)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -248,6 +250,48 @@ namespace Data.Migrations
                     table.PrimaryKey("PK_Posts", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Posts_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProfilePictures",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    ImageDownloadUrl = table.Column<string>(type: "text", nullable: true),
+                    ImagePublicId = table.Column<string>(type: "text", nullable: true),
+                    IsDownloadable = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    UserId = table.Column<string>(type: "varchar(256)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProfilePictures", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProfilePictures_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QrCodes",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    ImageDownloadUrl = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<string>(type: "varchar(256)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QrCodes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_QrCodes_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -501,6 +545,18 @@ namespace Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProfilePictures_UserId",
+                table: "ProfilePictures",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QrCodes_UserId",
+                table: "QrCodes",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reactions_PostId",
                 table: "Reactions",
                 column: "PostId");
@@ -576,6 +632,12 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "FriendRequests");
+
+            migrationBuilder.DropTable(
+                name: "ProfilePictures");
+
+            migrationBuilder.DropTable(
+                name: "QrCodes");
 
             migrationBuilder.DropTable(
                 name: "Reactions");

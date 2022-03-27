@@ -26,6 +26,8 @@ namespace Data
         public DbSet<Report> Reports { get; set; }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<UserGroup> UsersGroups { get; set; }
+        public DbSet<ProfilePicture> ProfilePictures { get; set; }
+        public DbSet<QrCode> QrCodes { get; set; }
 
         public EquilibriumDbContext(DbContextOptions<EquilibriumDbContext> options)
             : base(options)
@@ -51,6 +53,14 @@ namespace Data
                 entity.HasKey(e => new { e.UserId, e.FriendId })
                     .HasName("PRIMARY");
             });
+
+            builder.Entity<User>()
+                .HasOne(u => u.ProfilePicture).WithOne(i => i.User)
+                .HasForeignKey<ProfilePicture>(x => x.UserId);
+
+            builder.Entity<User>()
+                .HasOne(u => u.QrCode).WithOne(q => q.User)
+                .HasForeignKey<QrCode>(x => x.UserId);
         }
     }
 }
