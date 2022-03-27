@@ -21,6 +21,6 @@ namespace Data.Entities
 
         public QrCode QrCode { get; set; }
 
-        public Image ProfilePicture { get; set; }
+        public ProfilePicture ProfilePicture { get; set; }
     }
 }

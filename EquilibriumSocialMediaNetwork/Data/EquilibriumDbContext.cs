@@ -26,7 +26,7 @@ namespace Data
         public DbSet<Report> Reports { get; set; }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<UserGroup> UsersGroups { get; set; }
-        public DbSet<Image> Images { get; set; }
+        public DbSet<ProfilePicture> ProfilePictures { get; set; }
         public DbSet<QrCode> QrCodes { get; set; }
 
         public EquilibriumDbContext(DbContextOptions<EquilibriumDbContext> options)
@@ -56,7 +56,7 @@ namespace Data
 
             builder.Entity<User>()
                 .HasOne(u => u.ProfilePicture).WithOne(i => i.User)
-                .HasForeignKey<Image>(x => x.UserId);
+                .HasForeignKey<ProfilePicture>(x => x.UserId);
 
             builder.Entity<User>()
                 .HasOne(u => u.QrCode).WithOne(q => q.User)

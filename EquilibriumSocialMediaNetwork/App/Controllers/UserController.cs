@@ -23,8 +23,8 @@ namespace App.Controllers
         private IUserServices userServices;
         private ICommentServices commentServices;
         private IQrCodeServices qrCodeServices;
+        private IProfilePictureServices imageServices;
         private ICloudinaryServices cloudinaryServices;
-        private IImageServices imageServices;
 
         public UserController(
             IPostServices postServices,
@@ -33,7 +33,7 @@ namespace App.Controllers
             ICommentServices commentServices,
             IQrCodeServices qrCodeServices,
             ICloudinaryServices cloudinaryServices,
-            IImageServices imageServices)
+            IProfilePictureServices imageServices)
         {
             _userManager = userManager;
             this.postServices = postServices;
@@ -67,7 +67,7 @@ namespace App.Controllers
                 Posts = posts
             };
 
-            ImageServiceModel image = imageServices.GetProfilePictureByUserId(user.Id);
+            ProfilePictureServiceModel image = imageServices.GetProfilePictureByUserId(user.Id);
             ProfilePictureViewModel profilePicture;
 
             if (image != null)
@@ -110,7 +110,7 @@ namespace App.Controllers
                 .Select(p => p.ToPostViewModel())
                 .ToList();
 
-            ImageServiceModel image = imageServices.GetProfilePictureByUserId(id);
+            ProfilePictureServiceModel image = imageServices.GetProfilePictureByUserId(id);
             ProfilePictureViewModel profilePicture;
 
             if (image != null)
@@ -144,21 +144,21 @@ namespace App.Controllers
                 return RedirectToAction(nameof(Profile));
             }
 
-            byte[] data = await imageServices.GetImageBytes(input.ProfilePicture);
+            byte[] data = await qrCodeServices.GetImageBytes(input.ProfilePicture);
             User user = await _userManager.GetUserAsync(User);
             string userId = user.Id;
 
-            ImageServiceModel profilePicture = imageServices.GetProfilePictureByUserId(userId);
+            ProfilePictureServiceModel profilePicture = imageServices.GetProfilePictureByUserId(userId);
 
             if (profilePicture != null)
             {
                 cloudinaryServices.DeleteImage(profilePicture.ImagePublicId);
-                imageServices.DeleteImage(profilePicture.Id);
+                imageServices.DeleteProfilePicture(profilePicture.Id);
             }
 
             string[] imageData = cloudinaryServices.UploadImage(data, "Social media images/Profile pictures").Split("*");
 
-            profilePicture = new ImageServiceModel();
+            profilePicture = new ProfilePictureServiceModel();
 
             profilePicture.ImageUrl = imageData[0];
             profilePicture.ImagePublicId = imageData[1];
@@ -176,10 +176,10 @@ namespace App.Controllers
             User user = await _userManager.GetUserAsync(User);
             string userId = user.Id;
 
-            ImageServiceModel image = imageServices.GetProfilePictureByUserId(userId);
+            ProfilePictureServiceModel image = imageServices.GetProfilePictureByUserId(userId);
 
             cloudinaryServices.DeleteImage(image.ImagePublicId);
-            imageServices.DeleteImage(image.Id);
+            imageServices.DeleteProfilePicture(image.Id);
 
             return RedirectToAction(nameof(Profile));
         }
@@ -190,7 +190,7 @@ namespace App.Controllers
             string userId = user.Id;
 
             QrCodeViewModel qrCodeViewModel = null;
-            QrCodeServiceModel qrCode = imageServices.GetQrCodeByUserId(userId);
+            QrCodeServiceModel qrCode = qrCodeServices.GetQrCodeByUserId(userId);
 
             if (qrCode != null)
             {
@@ -210,7 +210,7 @@ namespace App.Controllers
 
             qrCodeViewModel = new QrCodeViewModel(qrCode.ImageUrl, qrCode.ImageDownloadUrl);
 
-            imageServices.AddQrCode(qrCode, user);
+            qrCodeServices.AddQrCode(qrCode, user);
 
             return View(qrCodeViewModel);
         }

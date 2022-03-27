@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Entities
+namespace Services.Models
 {
-    public class Image : BaseEntity
+    public class ProfilePictureServiceModel : BaseEntityServiceModel
     {
         public string ImageUrl { get; set; }
 
@@ -17,7 +17,5 @@ namespace Data.Entities
         public bool IsDownloadable { get; set; }
 
         public string UserId { get; set; }
-
-        public User User { get; set; }
     }
 }

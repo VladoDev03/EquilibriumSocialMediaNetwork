@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(EquilibriumDbContext))]
-    [Migration("20220325225313_qrcode")]
-    partial class qrcode
+    [Migration("20220327153954_ProfilePicture")]
+    partial class ProfilePicture
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -111,34 +111,6 @@ namespace Data.Migrations
                     b.ToTable("Groups");
                 });
 
-            modelBuilder.Entity("Data.Entities.Image", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<string>("ImageDownloadUrl")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ImagePublicId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDownloadable")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Images");
-                });
-
             modelBuilder.Entity("Data.Entities.Post", b =>
                 {
                     b.Property<string>("Id")
@@ -167,6 +139,34 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("Data.Entities.ProfilePicture", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("ImageDownloadUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagePublicId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDownloadable")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("ProfilePictures");
                 });
 
             modelBuilder.Entity("Data.Entities.QrCode", b =>
@@ -579,20 +579,20 @@ namespace Data.Migrations
                     b.Navigation("RequestedTo");
                 });
 
-            modelBuilder.Entity("Data.Entities.Image", b =>
-                {
-                    b.HasOne("Data.Entities.User", "User")
-                        .WithOne("ProfilePicture")
-                        .HasForeignKey("Data.Entities.Image", "UserId");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Data.Entities.Post", b =>
                 {
                     b.HasOne("Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Entities.ProfilePicture", b =>
+                {
+                    b.HasOne("Data.Entities.User", "User")
+                        .WithOne("ProfilePicture")
+                        .HasForeignKey("Data.Entities.ProfilePicture", "UserId");
 
                     b.Navigation("User");
                 });
