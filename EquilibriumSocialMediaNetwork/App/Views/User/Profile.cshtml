@@ -13,7 +13,7 @@
         <br />
     }
 
-    <a type ="button" asp-controller="User" asp-action = "DeleteProfilePicture" style="color:red; text-decoration:none;">Remove</a>
+    <a type="button" asp-controller="User" asp-action="DeleteProfilePicture" style="color:red; text-decoration:none;">Remove</a>
     <br />
 }
 else
@@ -33,6 +33,7 @@ else
 
 @foreach (var item in Model.Posts)
 {
+    <hr />
     <a type="button" asp-controller="Post" asp-action="DeletePost" asp-route-id="@item.Id" style="color:red;text-decoration:none;">Remove</a>
     <a type="button" asp-controller="Post" asp-action="Update" asp-route-id="@item.Id" style="color:deepskyblue;text-decoration:none;">Edit</a>
 

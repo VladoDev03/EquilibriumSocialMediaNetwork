@@ -140,7 +140,7 @@ namespace Services
         {
             Post post = db.Posts.FirstOrDefault(x => x.Id == updatedPost.Id);
 
-            if (post.Content != null)
+            if (updatedPost.Content != null)
             {
                 post.Content = updatedPost.Content;
                 db.SaveChanges();
