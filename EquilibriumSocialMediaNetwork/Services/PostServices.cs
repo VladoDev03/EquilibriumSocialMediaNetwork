@@ -128,8 +128,9 @@ namespace Services
 
         public List<PostServiceModel> GetUserPosts(string userId)
         {
-            List<PostServiceModel> posts = GetAllPosts()
+            List<PostServiceModel> posts = db.Posts
                 .Where(p => p.UserId == userId)
+                .Select(p => p.ToPostServiceModel())
                 .ToList();
 
             return posts;
@@ -162,6 +163,12 @@ namespace Services
                 .ToList();
 
             return posts;
+        }
+
+        public void DeleteUserPosts(string userId)
+        {
+            db.Posts.RemoveRange(db.Posts.Where(p => p.UserId == userId));
+            db.SaveChanges();
         }
     }
 }

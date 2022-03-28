@@ -1,6 +1,7 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Data;
+using Data.Entities;
 using Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,14 @@ namespace Services
 {
     public class CloudinaryServices : ICloudinaryServices
     {
+        private EquilibriumDbContext db;
         private Account account;
         private Cloudinary cloudinary;
 
-        public CloudinaryServices()
+        public CloudinaryServices(EquilibriumDbContext db)
         {
+            this.db = db;
+
             account = new Account(
                 "dwwp1raua",
                 "831167528144154",
@@ -28,6 +32,11 @@ namespace Services
 
         public void DeleteImage(string publicId)
         {
+            if (publicId == null)
+            {
+                return;
+            }
+
             DeletionParams param = new DeletionParams(publicId)
             {
                 ResourceType = ResourceType.Image,
@@ -35,6 +44,30 @@ namespace Services
             };
 
             cloudinary.Destroy(param);
+        }
+
+        public string FindProfilePicturePublicIdById(string id)
+        {
+            ProfilePicture profilePicture = db.ProfilePictures.FirstOrDefault(p => p.Id == id);
+
+            if (profilePicture == null)
+            {
+                return null;
+            }
+
+            return profilePicture.ImagePublicId;
+        }
+
+        public string FindQrCodePublicIdById(string id)
+        {
+            QrCode qrCode = db.QrCodes.FirstOrDefault(qr => qr.Id == id);
+
+            if (qrCode == null)
+            {
+                return null;
+            }
+
+            return qrCode.PublicId;
         }
 
         public string GetDownloadLink(string url)

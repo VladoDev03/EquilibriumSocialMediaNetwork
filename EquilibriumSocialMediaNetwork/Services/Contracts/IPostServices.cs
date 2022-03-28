@@ -27,6 +27,8 @@ namespace Services.Contracts
 
         void DeletePost(string id);
 
+        void DeleteUserPosts(string userId);
+
         void DeletePostComments(string id);
     }
 }

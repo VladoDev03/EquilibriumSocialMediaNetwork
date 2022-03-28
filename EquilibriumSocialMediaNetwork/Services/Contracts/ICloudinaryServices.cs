@@ -19,5 +19,9 @@ namespace Services.Contracts
         void DeleteImage(string publicId);
 
         string GetDownloadLink(string url);
+
+        string FindQrCodePublicIdById(string id);
+
+        string FindProfilePicturePublicIdById(string id);
     }
 }

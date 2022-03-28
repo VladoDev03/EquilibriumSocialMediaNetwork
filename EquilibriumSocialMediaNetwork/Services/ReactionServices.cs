@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Services.Contracts;
 using Services.Mappers;
@@ -27,6 +28,26 @@ namespace Services
             db.SaveChanges();
 
             return reaction;
+        }
+
+        public void DeletePostReactions(string postId)
+        {
+            List<Reaction> reactions = db.Reactions
+                .Where(r => r.PostId == postId)
+                .ToList();
+
+            db.RemoveRange(reactions);
+            db.SaveChanges();
+        }
+
+        public void DeleteUserReactions(string userId)
+        {
+            List<Reaction> reactions = db.Reactions
+                   .Where(r => r.UserId == userId)
+                   .ToList();
+
+            db.RemoveRange(reactions);
+            db.SaveChanges();
         }
 
         public List<ReactionServiceModel> GetPostReactions(string postId)

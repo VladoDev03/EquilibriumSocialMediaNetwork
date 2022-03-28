@@ -205,6 +205,7 @@ namespace App.Controllers
             qrCode = new QrCodeServiceModel();
 
             qrCode.ImageUrl = imageData[0];
+            qrCode.PublicId = imageData[1];
             qrCode.ImageDownloadUrl = cloudinaryServices.GetDownloadLink(imageData[0]);
             qrCode.UserId = userId;
 

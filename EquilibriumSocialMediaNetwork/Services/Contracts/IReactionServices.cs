@@ -12,5 +12,9 @@ namespace Services.Contracts
         ReactionServiceModel AddReaction(ReactionServiceModel reaction);
 
         List<ReactionServiceModel> GetPostReactions(string postId);
+
+        void DeleteUserReactions(string userId);
+
+        void DeletePostReactions(string postId);
     }
 }

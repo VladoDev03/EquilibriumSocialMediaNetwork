@@ -38,6 +38,31 @@ namespace Services
             db.SaveChanges();
         }
 
+        public void DeleteUserComments(string id)
+        {
+            db.RemoveRange(GetUserComments(id));
+            db.SaveChanges();
+        }
+
+        public List<CommentServiceModel> GetAllComments(string userId)
+        {
+            List<CommentServiceModel> comments = db.Comments
+                .Select(c => c.ToCommentServiceModel())
+                .ToList();
+
+            return comments;
+        }
+
+        public List<CommentServiceModel> GetUserComments(string userId)
+        {
+            List<CommentServiceModel> comments = db.Comments
+                   .Where(c => c.UserId == userId)
+                   .Select(c => c.ToCommentServiceModel())
+                   .ToList();
+
+            return comments;
+        }
+
         public CommentServiceModel UpdateComment(CommentServiceModel updatedComment)
         {
             Comment comment = db.Comments.FirstOrDefault(x => x.Id == updatedComment.Id);
