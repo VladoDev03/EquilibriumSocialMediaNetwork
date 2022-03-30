@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Entities;
+using Microsoft.AspNetCore.Identity;
 using Services.Contracts;
 using Services.Mappers;
 using Services.Models;
@@ -41,6 +42,25 @@ namespace Services
             db.Users.Remove(userToRemove);
 
             db.SaveChanges();
+        }
+
+        public List<UserServiceModel> GetUsersExceptAdmins()
+        {
+            IdentityRole role = db.Roles
+                .FirstOrDefault(r => r.Name == "Admin");
+
+            string roleId = role.Id;
+
+            List<string> adminIds = db.UserRoles
+                .Where(ur => ur.RoleId == roleId)
+                .Select(ur => ur.UserId)
+                .ToList();
+
+            List<UserServiceModel> notAdminUsers = GetUsers()
+                .Where(u => !adminIds.Contains(u.Id))
+                .ToList();
+
+            return notAdminUsers;
         }
     }
 }

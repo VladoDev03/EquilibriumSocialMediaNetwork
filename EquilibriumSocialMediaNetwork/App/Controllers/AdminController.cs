@@ -43,7 +43,7 @@ namespace App.Controllers
         public IActionResult AllUsersAdmin()
         {
             List<UserViewModel> allUsers = userServices
-                .GetUsers()
+                .GetUsersExceptAdmins()
                 .Select(u => u.ToUserViewModel())
                 .ToList();
 

@@ -12,6 +12,8 @@ namespace Services.Contracts
     {
         List<UserServiceModel> GetUsers();
 
+        List<UserServiceModel> GetUsersExceptAdmins();
+
         UserServiceModel GetUserById(string id);
 
         void DeleteUser(string userId);
