@@ -16,39 +16,18 @@ namespace App.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
-        private IPostServices postServices;
-        private ICommentServices commentServices;
-        private IQrCodeServices qrCodeServices;
-        private IProfilePictureServices profilePictureServices;
-        private IReactionServices reactionServices;
-        private ICloudinaryServices cloudinaryServices;
-        private IFriendRequestServices friendRequestServices;
-        private IUserFriendServices userFriendServices;
+        private IAdminServices adminServices;
 
         public DeletePersonalDataModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ILogger<DeletePersonalDataModel> logger,
-            IPostServices postServices,
-            ICommentServices commentServices,
-            IQrCodeServices qrCodeServices,
-            IProfilePictureServices profilePictureServices,
-            IReactionServices reactionServices,
-            ICloudinaryServices cloudinaryServices,
-            IFriendRequestServices friendRequestServices,
-            IUserFriendServices userFriendServices)
+            IAdminServices adminServices)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            this.postServices = postServices;
-            this.commentServices = commentServices;
-            this.qrCodeServices = qrCodeServices;
-            this.profilePictureServices = profilePictureServices;
-            this.reactionServices = reactionServices;
-            this.cloudinaryServices = cloudinaryServices;
-            this.friendRequestServices = friendRequestServices;
-            this.userFriendServices = userFriendServices;
+            this.adminServices = adminServices;
         }
 
         [BindProperty]
@@ -93,7 +72,9 @@ namespace App.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            await DeleteUserData();
+            User userToRemove = await _userManager.GetUserAsync(User);
+
+            adminServices.DeleteUserProfile(userToRemove.Id);
 
             var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);
@@ -108,30 +89,6 @@ namespace App.Areas.Identity.Pages.Account.Manage
             _logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
 
             return Redirect("~/");
-        }
-
-        private async Task DeleteUserData()
-        {
-            User userToRemove = await _userManager.GetUserAsync(User);
-
-            postServices.GetAllPosts().ForEach(p => postServices.DeletePostComments(p.Id));
-            postServices.GetAllPosts().ForEach(p => reactionServices.DeletePostReactions(p.Id));
-            postServices.GetAllPosts().ForEach(p => cloudinaryServices.DeleteImage(p.ImagePublicId));
-
-            postServices.DeleteUserPosts(userToRemove.Id);
-            commentServices.DeleteUserComments(userToRemove.Id);
-            reactionServices.DeleteUserReactions(userToRemove.Id);
-
-            cloudinaryServices.DeleteImage(cloudinaryServices.FindQrCodePublicIdById(userToRemove.QrCodeId));
-            qrCodeServices.DeleteQrCode(userToRemove.QrCodeId);
-
-            cloudinaryServices.DeleteImage(cloudinaryServices.FindProfilePicturePublicIdById(userToRemove.ProfilePictureId));
-            profilePictureServices.DeleteProfilePicture(userToRemove.ProfilePictureId);
-
-            friendRequestServices.DeleteAllFriendRequestByReveiverId(userToRemove.Id);
-            friendRequestServices.DeleteAllFriendRequestBySenderId(userToRemove.Id);
-
-            userFriendServices.RemoveAllFriends(userToRemove.Id);
         }
     }
 }

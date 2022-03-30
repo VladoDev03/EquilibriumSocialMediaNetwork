@@ -13,5 +13,7 @@ namespace Services.Contracts
         List<UserServiceModel> GetUsers();
 
         UserServiceModel GetUserById(string id);
+
+        void DeleteUser(string userId);
     }
 }

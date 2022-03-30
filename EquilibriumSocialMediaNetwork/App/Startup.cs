@@ -51,6 +51,7 @@ namespace App
             services.AddScoped<ICloudinaryServices, CloudinaryServices>();
             services.AddScoped<IQrCodeServices, QrCodeServices>();
             services.AddScoped<IProfilePictureServices, ProfilePictureServices>();
+            services.AddScoped<IAdminServices, AdminServices>();
 
             services.AddDefaultIdentity<User>(options =>
             {

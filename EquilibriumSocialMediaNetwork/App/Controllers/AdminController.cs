@@ -16,10 +16,27 @@ namespace App.Controllers
         private IUserServices userServices;
         private IProfilePictureServices imageServices;
         private ICloudinaryServices cloudinaryServices;
+        private IAdminServices adminServices;
 
-        public AdminController(IUserServices userServices)
+        public AdminController(
+            IUserServices userServices,
+            IProfilePictureServices imageServices,
+            ICloudinaryServices cloudinaryServices,
+            IAdminServices adminServices)
         {
             this.userServices = userServices;
+            this.imageServices = imageServices;
+            this.cloudinaryServices = cloudinaryServices;
+            this.adminServices = adminServices;
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult BanUserAdmin(string userId)
+        {
+            adminServices.DeleteUserProfile(userId);
+            userServices.DeleteUser(userId);
+
+            return RedirectToAction(nameof(AllUsersAdmin));
         }
 
         [Authorize(Roles = "Admin")]

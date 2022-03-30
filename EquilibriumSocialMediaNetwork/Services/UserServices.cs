@@ -33,5 +33,14 @@ namespace Services
                 .FirstOrDefault(u => u.Id == id)
                 .ToUserServiceModel();
         }
+
+        public void DeleteUser(string userId)
+        {
+            User userToRemove = db.Users.FirstOrDefault(u => u.Id == userId);
+
+            db.Users.Remove(userToRemove);
+
+            db.SaveChanges();
+        }
     }
 }
