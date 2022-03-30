@@ -22,6 +22,7 @@ namespace Services.Mappers
                 ImagePublicId = post.ImagePublicId,
                 ImageDownloadUrl = post.ImageDownloadUrl,
                 IsDownloadable = post.IsDownloadable,
+                TimePosted = post.TimePosted,
                 Id = post.Id,
                 User = post.User,
                 UserId = post.UserId,
@@ -41,6 +42,7 @@ namespace Services.Mappers
                 ImagePublicId = post.ImagePublicId,
                 ImageDownloadUrl = post.ImageDownloadUrl,
                 IsDownloadable = post.IsDownloadable,
+                TimePosted = post.TimePosted,
                 Id = post.Id,
                 UserId = post.UserId,
                 User = post.User,
@@ -61,6 +63,7 @@ namespace Services.Mappers
                 ImagePublicId = post.ImagePublicId,
                 ImageDownloadUrl = post.ImageDownloadUrl,
                 IsDownloadable = post.IsDownloadable,
+                TimePosted = $"On {post.TimePosted.Day}-{post.TimePosted.Month}-{post.TimePosted.Year} at {post.TimePosted.Hour}:{post.TimePosted.Minute}",
                 UserId = post.UserId,
                 User = post.User.ToUserViewModel(),
                 Reactions = post.Reactions.Select(x => x.ToReactionViewModel()).ToList()

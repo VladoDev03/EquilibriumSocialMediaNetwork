@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace Data.Migrations
 {
-    public partial class ProfilePicture : Migration
+    public partial class DatesPostsAndComments : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -243,6 +243,7 @@ namespace Data.Migrations
                     ImageDownloadUrl = table.Column<string>(type: "text", nullable: true),
                     ImagePublicId = table.Column<string>(type: "text", nullable: true),
                     IsDownloadable = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    TimePosted = table.Column<DateTime>(type: "datetime", nullable: false),
                     UserId = table.Column<string>(type: "varchar(256)", nullable: true)
                 },
                 constraints: table =>
@@ -285,6 +286,7 @@ namespace Data.Migrations
                     Id = table.Column<string>(type: "varchar(256)", nullable: false),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
                     ImageDownloadUrl = table.Column<string>(type: "text", nullable: true),
+                    PublicId = table.Column<string>(type: "text", nullable: true),
                     UserId = table.Column<string>(type: "varchar(256)", nullable: true)
                 },
                 constraints: table =>
@@ -374,6 +376,7 @@ namespace Data.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(256)", nullable: false),
                     Content = table.Column<string>(type: "text", nullable: true),
+                    TimeCommented = table.Column<DateTime>(type: "datetime", nullable: false),
                     PostId = table.Column<string>(type: "varchar(256)", nullable: true),
                     UserId = table.Column<string>(type: "varchar(256)", nullable: true)
                 },

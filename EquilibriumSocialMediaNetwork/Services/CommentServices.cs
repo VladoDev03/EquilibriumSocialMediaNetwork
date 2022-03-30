@@ -22,6 +22,7 @@ namespace Services
 
         public CommentServiceModel AddComment(PostServiceModel post, CommentServiceModel comment)
         {
+            comment.TimeCommented = DateTime.Now;
             db.Comments.Add(comment.ToComment());
 
             db.SaveChanges();

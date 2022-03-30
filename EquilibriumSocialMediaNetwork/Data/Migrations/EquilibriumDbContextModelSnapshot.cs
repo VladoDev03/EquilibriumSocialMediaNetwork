@@ -28,6 +28,9 @@ namespace Data.Migrations
                     b.Property<string>("PostId")
                         .HasColumnType("varchar(256)");
 
+                    b.Property<DateTime>("TimeCommented")
+                        .HasColumnType("datetime");
+
                     b.Property<string>("UserId")
                         .HasColumnType("varchar(256)");
 
@@ -128,6 +131,9 @@ namespace Data.Migrations
 
                     b.Property<bool>("IsDownloadable")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("TimePosted")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("UserId")
                         .HasColumnType("varchar(256)");

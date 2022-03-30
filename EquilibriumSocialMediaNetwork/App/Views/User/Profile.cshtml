@@ -38,6 +38,7 @@ else
     <a type="button" asp-controller="Post" asp-action="Update" asp-route-id="@item.Id" style="color:deepskyblue;text-decoration:none;">Edit</a>
 
     <div style="padding: 10px;">
+        <p class="text-info">@item.TimePosted</p>
         <p class="bg-success">@item.Content</p>
 
         @if (item.ImageUrl != null)
@@ -61,6 +62,7 @@ else
                             <a type="button" asp-controller="Comment" asp-action="DeleteComment" asp-route-id="@comment.Id" style="color:red;text-decoration:none;">Delete</a>
                         }
 
+                        <p class="text-info">@comment.TimeCommented</p>
                         <div style="padding-top: 4px;">@comment.Content</div>
                     </div>
                 }

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(EquilibriumDbContext))]
-    [Migration("20220327153954_ProfilePicture")]
-    partial class ProfilePicture
+    [Migration("20220330113407_DatesPostsAndComments")]
+    partial class DatesPostsAndComments
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,6 +29,9 @@ namespace Data.Migrations
 
                     b.Property<string>("PostId")
                         .HasColumnType("varchar(256)");
+
+                    b.Property<DateTime>("TimeCommented")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("UserId")
                         .HasColumnType("varchar(256)");
@@ -131,6 +134,9 @@ namespace Data.Migrations
                     b.Property<bool>("IsDownloadable")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<DateTime>("TimePosted")
+                        .HasColumnType("datetime");
+
                     b.Property<string>("UserId")
                         .HasColumnType("varchar(256)");
 
@@ -178,6 +184,9 @@ namespace Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PublicId")
                         .HasColumnType("text");
 
                     b.Property<string>("UserId")

@@ -23,6 +23,7 @@ namespace Services
 
         public PostServiceModel AddPost(PostServiceModel post)
         {
+            post.TimePosted = DateTime.Now;
             db.Posts.Add(post.ToPost());
 
             db.SaveChanges();
@@ -43,6 +44,8 @@ namespace Services
                 GetPostReactions(post); 
             }
 
+            posts = posts.OrderByDescending(p => p.TimePosted).ToList();
+
             return posts;
         }
 
@@ -61,6 +64,8 @@ namespace Services
                     post.Comments.Add(comment);
                 }
             }
+
+            comments = comments.OrderBy(c => c.TimeCommented).ToList();
 
             return comments;
         }

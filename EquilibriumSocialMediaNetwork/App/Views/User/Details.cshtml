@@ -34,6 +34,7 @@ else
     }
 
     <div style="padding: 10px;">
+        <p class="text-info">@item.TimePosted</p>
         <p class="bg-success">@item.Content</p>
 
         @if (item.ImageUrl != null)
@@ -57,6 +58,7 @@ else
                             <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId" style="color:green;text-decoration:none;">@comment.User.FirstName @comment.User.LastName (@comment.User.UserName)</a>
                         }
 
+                        <p class="text-info">@comment.TimeCommented</p>
                         <div style="padding-top: 4px;">@comment.Content</div>
                     </div>
                 }

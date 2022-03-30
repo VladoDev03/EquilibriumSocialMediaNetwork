@@ -31,6 +31,8 @@ namespace Data.ViewModels.Post
 
         public bool IsDownloadable { get; set; }
 
+        public string TimePosted { get; set; }
+
         public UserViewModel User { get; set; }
 
         public List<CommentViewModel> Comments { get; set; }
