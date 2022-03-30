@@ -80,9 +80,8 @@
                     <p class="text-danger">@TempData["NotEmptyComment"]</p>
                 }
 
-                <form asp-action="Create" asp-controller="Comment" method="post">
+                <form asp-route-id="@item.Id" asp-action="Create" asp-controller="Comment" method="post">
                     <input type="text" name="content" />
-                    <input class="hide" type="text" name="postId" value="@item.Id" />
                     <button type="submit">Comment</button>
                 </form>
                 <hr />

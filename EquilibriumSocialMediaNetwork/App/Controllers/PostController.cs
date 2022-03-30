@@ -96,21 +96,21 @@ namespace App.Controllers
         }
 
         [HttpGet]
-        public IActionResult Update(EditPostBindingModel newData)
+        public IActionResult Update(string id)
         {
             PostViewModel post = postServices
-                .GetPostById(newData.Id)
+                .GetPostById(id)
                 .ToPostViewModel();
 
             return View(post);
         }
 
         [HttpPost]
-        public IActionResult UpdatePost(EditPostBindingModel newData)
+        public IActionResult UpdatePost([FromForm]EditPostBindingModel newData, string id)
         {
             PostServiceModel post = new PostServiceModel()
             {
-                Id = newData.Id,
+                Id = id,
                 Content = newData.Content
             };
 
