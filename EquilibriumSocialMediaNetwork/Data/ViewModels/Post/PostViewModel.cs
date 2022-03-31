@@ -33,6 +33,10 @@ namespace Data.ViewModels.Post
 
         public string TimePosted { get; set; }
 
+        public int LikesCount { get; set; }
+
+        public int DislikesCount { get; set; }
+
         public UserViewModel User { get; set; }
 
         public List<CommentViewModel> Comments { get; set; }

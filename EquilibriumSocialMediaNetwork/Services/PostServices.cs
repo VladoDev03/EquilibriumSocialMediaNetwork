@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Entities;
+using Data.ViewModels.Post;
 using Microsoft.EntityFrameworkCore;
 using Services.Contracts;
 using Services.Mappers;
@@ -47,6 +48,17 @@ namespace Services
             posts = posts.OrderByDescending(p => p.TimePosted).ToList();
 
             return posts;
+        }
+
+        public PostViewModel SetReactionsCount(PostViewModel post)
+        {
+            int likes = post.Reactions.Where(r => r.Name == "like").Count();
+            int dislikes = post.Reactions.Where(r => r.Name == "dislike").Count();
+
+            post.LikesCount = likes;
+            post.DislikesCount = dislikes;
+
+            return post;
         }
 
         public List<CommentServiceModel> GetPostComments(PostServiceModel post)

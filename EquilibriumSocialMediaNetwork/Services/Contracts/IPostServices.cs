@@ -1,4 +1,5 @@
-﻿using Services.Models;
+﻿using Data.ViewModels.Post;
+using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,8 @@ namespace Services.Contracts
         List<PostServiceModel> GetUserPosts(string userId);
 
         PostServiceModel UpdatePost(PostServiceModel updatedPost);
+
+        PostViewModel SetReactionsCount(PostViewModel post);
 
         void DeletePost(string id);
 

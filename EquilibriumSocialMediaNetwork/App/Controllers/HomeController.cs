@@ -55,6 +55,7 @@ namespace App.Controllers
             List<PostViewModel> posts = postServices
                 .GetPostsForUser(userId)
                 .Select(p => p.ToPostViewModel())
+                .Select(p => postServices.SetReactionsCount(p))
                 .ToList();
 
             return View(posts);
