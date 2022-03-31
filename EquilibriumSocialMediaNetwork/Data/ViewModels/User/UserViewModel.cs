@@ -23,6 +23,8 @@ namespace Data.ViewModels.User
 
         public string UserName { get; set; }
 
+        public bool CanSendInvitation { get; set; }
+
         public ProfilePictureViewModel ProfilePicture { get; set; }
 
         public List<PostViewModel> Posts { get; set; }

@@ -62,5 +62,25 @@ namespace Services
 
             return notAdminUsers;
         }
+
+        public bool IsUserInvited(string loggedUserId, string userId)
+        {
+            bool isSender = db.FriendRequests.FirstOrDefault(fr => fr.RequestedFromId == loggedUserId && fr.RequestedToId == userId) != null;
+            bool isReceiver = db.FriendRequests.FirstOrDefault(fr => fr.RequestedToId == loggedUserId && fr.RequestedFromId == userId) != null;
+
+            bool result = !isSender && !isReceiver;
+
+            return result;
+        }
+
+        public bool IsUserFriend(string loggedUserId, string userId)
+        {
+            bool isFriend = db.UsersFriends.FirstOrDefault(ur => ur.UserId == loggedUserId && ur.FriendId == userId) != null;
+            bool isUser = db.UsersFriends.FirstOrDefault(ur => ur.FriendId == loggedUserId && ur.UserId == userId) != null;
+
+            bool result = !isFriend && !isUser;
+
+            return result;
+        }
     }
 }

@@ -16,6 +16,10 @@ namespace Services.Contracts
 
         UserServiceModel GetUserById(string id);
 
+        bool IsUserInvited(string loggedUserId, string userId);
+
+        bool IsUserFriend(string loggedUserId, string userId);
+
         void DeleteUser(string userId);
     }
 }

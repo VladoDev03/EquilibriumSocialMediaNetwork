@@ -22,8 +22,11 @@ else
 <h1>@Model.FirstName @Model.LastName</h1>
 <h2>@Model.UserName</h2>
 
-<a type="button" asp-controller="FriendRequest" asp-action="SendRequest" asp-route-id="@Model.Id" style="color:green;text-decoration:none;">Add friend</a>
-<br />
+@if (Model.CanSendInvitation)
+{
+    <a type="button" asp-controller="FriendRequest" asp-action="SendRequest" asp-route-id="@Model.Id" style="color:green;text-decoration:none;">Add friend</a>
+    <br />
+}
 
 @foreach (var item in Model.Posts)
 {
