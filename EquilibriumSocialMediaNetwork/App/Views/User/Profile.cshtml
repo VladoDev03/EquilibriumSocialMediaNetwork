@@ -79,6 +79,7 @@ else
                                 <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId" style="color:green;text-decoration:none;">@comment.User.FirstName @comment.User.LastName (@comment.User.UserName)</a>
                             }
 
+                            <a class="text-danger" asp-action="DeleteComment" asp-controller="Comment" asp-route-id="@comment.Id">Delete</a>
                             <p class="text-info">@comment.TimeCommented</p>
                             <div style="padding-top: 4px;">@comment.Content</div>
                         </div>
