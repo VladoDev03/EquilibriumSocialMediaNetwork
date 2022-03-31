@@ -150,6 +150,14 @@ namespace Services
                 .Select(p => p.ToPostServiceModel())
                 .ToList();
 
+            foreach (PostServiceModel post in posts)
+            {
+                GetPostComments(post);
+                GetPostReactions(post);
+            }
+
+            posts = posts.OrderByDescending(p => p.TimePosted).ToList();
+
             return posts;
         }
 

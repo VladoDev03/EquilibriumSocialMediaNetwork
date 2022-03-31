@@ -57,6 +57,7 @@ namespace App.Controllers
             List<PostViewModel> posts = postServices
                 .GetUserPosts(user.Id)
                 .Select(p => p.ToPostViewModel())
+                .Select(p => postServices.SetReactionsCount(p))
                 .ToList();
 
             UserViewModel result = new UserViewModel()
@@ -109,6 +110,7 @@ namespace App.Controllers
             List<PostViewModel> posts = postServices
                 .GetUserPosts(id)
                 .Select(p => p.ToPostViewModel())
+                .Select(p => postServices.SetReactionsCount(p))
                 .ToList();
 
             ProfilePictureServiceModel image = imageServices.GetProfilePictureByUserId(id);

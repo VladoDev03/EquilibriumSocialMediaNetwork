@@ -91,7 +91,6 @@
                     <input type="text" name="content" />
                     <button type="submit">Comment</button>
                 </form>
-                <hr />
             </div>
             <div>
                 <a asp-controller="Reaction" asp-action="AddReaction" asp-route-name="like" asp-route-postId="@item.Id">like</a>
@@ -99,4 +98,5 @@
             </div>
         </div>
     </div>
+    <hr />
 }
