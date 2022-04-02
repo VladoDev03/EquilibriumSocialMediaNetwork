@@ -28,6 +28,8 @@ namespace Data
         public DbSet<UserGroup> UsersGroups { get; set; }
         public DbSet<ProfilePicture> ProfilePictures { get; set; }
         public DbSet<QrCode> QrCodes { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Conversation> Conversations { get; set; }
 
         public EquilibriumDbContext(DbContextOptions<EquilibriumDbContext> options)
             : base(options)

@@ -120,6 +120,7 @@ namespace App.Areas.Identity.Pages.Account
                     if (_userManager.Users.Count() == 1)
                     {
                         await _userManager.AddToRoleAsync(user, "Admin");
+                        await _userManager.AddToRoleAsync(user, "User");
                     }
                     else
                     {

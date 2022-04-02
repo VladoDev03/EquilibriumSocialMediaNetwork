@@ -50,6 +50,12 @@ namespace App.Controllers
             }
 
             User user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+
             string userId = user.Id;
 
             List<PostViewModel> posts = postServices

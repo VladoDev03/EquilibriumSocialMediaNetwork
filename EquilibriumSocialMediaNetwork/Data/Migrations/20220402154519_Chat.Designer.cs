@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(EquilibriumDbContext))]
-    [Migration("20220330113407_DatesPostsAndComments")]
-    partial class DatesPostsAndComments
+    [Migration("20220402154519_Chat")]
+    partial class Chat
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,22 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Data.Entities.Conversation", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("UserOneId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserTwoId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Conversations");
                 });
 
             modelBuilder.Entity("Data.Entities.Cover", b =>
@@ -112,6 +128,34 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("Data.Entities.Message", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ConversationId")
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("UserOneId")
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("UserTwoId")
+                        .HasColumnType("varchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConversationId");
+
+                    b.HasIndex("UserOneId");
+
+                    b.HasIndex("UserTwoId");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Data.Entities.Post", b =>
@@ -588,6 +632,27 @@ namespace Data.Migrations
                     b.Navigation("RequestedTo");
                 });
 
+            modelBuilder.Entity("Data.Entities.Message", b =>
+                {
+                    b.HasOne("Data.Entities.Conversation", "Conversation")
+                        .WithMany("Messages")
+                        .HasForeignKey("ConversationId");
+
+                    b.HasOne("Data.Entities.User", "UserOne")
+                        .WithMany()
+                        .HasForeignKey("UserOneId");
+
+                    b.HasOne("Data.Entities.User", "UserTwo")
+                        .WithMany()
+                        .HasForeignKey("UserTwoId");
+
+                    b.Navigation("Conversation");
+
+                    b.Navigation("UserOne");
+
+                    b.Navigation("UserTwo");
+                });
+
             modelBuilder.Entity("Data.Entities.Post", b =>
                 {
                     b.HasOne("Data.Entities.User", "User")
@@ -757,6 +822,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Comment", b =>
                 {
                     b.Navigation("Replies");
+                });
+
+            modelBuilder.Entity("Data.Entities.Conversation", b =>
+                {
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("Data.Entities.Post", b =>

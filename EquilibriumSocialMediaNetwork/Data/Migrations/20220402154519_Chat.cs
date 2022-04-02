@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace Data.Migrations
 {
-    public partial class DatesPostsAndComments : Migration
+    public partial class Chat : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,6 +50,19 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Conversations",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    UserOneId = table.Column<string>(type: "text", nullable: true),
+                    UserTwoId = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Conversations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -344,6 +357,39 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Content = table.Column<string>(type: "text", nullable: true),
+                    ConversationId = table.Column<string>(type: "varchar(256)", nullable: true),
+                    UserOneId = table.Column<string>(type: "varchar(256)", nullable: true),
+                    UserTwoId = table.Column<string>(type: "varchar(256)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Messages_AspNetUsers_UserOneId",
+                        column: x => x.UserOneId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Messages_AspNetUsers_UserTwoId",
+                        column: x => x.UserTwoId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Messages_Conversations_ConversationId",
+                        column: x => x.ConversationId,
+                        principalTable: "Conversations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UsersGroups",
                 columns: table => new
                 {
@@ -543,6 +589,21 @@ namespace Data.Migrations
                 column: "RequestedToId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Messages_ConversationId",
+                table: "Messages",
+                column: "ConversationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_UserOneId",
+                table: "Messages",
+                column: "UserOneId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_UserTwoId",
+                table: "Messages",
+                column: "UserTwoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Posts_UserId",
                 table: "Posts",
                 column: "UserId");
@@ -637,6 +698,9 @@ namespace Data.Migrations
                 name: "FriendRequests");
 
             migrationBuilder.DropTable(
+                name: "Messages");
+
+            migrationBuilder.DropTable(
                 name: "ProfilePictures");
 
             migrationBuilder.DropTable(
@@ -662,6 +726,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Conversations");
 
             migrationBuilder.DropTable(
                 name: "Comments");

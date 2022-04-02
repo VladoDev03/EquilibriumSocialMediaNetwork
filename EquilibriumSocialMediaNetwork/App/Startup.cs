@@ -1,3 +1,4 @@
+using App.Hubs;
 using Data;
 using Data.Entities;
 using JsonManager;
@@ -52,6 +53,10 @@ namespace App
             services.AddScoped<IQrCodeServices, QrCodeServices>();
             services.AddScoped<IProfilePictureServices, ProfilePictureServices>();
             services.AddScoped<IAdminServices, AdminServices>();
+            services.AddScoped<IMessageServices, MessageServices>();
+            services.AddScoped<IConversationServices, ConversationServices>();
+
+            services.AddSingleton<ISessionServices>(new SessionServices());
 
             services.AddDefaultIdentity<User>(options =>
             {
@@ -68,6 +73,8 @@ namespace App
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<EquilibriumDbContext>();
             services.AddControllersWithViews();
+
+            services.AddSignalR();
 
             services.AddCors(options =>
             {
@@ -111,6 +118,8 @@ namespace App
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+
+                endpoints.MapHub<ChatHub>("/chat");
             });
         }
 
