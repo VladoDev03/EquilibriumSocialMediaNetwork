@@ -1,8 +1,0 @@
-﻿@model List<UserViewModel>
-
-@foreach (UserViewModel user in Model)
-{
-    <a asp-action="Details" asp-controller="User" asp-route-id="@user.Id">@user.FirstName @user.LastName (@user.UserName)</a>
-    <a class="text-danger" asp-action="BanUserAdmin" asp-controller="Admin" asp-route-userId="@user.Id">Delete</a>
-    <br/>
-}

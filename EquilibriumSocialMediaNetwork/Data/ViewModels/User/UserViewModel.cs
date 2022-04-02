@@ -25,6 +25,8 @@ namespace Data.ViewModels.User
 
         public bool CanSendInvitation { get; set; }
 
+        public bool IsAdmin { get; set; }
+
         public ProfilePictureViewModel ProfilePicture { get; set; }
 
         public List<PostViewModel> Posts { get; set; }

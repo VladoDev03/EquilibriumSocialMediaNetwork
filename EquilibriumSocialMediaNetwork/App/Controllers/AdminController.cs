@@ -1,5 +1,7 @@
-﻿using Data.ViewModels.User;
+﻿using Data.Entities;
+using Data.ViewModels.User;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
 using Services.Mappers;
@@ -13,17 +15,20 @@ namespace App.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private IUserServices userServices;
         private IProfilePictureServices imageServices;
         private ICloudinaryServices cloudinaryServices;
         private IAdminServices adminServices;
 
         public AdminController(
+            UserManager<User> userManager,
             IUserServices userServices,
             IProfilePictureServices imageServices,
             ICloudinaryServices cloudinaryServices,
             IAdminServices adminServices)
         {
+            _userManager = userManager;
             this.userServices = userServices;
             this.imageServices = imageServices;
             this.cloudinaryServices = cloudinaryServices;
@@ -31,21 +36,26 @@ namespace App.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult BanUserAdmin(string userId)
+        public IActionResult BanUser(string userId)
         {
             adminServices.DeleteUserProfile(userId);
             userServices.DeleteUser(userId);
 
-            return RedirectToAction(nameof(AllUsersAdmin));
+            return RedirectToAction(nameof(AllUsers));
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult AllUsersAdmin()
+        public IActionResult AllUsers()
         {
             List<UserViewModel> allUsers = userServices
-                .GetUsersExceptAdmins()
+                .GetUsers()
                 .Select(u => u.ToUserViewModel())
                 .ToList();
+
+            foreach (UserViewModel user in allUsers)
+            {
+                user.IsAdmin = userServices.IsUserAdmin(user.Id);
+            }
 
             return View(allUsers);
         }
@@ -58,7 +68,18 @@ namespace App.Controllers
             cloudinaryServices.DeleteImage(image.ImagePublicId);
             imageServices.DeleteProfilePicture(image.Id);
 
-            return RedirectToAction(nameof(AllUsersAdmin));
+            return RedirectToAction(nameof(AllUsers));
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult MakeAdmin(string userId)
+        {
+            if (userId != null)
+            {
+                userServices.MakeUserAdmin(userId);
+            }
+
+            return RedirectToAction(nameof(AllUsers));
         }
     }
 }

@@ -30,9 +30,13 @@ namespace Services
 
         public UserServiceModel GetUserById(string id)
         {
-            return db.Users
+            UserServiceModel user = db.Users
                 .FirstOrDefault(u => u.Id == id)
                 .ToUserServiceModel();
+
+            db.SaveChanges();
+
+            return user;
         }
 
         public void DeleteUser(string userId)
@@ -81,6 +85,30 @@ namespace Services
             bool result = !isFriend && !isUser;
 
             return result;
+        }
+
+        public bool IsUserAdmin(string userId)
+        {
+            string adminRoleId = db.Roles.FirstOrDefault(r => r.Name == "Admin").Id;
+
+            bool isAdmin = db.UserRoles
+                .Where(u => u.UserId == userId)
+                .Any(u => u.RoleId == adminRoleId);
+
+            return isAdmin;
+        }
+
+        public void MakeUserAdmin(string userId)
+        {
+            string adminRoleId = db.Roles.FirstOrDefault(r => r.Name == "Admin").Id;
+
+            db.UserRoles.Add(new IdentityUserRole<string>()
+            {
+                RoleId = adminRoleId,
+                UserId = userId
+            });
+
+            db.SaveChanges();
         }
     }
 }

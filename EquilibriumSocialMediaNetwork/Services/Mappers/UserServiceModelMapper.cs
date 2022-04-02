@@ -45,6 +45,19 @@ namespace Services.Mappers
             return result;
         }
 
+        public static User ToUser(this UserViewModel user)
+        {
+            User result = new User()
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName
+            };
+
+            return result;
+        }
+
         public static UserViewModel ToUserViewModel(this UserServiceModel user)
         {
             UserViewModel result = new UserViewModel()
