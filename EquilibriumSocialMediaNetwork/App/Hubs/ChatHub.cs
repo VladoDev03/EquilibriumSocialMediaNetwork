@@ -46,8 +46,9 @@ namespace App.Hubs
             return base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendMessage(string idOne, string idTwo, string message)
+        public async Task SendMessage(/*string idOne, */string idTwo, string message)
         {
+            string idOne = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             User userOne = userServices.GetUserById(idOne).ToUser();
             User userTwo = userServices.GetUserById(idTwo).ToUser();
 

@@ -16,6 +16,8 @@ namespace Services.Contracts
 
         UserServiceModel GetUserById(string id);
 
+        UserServiceModel GetUserByUsername(string username);
+
         bool IsUserAdmin(string userId);
 
         bool IsUserInvited(string loggedUserId, string userId);

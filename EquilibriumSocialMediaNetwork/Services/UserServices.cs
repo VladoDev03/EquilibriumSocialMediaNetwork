@@ -39,6 +39,17 @@ namespace Services
             return user;
         }
 
+        public UserServiceModel GetUserByUsername(string username)
+        {
+            UserServiceModel user = db.Users
+                .FirstOrDefault(u => u.UserName == username)
+                .ToUserServiceModel();
+
+            db.SaveChanges();
+
+            return user;
+        }
+
         public void DeleteUser(string userId)
         {
             User userToRemove = db.Users.FirstOrDefault(u => u.Id == userId);

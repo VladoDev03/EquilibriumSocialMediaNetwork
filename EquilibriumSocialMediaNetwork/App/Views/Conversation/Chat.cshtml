@@ -12,10 +12,16 @@
     <div id="messages"></div>
     <hr class="message-divider" />
     <div id="send-wrapper">
-        <p id="userOne">@Model.UserOneId</p>
-        <p id="userTwo">@Model.UserTwoId</p>
-        <p id="conversation-to-find">@Model.ConversationId</p>
+        <p>@Model.UserTwoFirstName @Model.UserTwoLastName (@Model.UserTwoUserName)</p>
+        <p class="hide" id="userTwo">@Model.UserTwoId</p>
+        <p class="hide" id="conversation-to-find">@Model.ConversationId</p>
         <input type="text" class="form-control" id="message" placeholder="Type message...">
         <button id="send-button" class="btn btn-info">Send</button>
     </div>
 </div>
+
+<style>
+    .hide {
+        display: none;
+    }
+</style>

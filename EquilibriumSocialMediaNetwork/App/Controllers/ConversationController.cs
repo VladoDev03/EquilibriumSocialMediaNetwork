@@ -33,9 +33,10 @@ namespace App.Controllers
         public async Task<IActionResult> Chat(string id)
         {
             User user = await _userManager.GetUserAsync(User);
+            User userTwo = userServices.GetUserById(id).ToUser();
 
             ConversationServiceModel conversation = conversationServices
-                .GetConversationByTwoUserIds(id, user.Id);
+                .GetConversationByTwoUserIds(userTwo.Id, user.Id);
 
             if (conversation == null)
             {
@@ -49,7 +50,13 @@ namespace App.Controllers
             }
 
             ConversationViewModel twoUsersWithConversation =
-                new ConversationViewModel(user.Id, id, conversation.Id);
+                new ConversationViewModel(
+                    user.Id,
+                    userTwo.Id,
+                    userTwo.UserName,
+                    userTwo.FirstName,
+                    userTwo.LastName,
+                    conversation.Id);
 
             return View(twoUsersWithConversation);
         }

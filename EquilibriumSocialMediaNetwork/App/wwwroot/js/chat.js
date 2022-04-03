@@ -1,5 +1,5 @@
 ﻿const config = {
-    idOne: document.getElementById('userOne').innerText,
+    //idOne: document.getElementById('userOne').innerText,
     idTwo: document.getElementById('userTwo').innerText,
     conversationId: document.getElementById('conversation-to-find').innerText
 };
@@ -34,7 +34,7 @@ const attemptChatLogin = () => {
         const message = document.getElementById('message').value;
 
         if (message) {
-            await connection.invoke("SendMessage", config.idOne, config.idTwo, message);
+            await connection.invoke("SendMessage", /*config.idOne, */config.idTwo, message);
             document.getElementById('message').value = "";
         }
     });
