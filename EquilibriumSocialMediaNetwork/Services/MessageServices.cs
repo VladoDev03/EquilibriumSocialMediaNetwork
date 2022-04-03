@@ -22,6 +22,7 @@ namespace Services
 
         public MessageServiceModel AddMessage(MessageServiceModel message)
         {
+            message.TimeSent = DateTime.Now;
             db.Messages.Add(message.ToMessage());
 
             db.SaveChanges();

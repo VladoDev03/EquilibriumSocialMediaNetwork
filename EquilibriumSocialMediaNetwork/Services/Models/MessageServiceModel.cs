@@ -22,6 +22,8 @@ namespace Services.Models
 
         public string UserTwoId { get; set; }
 
+        public DateTime TimeSent { get; set; }
+
         public User UserOne { get; set; }
 
         public User UserTwo { get; set; }

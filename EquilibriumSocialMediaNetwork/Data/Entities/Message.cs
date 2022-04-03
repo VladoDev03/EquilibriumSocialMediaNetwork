@@ -21,6 +21,8 @@ namespace Data.Entities
 
         public string UserTwoId { get; set; }
 
+        public DateTime TimeSent { get; set; }
+
         public Conversation Conversation { get; set; }
 
         public User UserOne { get; set; }

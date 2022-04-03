@@ -16,6 +16,7 @@ namespace Services.Mappers
             {
                 Id = message.Id,
                 Content = message.Content,
+                TimeSent = message.TimeSent,
                 UserOneId = message.UserOneId,
                 UserTwoId = message.UserTwoId,
                 ConversationId = message.ConversationId,
@@ -32,6 +33,7 @@ namespace Services.Mappers
             {
                 Id = message.Id,
                 Content = message.Content,
+                TimeSent = message.TimeSent,
                 UserOneId = message.UserOneId,
                 UserTwoId = message.UserTwoId,
                 ConversationId = message.ConversationId,

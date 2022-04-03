@@ -34,7 +34,7 @@ const attemptChatLogin = () => {
         const message = document.getElementById('message').value;
 
         if (message) {
-            await connection.invoke("SendMessage", /*config.idOne, */config.idTwo, message);
+            await connection.invoke("SendMessage", config.idTwo, message);
             document.getElementById('message').value = "";
         }
     });
@@ -49,7 +49,7 @@ const displayChatWrapper = () => {
         .then(conversation => {
             conversation.messages.forEach(message => {
                 const h1 = document.createElement("h1");
-                h1.textContent = `[${message.usernameOne}] sends ${message.content} to [${message.usernameTwo}]`;
+                h1.textContent = `[${message.usernameOne}] ${message.content}`;
                 document.getElementById('messages').appendChild(h1);
             })
         })

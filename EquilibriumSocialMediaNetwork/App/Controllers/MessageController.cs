@@ -14,15 +14,16 @@ namespace App.Controllers
             this.messageServices = messageServices;
         }
 
-        [HttpGet]
+        [HttpGet("messages")]
         public IActionResult Index()
         {
-            return Ok(messageServices.GetAllMessages()
+            return Ok(messageServices
+                .GetAllMessages()
                 .Select(message => new
                 {
                     Content = message.Content,
-                    Username1 = message.UserOne.UserName,
-                    Username2 = message.UserTwo.UserName,
+                    UsernameOne = message.UserOne.UserName,
+                    UsernameTwo = message.UserTwo.UserName,
                 })
                 .ToList());
         }

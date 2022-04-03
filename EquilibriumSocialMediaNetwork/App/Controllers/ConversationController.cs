@@ -74,11 +74,14 @@ namespace App.Controllers
             {
                 UsernameOne = usernameOne,
                 UsernameTwo = usernameTwo,
-                Messages = conversation.Messages.Select(message => new
+                Messages = conversation.Messages
+                    .OrderBy(m => m.TimeSent)
+                    .Select(message => new
                 {
                     Content = message.Content,
                     UsernameOne = message.UserOne.UserName,
                     UsernameTwo = message.UserTwo.UserName,
+                    Time = message.TimeSent
                 })
                 .ToList()
             });
