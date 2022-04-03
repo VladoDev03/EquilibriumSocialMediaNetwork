@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,5 +21,9 @@ namespace Services.Models
         public string UserOneId { get; set; }
 
         public string UserTwoId { get; set; }
+
+        public User UserOne { get; set; }
+
+        public User UserTwo { get; set; }
     }
 }

@@ -12,12 +12,28 @@ namespace Services.Mappers
     {
         public static Conversation ToConversation(this ConversationServiceModel conversation)
         {
-            throw new NotImplementedException();
+            Conversation result = new Conversation()
+            {
+                Id = conversation.Id,
+                Messages = conversation.Messages.Select(m => m.ToMessage()),
+                UserOneId = conversation.UserOneId,
+                UserTwoId = conversation.UserTwoId
+            };
+
+            return result;
         }
 
         public static ConversationServiceModel ToConversationServiceModel(this Conversation conversation)
         {
-            throw new NotImplementedException();
+            ConversationServiceModel result = new ConversationServiceModel()
+            {
+                Id = conversation.Id,
+                Messages = conversation.Messages.Select(m => m.ToMessageServiceModel()),
+                UserOneId = conversation.UserOneId,
+                UserTwoId = conversation.UserTwoId
+            };
+
+            return result;
         }
     }
 }

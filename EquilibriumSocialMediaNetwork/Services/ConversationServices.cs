@@ -1,5 +1,8 @@
 ﻿using Data;
+using Data.Entities;
+using Microsoft.EntityFrameworkCore;
 using Services.Contracts;
+using Services.Mappers;
 using Services.Models;
 using System;
 using System.Collections.Generic;
@@ -20,22 +23,46 @@ namespace Services
 
         public ConversationServiceModel AddConversation(ConversationServiceModel conversation)
         {
-            throw new NotImplementedException();
+            db.Conversations.Add(conversation.ToConversation());
+
+            db.SaveChanges();
+
+            return conversation;
         }
 
-        public List<ConversationServiceModel> GetAllConversation()
+        public List<ConversationServiceModel> GetAllConversations()
         {
-            throw new NotImplementedException();
+            List<ConversationServiceModel> conversations = db.Conversations
+                .Include(c => c.Messages)
+                .Select(c => c.ToConversationServiceModel())
+                .ToList();
+
+            return conversations;
         }
 
         public ConversationServiceModel GetConversationById(string id)
         {
-            throw new NotImplementedException();
+            ConversationServiceModel conversation = db.Conversations
+                .Include(c => c.Messages)
+                .SingleOrDefault(c => c.Id == id)
+                .ToConversationServiceModel();
+
+            return conversation;
         }
 
         public ConversationServiceModel GetConversationByTwoUserIds(string userIdOne, string userIdTwo)
         {
-            throw new NotImplementedException();
+            Conversation result = db.Conversations
+                .Include(c => c.Messages)
+                .FirstOrDefault(c => (c.UserOneId == userIdOne && c.UserTwoId == userIdTwo)
+                            || (c.UserOneId == userIdTwo && c.UserTwoId == userIdOne));
+
+            if (result == null)
+            {
+                return null;
+            }
+
+            return result.ToConversationServiceModel();
         }
 
         public List<ConversationServiceModel> GetUserConversations(string userId)

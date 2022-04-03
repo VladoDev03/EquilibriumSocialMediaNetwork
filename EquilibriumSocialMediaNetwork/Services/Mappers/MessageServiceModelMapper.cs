@@ -12,12 +12,34 @@ namespace Services.Mappers
     {
         public static Message ToMessage(this MessageServiceModel message)
         {
-            throw new NotImplementedException();
+            Message result = new Message()
+            {
+                Id = message.Id,
+                Content = message.Content,
+                UserOneId = message.UserOneId,
+                UserTwoId = message.UserTwoId,
+                ConversationId = message.ConversationId,
+                UserOne = message.UserOne,
+                UserTwo = message.UserTwo
+            };
+
+            return result;
         }
 
         public static MessageServiceModel ToMessageServiceModel(this Message message)
         {
-            throw new NotImplementedException();
+            MessageServiceModel result = new MessageServiceModel()
+            {
+                Id = message.Id,
+                Content = message.Content,
+                UserOneId = message.UserOneId,
+                UserTwoId = message.UserTwoId,
+                ConversationId = message.ConversationId,
+                UserOne = message.UserOne,
+                UserTwo = message.UserTwo
+            };
+
+            return result;
         }
     }
 }

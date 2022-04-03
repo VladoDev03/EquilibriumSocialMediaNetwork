@@ -9,7 +9,7 @@ namespace Services.Contracts
 {
     public interface IConversationServices
     {
-        List<ConversationServiceModel> GetAllConversation();
+        List<ConversationServiceModel> GetAllConversations();
 
         List<ConversationServiceModel> GetUserConversations(string userId);
 

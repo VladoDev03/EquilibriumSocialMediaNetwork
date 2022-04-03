@@ -33,6 +33,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Profile">My Profile</a>
                             </li>
                         }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UsersToChatWith">My Chats</a>
+                            </li>
+                        }
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">

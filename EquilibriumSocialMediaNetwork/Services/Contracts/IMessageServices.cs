@@ -11,8 +11,8 @@ namespace Services.Contracts
     {
         List<MessageServiceModel> GetAllMessages();
 
-        MessageServiceModel GetMessageById();
+        MessageServiceModel GetMessageById(string id);
 
-        MessageServiceModel AddMessage();
+        MessageServiceModel AddMessage(MessageServiceModel message);
     }
 }

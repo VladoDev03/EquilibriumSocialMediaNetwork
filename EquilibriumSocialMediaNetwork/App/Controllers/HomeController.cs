@@ -84,6 +84,17 @@ namespace App.Controllers
             return result;
         }
 
+        [HttpGet]
+        public IActionResult UsersToChatWith()
+        {
+            List<UserViewModel> chats = userServices
+                .GetUsers()
+                .Select(u => u.ToUserViewModel())
+                .ToList();
+
+            return View(chats);
+        }
+
         public IActionResult Privacy()
         {
             return View();

@@ -1,5 +1,7 @@
 ﻿using Data;
+using Microsoft.EntityFrameworkCore;
 using Services.Contracts;
+using Services.Mappers;
 using Services.Models;
 using System;
 using System.Collections.Generic;
@@ -18,19 +20,35 @@ namespace Services
             this.db = db;
         }
 
-        public MessageServiceModel AddMessage()
+        public MessageServiceModel AddMessage(MessageServiceModel message)
         {
-            throw new NotImplementedException();
+            db.Messages.Add(message.ToMessage());
+
+            db.SaveChanges();
+
+            return message;
         }
 
         public List<MessageServiceModel> GetAllMessages()
         {
-            throw new NotImplementedException();
+            List<MessageServiceModel> messages = db.Messages
+                .Include(m => m.UserOne)
+                .Include(m => m.UserTwo)
+                .Select(m => m.ToMessageServiceModel())
+                .ToList();
+
+            return messages;
         }
 
-        public MessageServiceModel GetMessageById()
+        public MessageServiceModel GetMessageById(string id)
         {
-            throw new NotImplementedException();
+            MessageServiceModel message = db.Messages
+                .Include(m => m.UserOne)
+                .Include(m => m.UserTwo)
+                .FirstOrDefault(m => m.Id == id)
+                .ToMessageServiceModel();
+
+            return message;
         }
     }
 }
