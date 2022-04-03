@@ -3,4 +3,5 @@
 @foreach (UserViewModel user in Model)
 {
     <a asp-controller="Conversation" asp-action="Chat" asp-route-id="@user.Id">@user.UserName</a>
+    <br />
 }

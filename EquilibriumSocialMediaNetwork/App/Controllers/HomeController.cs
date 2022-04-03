@@ -25,6 +25,7 @@ namespace App.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<User> _userManager;
         private IUserServices userServices;
+        private IUserFriendServices userFriendServices;
         private IJsonUserManager userJsonServices;
         private IPostServices postServices;
 
@@ -32,6 +33,7 @@ namespace App.Controllers
             ILogger<HomeController> logger,
             UserManager<User> userManager,
             IUserServices userServices,
+            IUserFriendServices userFriendServices,
             IJsonUserManager userJsonServices,
             IPostServices postServices)
         {
@@ -40,6 +42,7 @@ namespace App.Controllers
             this.userServices = userServices;
             this.userJsonServices = userJsonServices;
             this.postServices = postServices;
+            this.userFriendServices = userFriendServices;
         }
 
         public async Task<IActionResult> Index()
@@ -85,10 +88,14 @@ namespace App.Controllers
         }
 
         [HttpGet]
-        public IActionResult UsersToChatWith()
+        public async Task<IActionResult> UsersToChatWith()
         {
-            List<UserViewModel> chats = userServices
-                .GetUsers()
+            User user = await _userManager.GetUserAsync(User);
+
+            List<UserViewModel> chats = userFriendServices
+                .GetUserFriends(user.Id)
+                .Select(uf => uf.FriendId)
+                .Select(id => userServices.GetUserById(id))
                 .Select(u => u.ToUserViewModel())
                 .ToList();
 
