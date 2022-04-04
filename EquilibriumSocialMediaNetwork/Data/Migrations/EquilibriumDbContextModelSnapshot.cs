@@ -92,6 +92,25 @@ namespace Data.Migrations
                     b.ToTable("Descriptions");
                 });
 
+            modelBuilder.Entity("Data.Entities.Email", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("text");
+
+                    b.Property<string>("To")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Emails");
+                });
+
             modelBuilder.Entity("Data.Entities.FriendRequest", b =>
                 {
                     b.Property<string>("Id")
@@ -528,12 +547,10 @@ namespace Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("text");
@@ -570,12 +587,10 @@ namespace Data.Migrations
                         .HasColumnType("varchar(256)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("Value")
                         .HasColumnType("text");

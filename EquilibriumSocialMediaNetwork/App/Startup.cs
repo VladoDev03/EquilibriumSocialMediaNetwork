@@ -40,10 +40,13 @@ namespace App
                 .GetSection("CloudinaryConfiguration")
                 .Get<CloudinaryConfigurationModel>();
 
+            OutlookConfigurationModel outlookConfiguration = Configuration
+                .GetSection("OutlookConfiguration")
+                .Get<OutlookConfigurationModel>();
+
             services.AddDbContext<EquilibriumDbContext>(options =>
                 options.UseMySQL(
-                    Configuration.GetConnectionString("DefaultConnection"))
-                                 /*.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)*/);
+                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddScoped<IUserServices, UserServices>();
@@ -60,9 +63,11 @@ namespace App
             services.AddScoped<IAdminServices, AdminServices>();
             services.AddScoped<IMessageServices, MessageServices>();
             services.AddScoped<IConversationServices, ConversationServices>();
+            services.AddScoped<IEmailServices, EmailServices>();
 
             services.AddSingleton<ISessionServices>(new SessionServices());
             services.AddSingleton(cloudinaryConfiguration);
+            services.AddSingleton(outlookConfiguration);
 
             services.AddDefaultIdentity<User>(options =>
             {

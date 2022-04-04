@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace Data.Migrations
 {
-    public partial class Chat : Migration
+    public partial class Emails : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -66,6 +66,20 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Emails",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    To = table.Column<string>(type: "text", nullable: true),
+                    Subject = table.Column<string>(type: "text", nullable: true),
+                    Content = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Emails", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Groups",
                 columns: table => new
                 {
@@ -123,8 +137,8 @@ namespace Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "varchar(256)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "varchar(256)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
                     UserId = table.Column<string>(type: "varchar(256)", nullable: false)
                 },
@@ -168,8 +182,8 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "varchar(256)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(256)", nullable: false),
                     Value = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -364,7 +378,8 @@ namespace Data.Migrations
                     Content = table.Column<string>(type: "text", nullable: true),
                     ConversationId = table.Column<string>(type: "varchar(256)", nullable: true),
                     UserOneId = table.Column<string>(type: "varchar(256)", nullable: true),
-                    UserTwoId = table.Column<string>(type: "varchar(256)", nullable: true)
+                    UserTwoId = table.Column<string>(type: "varchar(256)", nullable: true),
+                    TimeSent = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -693,6 +708,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Descriptions");
+
+            migrationBuilder.DropTable(
+                name: "Emails");
 
             migrationBuilder.DropTable(
                 name: "FriendRequests");
