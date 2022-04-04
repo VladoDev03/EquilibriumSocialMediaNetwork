@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Data.ConfigurationModels;
 using System.Threading.Tasks;
 
 namespace Services
@@ -15,18 +16,14 @@ namespace Services
     public class CloudinaryServices : ICloudinaryServices
     {
         private EquilibriumDbContext db;
-        private Account account;
         private Cloudinary cloudinary;
 
-        public CloudinaryServices(EquilibriumDbContext db)
+        public CloudinaryServices(
+            EquilibriumDbContext db,
+            CloudinaryConfigurationModel cloudinaryConfiguration)
         {
             this.db = db;
-
-            account = new Account(
-                "dwwp1raua",
-                "831167528144154",
-                "I_OBjKDBaJn6JCDGZkkKubfAnzQ");
-
+            Account account = SetUpCloudinaryAccount(cloudinaryConfiguration);
             cloudinary = new Cloudinary(account);
         }
 
@@ -113,6 +110,16 @@ namespace Services
             string id = uploadResult.PublicId;
 
             return $"{url}*{id}";
+        }
+
+        private Account SetUpCloudinaryAccount(CloudinaryConfigurationModel cloudinaryConfiguration)
+        {
+            Account account = new Account(
+                cloudinaryConfiguration.Cloud,
+                cloudinaryConfiguration.ApiKey,
+                cloudinaryConfiguration.ApiSecret);
+
+            return account;
         }
     }
 }

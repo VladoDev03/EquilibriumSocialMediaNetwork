@@ -1,5 +1,6 @@
 using App.Hubs;
 using Data;
+using Data.ConfigurationModels;
 using Data.Entities;
 using JsonManager;
 using JsonManager.Contracts;
@@ -35,6 +36,10 @@ namespace App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            CloudinaryConfigurationModel cloudinaryConfiguration = Configuration
+                .GetSection("CloudinaryConfiguration")
+                .Get<CloudinaryConfigurationModel>();
+
             services.AddDbContext<EquilibriumDbContext>(options =>
                 options.UseMySQL(
                     Configuration.GetConnectionString("DefaultConnection"))
@@ -57,6 +62,7 @@ namespace App
             services.AddScoped<IConversationServices, ConversationServices>();
 
             services.AddSingleton<ISessionServices>(new SessionServices());
+            services.AddSingleton(cloudinaryConfiguration);
 
             services.AddDefaultIdentity<User>(options =>
             {
