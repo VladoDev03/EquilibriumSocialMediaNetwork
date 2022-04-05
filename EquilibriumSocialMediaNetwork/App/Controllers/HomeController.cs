@@ -57,7 +57,7 @@ namespace App.Controllers
             string userId = user.Id;
 
             List<PostViewModel> posts = postServices
-                .GetAllPosts()
+                .GetPostsForUser(userId)
                 .Select(p => p.ToPostViewModel())
                 .Select(p => postServices.SetReactionsCount(p))
                 .ToList();
@@ -70,14 +70,20 @@ namespace App.Controllers
 
         [Authorize(Roles = "User, Admin")]
         [HttpGet("users")]
-        public string Search()
+        public async Task<string> Search()
         {
-            List<UserSearchView> users = userServices.GetUsers().Select(u => new UserSearchView()
+            User user = await _userManager.GetUserAsync(User);
+
+            List<UserSearchView> users = userServices
+                .GetUsers()
+                .Where(u => u.Id != user.Id)
+                .Select(u => new UserSearchView()
             {
                 UserName = u.UserName,
                 FirstName = u.FirstName,
                 LastName = u.LastName,
-                Email = u.Email
+                Email = u.Email,
+                Url = $"https://localhost:44366/User/Details/{u.Id}"
             }).ToList();
 
             string result = userJsonServices.AllUsersToJson(users);

@@ -27,13 +27,16 @@ fetch("https://localhost:44366/users")
             const body = card.querySelector("[data-body]")
 
             let wholeName = `${user.FirstName} ${user.LastName}`
+            let link = user.Url
 
             header.textContent = wholeName
+            header.href = link
+
             body.textContent = user.UserName
 
             userCardContainer.append(card)
 
-            return { name: wholeName, username: user.UserName, element: card }
+            return { name: wholeName, username: user.UserName, url: link, element: card }
         })
     })
 
