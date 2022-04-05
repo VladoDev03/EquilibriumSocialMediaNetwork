@@ -37,7 +37,9 @@ namespace Data.ViewModels.Post
 
         public int DislikesCount { get; set; }
 
-        public bool IsReactedByUser { get; set; }
+        public bool IsLikedByUser { get; set; }
+
+        public bool IsDislikedByUser { get; set; }
 
         public UserViewModel User { get; set; }
 

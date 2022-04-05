@@ -23,7 +23,19 @@ namespace Services
 
         public ReactionServiceModel AddReaction(ReactionServiceModel reaction)
         {
-            db.Reactions.Add(reaction.ToReaction());
+            Reaction oldReaction = db.Reactions
+                .FirstOrDefault(r => r.UserId == reaction.UserId
+                    && r.PostId == reaction.PostId
+                    && r.Name != reaction.Name);
+
+            if (oldReaction != null)
+            {
+                oldReaction.Name = reaction.Name;
+            }
+            else
+            {
+                db.Reactions.Add(reaction.ToReaction());
+            }
 
             db.SaveChanges();
 

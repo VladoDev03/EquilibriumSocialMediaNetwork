@@ -57,12 +57,13 @@ namespace App.Controllers
             string userId = user.Id;
 
             List<PostViewModel> posts = postServices
-                .GetPostsForUser(userId)
+                .GetAllPosts()
                 .Select(p => p.ToPostViewModel())
                 .Select(p => postServices.SetReactionsCount(p))
                 .ToList();
 
-            posts.ForEach(p => p.IsReactedByUser = postServices.IsReactedByUser(p.Id, user.Id));
+            posts.ForEach(p => p.IsLikedByUser = postServices.IsReactedByUser(p.Id, user.Id, "like"));
+            posts.ForEach(p => p.IsDislikedByUser = postServices.IsReactedByUser(p.Id, user.Id, "dislike"));
 
             return View(posts);
         }

@@ -28,7 +28,15 @@ namespace Services.Contracts
 
         PostViewModel SetReactionsCount(PostViewModel post);
 
-        bool IsReactedByUser(string postId, string userId);
+        /// <summary>
+        /// Returns true if post is reacted by user with the given reaction.
+        /// Reactions are likely to be: "like" and "dislike".
+        /// </summary>
+        /// <param name="postId">Searched post's id</param>
+        /// <param name="userId">Searched user's id</param>
+        /// <param name="reactionName">Name of reaction</param>
+        /// <returns></returns>
+        bool IsReactedByUser(string postId, string userId, string reactionName);
 
         void DeletePost(string id);
 

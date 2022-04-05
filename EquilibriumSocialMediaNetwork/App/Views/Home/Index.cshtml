@@ -93,9 +93,12 @@
                 </form>
             </div>
             <div>
-                @if (!item.IsReactedByUser)
+                @if (!item.IsLikedByUser)
                 {
                     <a asp-controller="Reaction" asp-action="AddReaction" asp-route-name="like" asp-route-postId="@item.Id">like</a>
+                }
+                @if (!item.IsDislikedByUser)
+                {
                     <a asp-controller="Reaction" asp-action="AddReaction" asp-route-name="dislike" asp-route-postId="@item.Id">dislike</a>
                 }
             </div>

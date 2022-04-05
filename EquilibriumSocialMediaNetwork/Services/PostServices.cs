@@ -196,15 +196,29 @@ namespace Services
             db.SaveChanges();
         }
 
-        public bool IsReactedByUser(string postId, string userId)
+        public bool IsReactedByUser(string postId, string userId, string reactionName)
+        {
+            Reaction reaction = FindReactionByPostIdAndUserId(postId, userId);
+
+            if (reaction == null)
+            {
+                return false;
+            }
+
+            bool result = reaction.Name == reactionName;
+
+            return result;
+        }
+
+        private Reaction FindReactionByPostIdAndUserId(string postId, string userId)
         {
             User user = db.Users
                 .SingleOrDefault(u => u.Id == userId);
 
-            bool isReacted = db.Reactions
-                .Any(r => r.UserId == userId && r.PostId == postId);
+            Reaction reaction = db.Reactions
+                .SingleOrDefault(r => r.UserId == userId && r.PostId == postId);
 
-            return isReacted;
+            return reaction;
         }
     }
 }
