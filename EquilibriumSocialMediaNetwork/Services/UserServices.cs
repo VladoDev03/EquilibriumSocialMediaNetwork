@@ -50,6 +50,17 @@ namespace Services
             return user;
         }
 
+        public UserServiceModel GetUserByEmail(string email)
+        {
+            UserServiceModel user = db.Users
+                .FirstOrDefault(u => u.Email == email)
+                .ToUserServiceModel();
+
+            db.SaveChanges();
+
+            return user;
+        }
+
         public void DeleteUser(string userId)
         {
             User userToRemove = db.Users.FirstOrDefault(u => u.Id == userId);
@@ -126,6 +137,19 @@ namespace Services
                 UserId = userId
             });
 
+            db.SaveChanges();
+        }
+
+        public void ConfirmAccount(string userId)
+        {
+            User user = db.Users.FirstOrDefault(u => u.Id == userId);
+
+            if (user.EmailConfirmed)
+            {
+                return;
+            }
+
+            user.EmailConfirmed = true;
             db.SaveChanges();
         }
     }

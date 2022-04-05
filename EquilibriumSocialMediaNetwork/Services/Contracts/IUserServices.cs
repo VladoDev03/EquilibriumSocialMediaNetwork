@@ -18,6 +18,8 @@ namespace Services.Contracts
 
         UserServiceModel GetUserByUsername(string username);
 
+        UserServiceModel GetUserByEmail(string email);
+
         bool IsUserAdmin(string userId);
 
         bool IsUserInvited(string loggedUserId, string userId);
@@ -27,5 +29,7 @@ namespace Services.Contracts
         void DeleteUser(string userId);
 
         void MakeUserAdmin(string userId);
+
+        void ConfirmAccount(string userId);
     }
 }

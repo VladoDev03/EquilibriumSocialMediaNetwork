@@ -25,9 +25,37 @@ namespace Services
             this.db = db;
         }
 
-        public EmailServiceModel SendMessage(EmailServiceModel email)
+        public EmailServiceModel SendEmail(EmailServiceModel email)
         {
             Send(CreateEmailMessage(email));
+            return email;
+        }
+
+        public EmailServiceModel SendConfirmEmail(EmailServiceModel email)
+        {
+            string confirmUrl = $"https://localhost:44366/ConfirmEmail/{email.Id}";
+            string confirmation = "Please, confirm your account by clicking on the fowolling url:";
+
+            email.Content = $"{email.Content}\n{confirmation}\n{confirmUrl}";
+
+            return SendEmail(email);
+        }
+
+        public EmailServiceModel AddEmailToDatabase(EmailServiceModel email)
+        {
+            db.Emails.Add(email.ToEmail());
+
+            db.SaveChanges();
+
+            return email;
+        }
+
+        public EmailServiceModel GetEmailById(string id)
+        {
+            EmailServiceModel email = db.Emails
+                .FirstOrDefault(e => e.Id == id)
+                .ToEmailServiceModel();
+
             return email;
         }
 
@@ -62,16 +90,7 @@ namespace Services
             emailMessage.Subject = email.Subject;
             emailMessage.Body = email.Content;
 
-            AddToDatabase(email);
-
             return emailMessage;
-        }
-
-        private EmailServiceModel AddToDatabase(EmailServiceModel email)
-        {
-            db.Emails.Add(email.ToEmail());
-            db.SaveChanges();
-            return email;
         }
     }
 }
