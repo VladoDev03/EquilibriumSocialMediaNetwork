@@ -80,8 +80,15 @@ namespace Services
 
         public bool IsUserInvited(string loggedUserId, string userId)
         {
-            bool isSender = db.FriendRequests.FirstOrDefault(fr => fr.RequestedFromId == loggedUserId && fr.RequestedToId == userId) != null;
-            bool isReceiver = db.FriendRequests.FirstOrDefault(fr => fr.RequestedToId == loggedUserId && fr.RequestedFromId == userId) != null;
+            bool isSender = db.FriendRequests
+                .Any(fr => fr.RequestedFromId == loggedUserId
+                    && fr.RequestedToId == userId
+                    && fr.RequestStatus != "Rejected");
+
+            bool isReceiver = db.FriendRequests
+                .Any(fr => fr.RequestedToId == loggedUserId
+                    && fr.RequestedFromId == userId
+                    && fr.RequestStatus != "Rejected");
 
             bool result = !isSender && !isReceiver;
 

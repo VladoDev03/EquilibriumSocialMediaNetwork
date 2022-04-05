@@ -111,7 +111,7 @@ namespace App.Areas.Identity.Pages.Account
                         {
                             To = user.Email,
                             Subject = "Registration",
-                            Content = "Congratulations! You have successfuly regiistered!"
+                            Content = $"Congratulations, {user.FirstName} {user.LastName}! You have successfully registered :)"
                         };
 
                         emailServices.SendMessage(message);
