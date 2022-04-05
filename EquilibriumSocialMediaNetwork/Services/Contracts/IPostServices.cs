@@ -28,6 +28,8 @@ namespace Services.Contracts
 
         PostViewModel SetReactionsCount(PostViewModel post);
 
+        bool IsReactedByUser(string postId, string userId);
+
         void DeletePost(string id);
 
         void DeleteUserPosts(string userId);

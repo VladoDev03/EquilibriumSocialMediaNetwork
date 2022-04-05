@@ -1,6 +1,6 @@
-﻿@{
+﻿@model List<PostViewModel>
+@{
     ViewData["Title"] = "Home Page";
-    @model List<PostViewModel>
 }
 
 <script src="~/js/search.js" defer></script>
@@ -93,8 +93,11 @@
                 </form>
             </div>
             <div>
-                <a asp-controller="Reaction" asp-action="AddReaction" asp-route-name="like" asp-route-postId="@item.Id">like</a>
-                <a asp-controller="Reaction" asp-action="AddReaction" asp-route-name="dislike" asp-route-postId="@item.Id">dislike</a>
+                @if (!item.IsReactedByUser)
+                {
+                    <a asp-controller="Reaction" asp-action="AddReaction" asp-route-name="like" asp-route-postId="@item.Id">like</a>
+                    <a asp-controller="Reaction" asp-action="AddReaction" asp-route-name="dislike" asp-route-postId="@item.Id">dislike</a>
+                }
             </div>
         </div>
     </div>

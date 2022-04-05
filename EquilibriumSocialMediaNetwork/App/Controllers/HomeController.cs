@@ -62,6 +62,8 @@ namespace App.Controllers
                 .Select(p => postServices.SetReactionsCount(p))
                 .ToList();
 
+            posts.ForEach(p => p.IsReactedByUser = postServices.IsReactedByUser(p.Id, user.Id));
+
             return View(posts);
         }
 

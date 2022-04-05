@@ -195,5 +195,16 @@ namespace Services
             db.Posts.RemoveRange(db.Posts.Where(p => p.UserId == userId));
             db.SaveChanges();
         }
+
+        public bool IsReactedByUser(string postId, string userId)
+        {
+            User user = db.Users
+                .SingleOrDefault(u => u.Id == userId);
+
+            bool isReacted = db.Reactions
+                .Any(r => r.UserId == userId && r.PostId == postId);
+
+            return isReacted;
+        }
     }
 }
