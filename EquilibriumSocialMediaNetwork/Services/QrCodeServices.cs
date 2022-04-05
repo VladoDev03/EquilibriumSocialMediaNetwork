@@ -77,5 +77,17 @@ namespace Services
                 return img;
             }
         }
+
+        public void DeleteQrCode(string id)
+        {
+            QrCode qrCode = db.QrCodes.FirstOrDefault(qr => qr.Id == id);
+
+            if (qrCode != null)
+            {
+                db.QrCodes.Remove(qrCode);
+
+                db.SaveChanges();
+            }
+        }
     }
 }

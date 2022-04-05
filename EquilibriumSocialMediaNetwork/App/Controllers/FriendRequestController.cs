@@ -72,7 +72,7 @@ namespace App.Controllers
         {
             friendRequestServices.ApproveFriendRequest(id);
 
-            return RedirectToAction("Profile", "User");
+            return RedirectToAction(nameof(Invites));
         }
 
         [HttpGet]

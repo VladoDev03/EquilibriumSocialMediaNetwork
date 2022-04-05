@@ -12,6 +12,20 @@ namespace Services.Contracts
     {
         List<UserServiceModel> GetUsers();
 
+        List<UserServiceModel> GetUsersExceptAdmins();
+
         UserServiceModel GetUserById(string id);
+
+        UserServiceModel GetUserByUsername(string username);
+
+        bool IsUserAdmin(string userId);
+
+        bool IsUserInvited(string loggedUserId, string userId);
+
+        bool IsUserFriend(string loggedUserId, string userId);
+
+        void DeleteUser(string userId);
+
+        void MakeUserAdmin(string userId);
     }
 }

@@ -12,5 +12,7 @@ namespace Services.Contracts
         List<UserFriendServiceModel> GetUserFriends(string userId);
 
         void RemoveUserFriend(string userId, string friendId);
+
+        void RemoveAllFriends(string userId);
     }
 }

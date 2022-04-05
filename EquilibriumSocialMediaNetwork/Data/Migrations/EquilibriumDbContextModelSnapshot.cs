@@ -28,6 +28,9 @@ namespace Data.Migrations
                     b.Property<string>("PostId")
                         .HasColumnType("varchar(256)");
 
+                    b.Property<DateTime>("TimeCommented")
+                        .HasColumnType("datetime");
+
                     b.Property<string>("UserId")
                         .HasColumnType("varchar(256)");
 
@@ -38,6 +41,22 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Data.Entities.Conversation", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("UserOneId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserTwoId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Conversations");
                 });
 
             modelBuilder.Entity("Data.Entities.Cover", b =>
@@ -71,6 +90,25 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Descriptions");
+                });
+
+            modelBuilder.Entity("Data.Entities.Email", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("text");
+
+                    b.Property<string>("To")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Emails");
                 });
 
             modelBuilder.Entity("Data.Entities.FriendRequest", b =>
@@ -109,6 +147,37 @@ namespace Data.Migrations
                     b.ToTable("Groups");
                 });
 
+            modelBuilder.Entity("Data.Entities.Message", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ConversationId")
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<DateTime>("TimeSent")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("UserOneId")
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("UserTwoId")
+                        .HasColumnType("varchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConversationId");
+
+                    b.HasIndex("UserOneId");
+
+                    b.HasIndex("UserTwoId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("Data.Entities.Post", b =>
                 {
                     b.Property<string>("Id")
@@ -128,6 +197,9 @@ namespace Data.Migrations
 
                     b.Property<bool>("IsDownloadable")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("TimePosted")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("UserId")
                         .HasColumnType("varchar(256)");
@@ -176,6 +248,9 @@ namespace Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PublicId")
                         .HasColumnType("text");
 
                     b.Property<string>("UserId")
@@ -472,12 +547,10 @@ namespace Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("text");
@@ -514,12 +587,10 @@ namespace Data.Migrations
                         .HasColumnType("varchar(256)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("Value")
                         .HasColumnType("text");
@@ -575,6 +646,27 @@ namespace Data.Migrations
                     b.Navigation("RequestedFrom");
 
                     b.Navigation("RequestedTo");
+                });
+
+            modelBuilder.Entity("Data.Entities.Message", b =>
+                {
+                    b.HasOne("Data.Entities.Conversation", "Conversation")
+                        .WithMany("Messages")
+                        .HasForeignKey("ConversationId");
+
+                    b.HasOne("Data.Entities.User", "UserOne")
+                        .WithMany()
+                        .HasForeignKey("UserOneId");
+
+                    b.HasOne("Data.Entities.User", "UserTwo")
+                        .WithMany()
+                        .HasForeignKey("UserTwoId");
+
+                    b.Navigation("Conversation");
+
+                    b.Navigation("UserOne");
+
+                    b.Navigation("UserTwo");
                 });
 
             modelBuilder.Entity("Data.Entities.Post", b =>
@@ -746,6 +838,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Comment", b =>
                 {
                     b.Navigation("Replies");
+                });
+
+            modelBuilder.Entity("Data.Entities.Conversation", b =>
+                {
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("Data.Entities.Post", b =>

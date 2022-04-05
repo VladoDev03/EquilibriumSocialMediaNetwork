@@ -25,6 +25,7 @@ namespace App.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<User> _userManager;
         private IUserServices userServices;
+        private IUserFriendServices userFriendServices;
         private IJsonUserManager userJsonServices;
         private IPostServices postServices;
 
@@ -32,6 +33,7 @@ namespace App.Controllers
             ILogger<HomeController> logger,
             UserManager<User> userManager,
             IUserServices userServices,
+            IUserFriendServices userFriendServices,
             IJsonUserManager userJsonServices,
             IPostServices postServices)
         {
@@ -40,6 +42,7 @@ namespace App.Controllers
             this.userServices = userServices;
             this.userJsonServices = userJsonServices;
             this.postServices = postServices;
+            this.userFriendServices = userFriendServices;
         }
 
         public async Task<IActionResult> Index()
@@ -50,11 +53,13 @@ namespace App.Controllers
             }
 
             User user = await _userManager.GetUserAsync(User);
+
             string userId = user.Id;
 
             List<PostViewModel> posts = postServices
                 .GetPostsForUser(userId)
                 .Select(p => p.ToPostViewModel())
+                .Select(p => postServices.SetReactionsCount(p))
                 .ToList();
 
             return View(posts);
@@ -75,6 +80,21 @@ namespace App.Controllers
             string result = userJsonServices.AllUsersToJson(users);
 
             return result;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UsersToChatWith()
+        {
+            User user = await _userManager.GetUserAsync(User);
+
+            List<UserViewModel> chats = userFriendServices
+                .GetUserFriends(user.Id)
+                .Select(uf => uf.FriendId)
+                .Select(id => userServices.GetUserById(id))
+                .Select(u => u.ToUserViewModel())
+                .ToList();
+
+            return View(chats);
         }
 
         public IActionResult Privacy()

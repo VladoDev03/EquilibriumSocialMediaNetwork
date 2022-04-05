@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Entities;
+using Data.ViewModels.Post;
 using Microsoft.EntityFrameworkCore;
 using Services.Contracts;
 using Services.Mappers;
@@ -23,6 +24,7 @@ namespace Services
 
         public PostServiceModel AddPost(PostServiceModel post)
         {
+            post.TimePosted = DateTime.Now;
             db.Posts.Add(post.ToPost());
 
             db.SaveChanges();
@@ -43,7 +45,20 @@ namespace Services
                 GetPostReactions(post); 
             }
 
+            posts = posts.OrderByDescending(p => p.TimePosted).ToList();
+
             return posts;
+        }
+
+        public PostViewModel SetReactionsCount(PostViewModel post)
+        {
+            int likes = post.Reactions.Where(r => r.Name == "like").Count();
+            int dislikes = post.Reactions.Where(r => r.Name == "dislike").Count();
+
+            post.LikesCount = likes;
+            post.DislikesCount = dislikes;
+
+            return post;
         }
 
         public List<CommentServiceModel> GetPostComments(PostServiceModel post)
@@ -61,6 +76,8 @@ namespace Services
                     post.Comments.Add(comment);
                 }
             }
+
+            comments = comments.OrderBy(c => c.TimeCommented).ToList();
 
             return comments;
         }
@@ -128,9 +145,18 @@ namespace Services
 
         public List<PostServiceModel> GetUserPosts(string userId)
         {
-            List<PostServiceModel> posts = GetAllPosts()
+            List<PostServiceModel> posts = db.Posts
                 .Where(p => p.UserId == userId)
+                .Select(p => p.ToPostServiceModel())
                 .ToList();
+
+            foreach (PostServiceModel post in posts)
+            {
+                GetPostComments(post);
+                GetPostReactions(post);
+            }
+
+            posts = posts.OrderByDescending(p => p.TimePosted).ToList();
 
             return posts;
         }
@@ -139,7 +165,7 @@ namespace Services
         {
             Post post = db.Posts.FirstOrDefault(x => x.Id == updatedPost.Id);
 
-            if (post.Content != null)
+            if (updatedPost.Content != null)
             {
                 post.Content = updatedPost.Content;
                 db.SaveChanges();
@@ -162,6 +188,12 @@ namespace Services
                 .ToList();
 
             return posts;
+        }
+
+        public void DeleteUserPosts(string userId)
+        {
+            db.Posts.RemoveRange(db.Posts.Where(p => p.UserId == userId));
+            db.SaveChanges();
         }
     }
 }

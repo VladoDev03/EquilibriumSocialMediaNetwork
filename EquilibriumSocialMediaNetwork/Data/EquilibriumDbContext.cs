@@ -14,6 +14,11 @@ namespace Data
 
         }
 
+        public EquilibriumDbContext(DbContextOptions<EquilibriumDbContext> options)
+            : base(options)
+        {
+        }
+
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Cover> Covers { get; set; }
         public DbSet<Description> Descriptions { get; set; }
@@ -28,11 +33,9 @@ namespace Data
         public DbSet<UserGroup> UsersGroups { get; set; }
         public DbSet<ProfilePicture> ProfilePictures { get; set; }
         public DbSet<QrCode> QrCodes { get; set; }
-
-        public EquilibriumDbContext(DbContextOptions<EquilibriumDbContext> options)
-            : base(options)
-        {
-        }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Conversation> Conversations { get; set; }
+        public DbSet<Email> Emails { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -25,6 +25,8 @@ namespace Services.Models
 
         public bool IsDownloadable { get; set; }
 
+        public DateTime TimePosted { get; set; }
+
         public virtual ICollection<CommentServiceModel> Comments { get; set; }
 
         public string UserId { get; set; }

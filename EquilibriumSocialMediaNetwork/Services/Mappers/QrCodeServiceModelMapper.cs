@@ -17,7 +17,8 @@ namespace Services.Mappers
                 Id = qrCode.Id,
                 ImageDownloadUrl = qrCode.ImageDownloadUrl,
                 ImageUrl = qrCode.ImageUrl,
-                UserId = qrCode.UserId
+                UserId = qrCode.UserId,
+                PublicId = qrCode.PublicId
             };
 
             return result;
@@ -30,7 +31,8 @@ namespace Services.Mappers
                 Id = qrCode.Id,
                 ImageDownloadUrl = qrCode.ImageDownloadUrl,
                 ImageUrl = qrCode.ImageUrl,
-                UserId = qrCode.UserId
+                UserId = qrCode.UserId,
+                PublicId = qrCode.PublicId
             };
 
             return result;

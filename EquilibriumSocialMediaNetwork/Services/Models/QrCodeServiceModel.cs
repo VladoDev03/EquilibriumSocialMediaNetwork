@@ -12,6 +12,8 @@ namespace Services.Models
 
         public string ImageDownloadUrl { get; set; }
 
+        public string PublicId { get; set; }
+
         public string UserId { get; set; }
     }
 }

@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Services.Contracts;
+using Services.Models;
 
 namespace App.Areas.Identity.Pages.Account
 {
@@ -25,20 +26,20 @@ namespace App.Areas.Identity.Pages.Account
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly IUserServices userServices;
+        private readonly IEmailServices emailServices;
 
         public RegisterModel(
             UserManager<User> userManager,
-            IUserServices userServices,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IEmailServices emailServices)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            this.userServices = userServices;
+            this.emailServices = emailServices;
         }
 
         [BindProperty]
@@ -104,6 +105,18 @@ namespace App.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    if (user != null)
+                    {
+                        EmailServiceModel message = new EmailServiceModel()
+                        {
+                            To = user.Email,
+                            Subject = "Registration",
+                            Content = $"Congratulations, {user.FirstName} {user.LastName}! You have successfully registered :)"
+                        };
+
+                        emailServices.SendMessage(message);
+                    }
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -120,6 +133,7 @@ namespace App.Areas.Identity.Pages.Account
                     if (_userManager.Users.Count() == 1)
                     {
                         await _userManager.AddToRoleAsync(user, "Admin");
+                        await _userManager.AddToRoleAsync(user, "User");
                     }
                     else
                     {

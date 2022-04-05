@@ -57,6 +57,7 @@ namespace App.Controllers
             List<PostViewModel> posts = postServices
                 .GetUserPosts(user.Id)
                 .Select(p => p.ToPostViewModel())
+                .Select(p => postServices.SetReactionsCount(p))
                 .ToList();
 
             UserViewModel result = new UserViewModel()
@@ -104,10 +105,12 @@ namespace App.Controllers
                 .GetUserById(id);
 
             UserViewModel result = user.ToUserViewModel();
+            result.CanSendInvitation = userServices.IsUserFriend(loggedUser.Id, id) && userServices.IsUserInvited(loggedUser.Id, id);
 
             List<PostViewModel> posts = postServices
                 .GetUserPosts(id)
                 .Select(p => p.ToPostViewModel())
+                .Select(p => postServices.SetReactionsCount(p))
                 .ToList();
 
             ProfilePictureServiceModel image = imageServices.GetProfilePictureByUserId(id);
@@ -205,6 +208,7 @@ namespace App.Controllers
             qrCode = new QrCodeServiceModel();
 
             qrCode.ImageUrl = imageData[0];
+            qrCode.PublicId = imageData[1];
             qrCode.ImageDownloadUrl = cloudinaryServices.GetDownloadLink(imageData[0]);
             qrCode.UserId = userId;
 

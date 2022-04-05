@@ -28,7 +28,7 @@ namespace App.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCommentBindingModel comment)
+        public async Task<IActionResult> Create([FromForm]CreateCommentBindingModel comment, string id)
         {
             if (comment.Content == null)
             {
@@ -37,12 +37,12 @@ namespace App.Controllers
             }
 
             User user = await _userManager.GetUserAsync(User);
-            PostServiceModel post = postServices.GetPostById(comment.PostId);
+            PostServiceModel post = postServices.GetPostById(id);
 
             CommentServiceModel commentToAdd = new CommentServiceModel()
             {
                 Content = comment.Content,
-                PostId = comment.PostId,
+                PostId = id,
                 UserId = user.Id,
                 User = user
             };

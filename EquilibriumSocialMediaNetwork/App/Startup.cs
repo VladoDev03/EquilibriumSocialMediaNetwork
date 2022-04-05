@@ -1,4 +1,6 @@
+using App.Hubs;
 using Data;
+using Data.ConfigurationModels;
 using Data.Entities;
 using JsonManager;
 using JsonManager.Contracts;
@@ -34,10 +36,17 @@ namespace App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            CloudinaryConfigurationModel cloudinaryConfiguration = Configuration
+                .GetSection("CloudinaryConfiguration")
+                .Get<CloudinaryConfigurationModel>();
+
+            OutlookConfigurationModel outlookConfiguration = Configuration
+                .GetSection("OutlookConfiguration")
+                .Get<OutlookConfigurationModel>();
+
             services.AddDbContext<EquilibriumDbContext>(options =>
                 options.UseMySQL(
-                    Configuration.GetConnectionString("DefaultConnection"))
-                                 /*.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)*/);
+                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddScoped<IUserServices, UserServices>();
@@ -51,6 +60,14 @@ namespace App
             services.AddScoped<ICloudinaryServices, CloudinaryServices>();
             services.AddScoped<IQrCodeServices, QrCodeServices>();
             services.AddScoped<IProfilePictureServices, ProfilePictureServices>();
+            services.AddScoped<IAdminServices, AdminServices>();
+            services.AddScoped<IMessageServices, MessageServices>();
+            services.AddScoped<IConversationServices, ConversationServices>();
+            services.AddScoped<IEmailServices, EmailServices>();
+
+            services.AddSingleton<ISessionServices>(new SessionServices());
+            services.AddSingleton(cloudinaryConfiguration);
+            services.AddSingleton(outlookConfiguration);
 
             services.AddDefaultIdentity<User>(options =>
             {
@@ -67,6 +84,8 @@ namespace App
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<EquilibriumDbContext>();
             services.AddControllersWithViews();
+
+            services.AddSignalR();
 
             services.AddCors(options =>
             {
@@ -110,6 +129,8 @@ namespace App
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+
+                endpoints.MapHub<ChatHub>("/chat");
             });
         }
 

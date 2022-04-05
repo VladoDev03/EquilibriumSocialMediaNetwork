@@ -16,6 +16,8 @@ namespace Services.Models
 
         public string Content { get; set; }
 
+        public DateTime TimeCommented { get; set; }
+
         public string PostId { get; set; }
 
         public PostServiceModel Post { get; set; }

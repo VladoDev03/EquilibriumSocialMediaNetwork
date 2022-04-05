@@ -10,8 +10,13 @@ namespace Data.ViewModels.Comment
     public class CommentViewModel
     {
         public string Id { get; set; }
+
         public string Content { get; set; }
+
+        public string TimeCommented { get; set; }
+
         public string UserId { get; set; }
+
         public Entities.User User { get; set; }
     }
 }

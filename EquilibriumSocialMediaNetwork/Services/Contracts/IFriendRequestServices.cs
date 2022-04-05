@@ -27,5 +27,9 @@ namespace Services.Contracts
         List<FriendRequestServiceModel> GetUserInvitations(string receiverId);
 
         void DeleteFriendRequest(string id);
+
+        void DeleteAllFriendRequestBySenderId(string id);
+
+        void DeleteAllFriendRequestByReveiverId(string id);
     }
 }

@@ -18,5 +18,7 @@ namespace Services.Contracts
         QrCodeServiceModel GetQrCodeByUserId(string userId);
 
         Task<byte[]> GetImageBytes(IFormFile file);
+
+        void DeleteQrCode(string id);
     }
 }

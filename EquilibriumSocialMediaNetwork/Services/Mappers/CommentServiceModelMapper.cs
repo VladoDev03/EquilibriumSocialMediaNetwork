@@ -18,6 +18,7 @@ namespace Services.Mappers
             {
                 Id = comment.Id,
                 Content = comment.Content,
+                TimeCommented = comment.TimeCommented,
                 PostId = comment.PostId,
                 UserId = comment.UserId,
                 User = comment.User,
@@ -33,6 +34,7 @@ namespace Services.Mappers
             {
                 Id = comment.Id,
                 Content = comment.Content,
+                TimeCommented = comment.TimeCommented,
                 PostId = comment.PostId,
                 UserId = comment.UserId,
                 User = comment.User,
@@ -48,6 +50,7 @@ namespace Services.Mappers
             {
                 Id = comment.Id,
                 Content = comment.Content,
+                TimeCommented = $"On {comment.TimeCommented.Day}-{comment.TimeCommented.Month}-{comment.TimeCommented.Year} at {comment.TimeCommented.Hour}:{comment.TimeCommented.Minute}",
                 UserId = comment.UserId,
                 User = comment.User
             };

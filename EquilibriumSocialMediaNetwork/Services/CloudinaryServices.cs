@@ -1,33 +1,39 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Data;
+using Data.Entities;
 using Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Data.ConfigurationModels;
 using System.Threading.Tasks;
 
 namespace Services
 {
     public class CloudinaryServices : ICloudinaryServices
     {
-        private Account account;
+        private EquilibriumDbContext db;
         private Cloudinary cloudinary;
 
-        public CloudinaryServices()
+        public CloudinaryServices(
+            EquilibriumDbContext db,
+            CloudinaryConfigurationModel cloudinaryConfiguration)
         {
-            account = new Account(
-                "dwwp1raua",
-                "831167528144154",
-                "I_OBjKDBaJn6JCDGZkkKubfAnzQ");
-
+            this.db = db;
+            Account account = SetUpCloudinaryAccount(cloudinaryConfiguration);
             cloudinary = new Cloudinary(account);
         }
 
         public void DeleteImage(string publicId)
         {
+            if (publicId == null)
+            {
+                return;
+            }
+
             DeletionParams param = new DeletionParams(publicId)
             {
                 ResourceType = ResourceType.Image,
@@ -35,6 +41,30 @@ namespace Services
             };
 
             cloudinary.Destroy(param);
+        }
+
+        public string FindProfilePicturePublicIdById(string id)
+        {
+            ProfilePicture profilePicture = db.ProfilePictures.FirstOrDefault(p => p.Id == id);
+
+            if (profilePicture == null)
+            {
+                return null;
+            }
+
+            return profilePicture.ImagePublicId;
+        }
+
+        public string FindQrCodePublicIdById(string id)
+        {
+            QrCode qrCode = db.QrCodes.FirstOrDefault(qr => qr.Id == id);
+
+            if (qrCode == null)
+            {
+                return null;
+            }
+
+            return qrCode.PublicId;
         }
 
         public string GetDownloadLink(string url)
@@ -80,6 +110,16 @@ namespace Services
             string id = uploadResult.PublicId;
 
             return $"{url}*{id}";
+        }
+
+        private Account SetUpCloudinaryAccount(CloudinaryConfigurationModel cloudinaryConfiguration)
+        {
+            Account account = new Account(
+                cloudinaryConfiguration.Cloud,
+                cloudinaryConfiguration.ApiKey,
+                cloudinaryConfiguration.ApiSecret);
+
+            return account;
         }
     }
 }

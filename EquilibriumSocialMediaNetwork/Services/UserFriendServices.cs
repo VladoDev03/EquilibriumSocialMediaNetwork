@@ -45,5 +45,13 @@ namespace Services
 
             db.SaveChanges();
         }
+
+        public void RemoveAllFriends(string userId)
+        {
+            UserFriend friendsToRemove = db.UsersFriends
+                .FirstOrDefault(fr => fr.UserId == userId || fr.FriendId == userId);
+
+            db.SaveChanges();
+        }
     }
 }

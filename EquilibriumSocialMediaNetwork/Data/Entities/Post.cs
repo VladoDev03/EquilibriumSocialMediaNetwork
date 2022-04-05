@@ -24,6 +24,8 @@ namespace Data.Entities
 
         public bool IsDownloadable { get; set; }
 
+        public DateTime TimePosted { get; set; }
+
         public virtual ICollection<Comment> Comments { get; set; }
 
         public string UserId { get; set; }

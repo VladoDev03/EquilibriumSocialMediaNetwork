@@ -142,5 +142,27 @@ namespace Services
 
             return invitations;
         }
+
+        public void DeleteAllFriendRequestBySenderId(string id)
+        {
+            List<FriendRequest> friendRequests = db.FriendRequests
+                .Where(fr => fr.RequestedFromId == id)
+                .ToList();
+
+            db.FriendRequests.RemoveRange(friendRequests);
+
+            db.SaveChanges();
+        }
+
+        public void DeleteAllFriendRequestByReveiverId(string id)
+        {
+            List<FriendRequest> friendRequests = db.FriendRequests
+                   .Where(fr => fr.RequestedToId == id)
+                   .ToList();
+
+            db.FriendRequests.RemoveRange(friendRequests);
+
+            db.SaveChanges();
+        }
     }
 }
