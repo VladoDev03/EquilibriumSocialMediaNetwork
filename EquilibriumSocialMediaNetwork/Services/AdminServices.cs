@@ -20,6 +20,9 @@ namespace Services
         private ICloudinaryServices cloudinaryServices;
         private IFriendRequestServices friendRequestServices;
         private IUserFriendServices userFriendServices;
+        private IEmailServices emailServices;
+        private IMessageServices messageServices;
+        private IConversationServices conversationServices;
 
         public AdminServices(
             EquilibriumDbContext db,
@@ -30,8 +33,12 @@ namespace Services
             IReactionServices reactionServices,
             ICloudinaryServices cloudinaryServices,
             IFriendRequestServices friendRequestServices,
-            IUserFriendServices userFriendServices)
+            IUserFriendServices userFriendServices,
+            IEmailServices emailServices,
+            IMessageServices messageServices,
+            IConversationServices conversationServices)
         {
+            this.db = db;
             this.postServices = postServices;
             this.commentServices = commentServices;
             this.qrCodeServices = qrCodeServices;
@@ -40,7 +47,9 @@ namespace Services
             this.cloudinaryServices = cloudinaryServices;
             this.friendRequestServices = friendRequestServices;
             this.userFriendServices = userFriendServices;
-            this.db = db;
+            this.emailServices = emailServices;
+            this.messageServices = messageServices;
+            this.conversationServices = conversationServices;
         }
         public void DeleteUserProfile(string userId)
         {
@@ -64,6 +73,10 @@ namespace Services
             friendRequestServices.DeleteAllFriendRequestBySenderId(userId);
 
             userFriendServices.RemoveAllFriends(userId);
+
+            emailServices.DeleteAllUserEmails(userId);
+            messageServices.DeleteAllUserMessages(userId);
+            conversationServices.DeleteAllUserConversations(userId);
         }
     }
 }

@@ -59,6 +59,36 @@ namespace Services
             return email;
         }
 
+        public void DeleteEmailById(string id)
+        {
+            Email email = db.Emails.FirstOrDefault(e => e.Id == id);
+
+            db.Emails.Remove(email);
+
+            db.SaveChanges();
+        }
+
+        public void DeleteEmailByUserEmail(string userEmail)
+        {
+            Email email = db.Emails.FirstOrDefault(e => e.To == userEmail);
+
+            db.Emails.Remove(email);
+
+            db.SaveChanges();
+        }
+
+        public void DeleteAllUserEmails(string userId)
+        {
+            string userEmail = db.Users.FirstOrDefault(u => u.Id == userId).Email;
+
+            List<Email> emailsToRemove = db.Emails
+                .Where(e => e.To == userEmail)
+                .ToList();
+
+            db.Emails.RemoveRange(emailsToRemove);
+            db.SaveChanges();
+        }
+
         private void Send(MailMessage mailMessage)
         {
             using (var client = new SmtpClient(configuration.SmtpServer, int.Parse(configuration.Port)))
@@ -85,6 +115,7 @@ namespace Services
         private MailMessage CreateEmailMessage(EmailServiceModel email)
         {
             MailMessage emailMessage = new MailMessage();
+
             emailMessage.From = new MailAddress(configuration.From);
             emailMessage.To.Add(email.To);
             emailMessage.Subject = email.Subject;

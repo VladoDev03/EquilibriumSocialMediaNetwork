@@ -16,5 +16,11 @@ namespace Services.Contracts
         EmailServiceModel AddEmailToDatabase(EmailServiceModel email);
 
         EmailServiceModel GetEmailById(string id);
+
+        void DeleteEmailById(string id);
+
+        void DeleteEmailByUserEmail(string userEmail);
+
+        void DeleteAllUserEmails(string userId);
     }
 }

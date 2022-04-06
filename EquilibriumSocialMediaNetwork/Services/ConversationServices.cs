@@ -67,7 +67,42 @@ namespace Services
 
         public List<ConversationServiceModel> GetUserConversations(string userId)
         {
-            throw new NotImplementedException();
+            List<ConversationServiceModel> conversations = db.Conversations
+                .Where(c => c.UserOneId == userId || c.UserTwoId == userId)
+                .Select(c => c.ToConversationServiceModel())
+                .ToList();
+
+            return conversations;
+        }
+
+        public void DeleteAllUserConversations(string userId)
+        {
+            List<Conversation> conversations = db.Conversations
+                   .Where(c => c.UserOneId == userId || c.UserTwoId == userId)
+                   .ToList();
+
+            db.Conversations.RemoveRange(conversations);
+            db.SaveChanges();
+        }
+
+        public void RemoveConversation(string conversationId)
+        {
+            Conversation conversation = db.Conversations.FirstOrDefault(c => c.Id == conversationId);
+
+            db.Conversations.Remove(conversation);
+
+            db.SaveChanges();
+        }
+
+        public void DeleteConversationByUserIds(string userIdOne, string userIdTwo)
+        {
+            Conversation conversation = db.Conversations
+                   .FirstOrDefault(c => (c.UserOneId == userIdOne && c.UserTwoId == userIdTwo)
+                        || (c.UserOneId == userIdTwo && c.UserTwoId == userIdOne));
+
+            db.Conversations.Remove(conversation);
+
+            db.SaveChanges();
         }
     }
 }
