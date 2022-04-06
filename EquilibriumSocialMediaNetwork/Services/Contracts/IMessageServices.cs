@@ -14,5 +14,9 @@ namespace Services.Contracts
         MessageServiceModel GetMessageById(string id);
 
         MessageServiceModel AddMessage(MessageServiceModel message);
+
+        void RemoveMessage(string messageId);
+
+        void DeleteAllUserMessages(string userId);
     }
 }

@@ -9,6 +9,18 @@ namespace Services.Contracts
 {
     public interface IEmailServices
     {
-        EmailServiceModel SendMessage(EmailServiceModel message);
+        EmailServiceModel SendEmail(EmailServiceModel email);
+
+        EmailServiceModel SendConfirmEmail(EmailServiceModel email);
+
+        EmailServiceModel AddEmailToDatabase(EmailServiceModel email);
+
+        EmailServiceModel GetEmailById(string id);
+
+        void DeleteEmailById(string id);
+
+        void DeleteEmailByUserEmail(string userEmail);
+
+        void DeleteAllUserEmails(string userId);
     }
 }

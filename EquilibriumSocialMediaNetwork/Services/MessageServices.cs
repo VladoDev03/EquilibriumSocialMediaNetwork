@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Services.Contracts;
 using Services.Mappers;
@@ -50,6 +51,25 @@ namespace Services
                 .ToMessageServiceModel();
 
             return message;
+        }
+
+        public void DeleteAllUserMessages(string userId)
+        {
+            List<Message> messagesToDelete = db.Messages
+                .Where(m => m.UserOneId == userId || m.UserTwoId == userId)
+                .ToList();
+
+            db.Messages.RemoveRange(messagesToDelete);
+            db.SaveChanges();
+        }
+
+        public void RemoveMessage(string messageId)
+        {
+            Message message = db.Messages.FirstOrDefault(m => m.Id == messageId);
+
+            db.Messages.Remove(message);
+
+            db.SaveChanges();
         }
     }
 }

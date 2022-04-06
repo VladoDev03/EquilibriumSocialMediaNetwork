@@ -53,12 +53,7 @@ namespace App.Controllers
             }
 
             User user = await _userManager.GetUserAsync(User);
-
-            List<PostViewModel> posts = postServices
-                .GetUserPosts(user.Id)
-                .Select(p => p.ToPostViewModel())
-                .Select(p => postServices.SetReactionsCount(p))
-                .ToList();
+            List<PostViewModel> posts = GetUserPosts(user.Id);
 
             UserViewModel result = new UserViewModel()
             {
@@ -69,19 +64,9 @@ namespace App.Controllers
             };
 
             ProfilePictureServiceModel image = imageServices.GetProfilePictureByUserId(user.Id);
-            ProfilePictureViewModel profilePicture;
+            ProfilePictureViewModel profilePicture = GetProfilePicture(image);
 
-            if (image != null)
-            {
-                profilePicture = new ProfilePictureViewModel()
-                {
-                    ImageDownloadUrl = image.ImageDownloadUrl,
-                    ImageUrl = image.ImageUrl,
-                    IsDownloadable = image.IsDownloadable
-                };
-
-                result.ProfilePicture = profilePicture;
-            }
+            result.ProfilePicture = profilePicture;
 
             return View(result);
         }
@@ -105,29 +90,19 @@ namespace App.Controllers
                 .GetUserById(id);
 
             UserViewModel result = user.ToUserViewModel();
-            result.CanSendInvitation = userServices.IsUserFriend(loggedUser.Id, id) && userServices.IsUserInvited(loggedUser.Id, id);
 
-            List<PostViewModel> posts = postServices
-                .GetUserPosts(id)
-                .Select(p => p.ToPostViewModel())
-                .Select(p => postServices.SetReactionsCount(p))
-                .ToList();
+            result.CanSendInvitation = userServices
+                .IsUserFriend(loggedUser.Id, id)
+                    && userServices.IsUserInvited(loggedUser.Id, id);
+
+            result.LoggedUserId = user.Id;
+
+            List<PostViewModel> posts = GetUserPosts(id);
 
             ProfilePictureServiceModel image = imageServices.GetProfilePictureByUserId(id);
-            ProfilePictureViewModel profilePicture;
+            ProfilePictureViewModel profilePicture = GetProfilePicture(image);
 
-            if (image != null)
-            {
-                profilePicture = new ProfilePictureViewModel()
-                {
-                    ImageDownloadUrl = image.ImageDownloadUrl,
-                    ImageUrl = image.ImageUrl,
-                    IsDownloadable = image.IsDownloadable
-                };
-
-                result.ProfilePicture = profilePicture;
-            }
-
+            result.ProfilePicture = profilePicture;
             result.Posts = posts;
 
             return View(result);
@@ -217,6 +192,39 @@ namespace App.Controllers
             qrCodeServices.AddQrCode(qrCode, user);
 
             return View(qrCodeViewModel);
+        }
+
+        private List<PostViewModel> GetUserPosts(string id)
+        {
+            List<PostViewModel> posts = postServices
+                .GetUserPosts(id)
+                .Select(p => p.ToPostViewModel())
+                .Select(p => postServices.SetReactionsCount(p))
+                .ToList();
+
+            posts.ForEach(p => p.IsLikedByUser = postServices.IsReactedByUser(p.Id, id, "like"));
+            posts.ForEach(p => p.IsDislikedByUser = postServices.IsReactedByUser(p.Id, id, "dislike"));
+
+            return posts;
+        }
+
+        private ProfilePictureViewModel GetProfilePicture(ProfilePictureServiceModel image)
+        {
+            ProfilePictureViewModel profilePicture;
+
+            if (image != null)
+            {
+                profilePicture = new ProfilePictureViewModel()
+                {
+                    ImageDownloadUrl = image.ImageDownloadUrl,
+                    ImageUrl = image.ImageUrl,
+                    IsDownloadable = image.IsDownloadable
+                };
+
+                return profilePicture;
+            }
+
+            return null;
         }
     }
 }

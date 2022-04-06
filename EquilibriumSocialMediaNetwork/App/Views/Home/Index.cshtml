@@ -1,6 +1,6 @@
-﻿@{
+﻿@model HomeViewModel
+@{
     ViewData["Title"] = "Home Page";
-    @model List<PostViewModel>
 }
 
 <script src="~/js/search.js" defer></script>
@@ -16,7 +16,7 @@
     <div class="user-cards" data-user-cards-container></div>
     <template data-user-template>
         <div class="card">
-            <div class="header" data-header></div>
+            <a class="header" data-header></a>
             <div class="body" data-body></div>
         </div>
     </template>
@@ -29,7 +29,7 @@
 </style>
 
 <br />
-@foreach (var item in Model)
+@foreach (var item in Model.Posts)
 {
     <div style="padding: 10px;">
         <a asp-controller="User" asp-action="Details" asp-route-id="@item.UserId">@item.User.FirstName @item.User.LastName (@item.User.UserName)</a>
@@ -73,6 +73,12 @@
                             {
                                 <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId" style="color:green;text-decoration:none;">@comment.User.FirstName @comment.User.LastName (@comment.User.UserName)</a>
                             }
+                            @if (User.IsInRole("Admin")
+                                || Model.LoggedUserId == comment.UserId
+                                || item.UserId == Model.LoggedUserId)
+                            {
+                                <a class="text-danger" asp-action="DeleteComment" asp-controller="Comment" asp-route-id="@comment.Id">Delete</a>
+                            }
 
                             <p class="text-info">@comment.TimeCommented</p>
                             <div style="padding-top: 4px;">@comment.Content</div>
@@ -93,8 +99,22 @@
                 </form>
             </div>
             <div>
-                <a asp-controller="Reaction" asp-action="AddReaction" asp-route-name="like" asp-route-postId="@item.Id">like</a>
-                <a asp-controller="Reaction" asp-action="AddReaction" asp-route-name="dislike" asp-route-postId="@item.Id">dislike</a>
+                @{
+                    string likeStyle = "text-success";
+                    string dislikeStyle = "text-danger";
+                }
+
+                @if (item.IsLikedByUser)
+                {
+                    likeStyle += " font-weight-bold";
+                }
+                @if (item.IsDislikedByUser)
+                {
+                    dislikeStyle += " font-weight-bold";
+                }
+
+                <a class=@likeStyle asp-controller="Reaction" asp-action="AddReaction" asp-route-name="like" asp-route-postId="@item.Id">like</a>
+                <a class=@dislikeStyle asp-controller="Reaction" asp-action="AddReaction" asp-route-name="dislike" asp-route-postId="@item.Id">dislike</a>
             </div>
         </div>
     </div>

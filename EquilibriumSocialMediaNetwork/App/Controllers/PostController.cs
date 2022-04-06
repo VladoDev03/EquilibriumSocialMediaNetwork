@@ -24,20 +24,17 @@ namespace App.Controllers
         private readonly UserManager<User> _userManager;
         private IPostServices postServices;
         private ICloudinaryServices cloudinaryServices;
-        private IProfilePictureServices imageServices;
         private IQrCodeServices qrCodeServices;
 
         public PostController(
             UserManager<User> userManager,
             IPostServices postServices,
             ICloudinaryServices cloudinaryServices,
-            IProfilePictureServices imageServices,
             IQrCodeServices qrCodeServices)
         {
             _userManager = userManager;
             this.postServices = postServices;
             this.cloudinaryServices = cloudinaryServices;
-            this.imageServices = imageServices;
             this.qrCodeServices = qrCodeServices;
         }
 
@@ -92,7 +89,7 @@ namespace App.Controllers
                 cloudinaryServices.DeleteImage(post.ImagePublicId);
             }
 
-            return RedirectToAction("Profile", "User");
+            return Redirect(Request.Headers["Referer"].ToString());
         }
 
         [HttpGet]

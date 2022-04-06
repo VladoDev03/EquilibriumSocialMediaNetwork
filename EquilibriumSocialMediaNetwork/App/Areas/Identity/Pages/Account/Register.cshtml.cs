@@ -107,14 +107,15 @@ namespace App.Areas.Identity.Pages.Account
                 {
                     if (user != null)
                     {
-                        EmailServiceModel message = new EmailServiceModel()
+                        EmailServiceModel email = new EmailServiceModel()
                         {
                             To = user.Email,
                             Subject = "Registration",
                             Content = $"Congratulations, {user.FirstName} {user.LastName}! You have successfully registered :)"
                         };
 
-                        emailServices.SendMessage(message);
+                        emailServices.SendConfirmEmail(email);
+                        emailServices.AddEmailToDatabase(email);
                     }
 
                     _logger.LogInformation("User created a new account with password.");
@@ -140,15 +141,17 @@ namespace App.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, "User");
                     }
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
+                    //if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    //{
+                    //    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                    //}
+                    //else
+                    //{
+                    //    await _signInManager.SignInAsync(user, isPersistent: false);
+                    //    return LocalRedirect(returnUrl);
+                    //}
+
+                    return RedirectToAction("Index", "Home");
                 }
 
                 foreach (var error in result.Errors)

@@ -18,5 +18,11 @@ namespace Services.Contracts
         ConversationServiceModel GetConversationById(string id);
 
         ConversationServiceModel AddConversation(ConversationServiceModel conversation);
+
+        void RemoveConversation(string conversationId);
+
+        void DeleteConversationByUserIds(string userIdOne, string userIdTwo);
+
+        void DeleteAllUserConversations(string userId);
     }
 }

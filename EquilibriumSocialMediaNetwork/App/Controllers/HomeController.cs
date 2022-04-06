@@ -62,20 +62,34 @@ namespace App.Controllers
                 .Select(p => postServices.SetReactionsCount(p))
                 .ToList();
 
-            return View(posts);
+            HomeViewModel homeViewModel = new HomeViewModel();
+
+            homeViewModel.Posts = posts;
+            homeViewModel.LoggedUserId = userId;
+
+            posts.ForEach(p => p.IsLikedByUser = postServices.IsReactedByUser(p.Id, user.Id, "like"));
+            posts.ForEach(p => p.IsDislikedByUser = postServices.IsReactedByUser(p.Id, user.Id, "dislike"));
+
+            return View(homeViewModel);
         }
 
         [Authorize(Roles = "User, Admin")]
         [HttpGet("users")]
-        public string Search()
+        public async Task<string> Search()
         {
-            List<UserSearchView> users = userServices.GetUsers().Select(u => new UserSearchView()
-            {
-                UserName = u.UserName,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                Email = u.Email
-            }).ToList();
+            User user = await _userManager.GetUserAsync(User);
+
+            List<UserSearchView> users = userServices
+                .GetUsers()
+                .Where(u => u.Id != user.Id)
+                .Select(u => new UserSearchView()
+                {
+                    UserName = u.UserName,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    Url = $"https://localhost:44366/User/Details/{u.Id}"
+                }).ToList();
 
             string result = userJsonServices.AllUsersToJson(users);
 

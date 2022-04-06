@@ -195,5 +195,30 @@ namespace Services
             db.Posts.RemoveRange(db.Posts.Where(p => p.UserId == userId));
             db.SaveChanges();
         }
+
+        public bool IsReactedByUser(string postId, string userId, string reactionName)
+        {
+            Reaction reaction = FindReactionByPostIdAndUserId(postId, userId);
+
+            if (reaction == null)
+            {
+                return false;
+            }
+
+            bool result = reaction.Name == reactionName;
+
+            return result;
+        }
+
+        private Reaction FindReactionByPostIdAndUserId(string postId, string userId)
+        {
+            User user = db.Users
+                .FirstOrDefault(u => u.Id == userId);
+
+            Reaction reaction = db.Reactions
+                .FirstOrDefault(r => r.UserId == userId && r.PostId == postId);
+
+            return reaction;
+        }
     }
 }
