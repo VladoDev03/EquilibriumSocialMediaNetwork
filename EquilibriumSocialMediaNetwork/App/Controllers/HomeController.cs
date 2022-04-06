@@ -62,10 +62,15 @@ namespace App.Controllers
                 .Select(p => postServices.SetReactionsCount(p))
                 .ToList();
 
+            HomeViewModel homeViewModel = new HomeViewModel();
+
+            homeViewModel.Posts = posts;
+            homeViewModel.LoggedUserId = userId;
+
             posts.ForEach(p => p.IsLikedByUser = postServices.IsReactedByUser(p.Id, user.Id, "like"));
             posts.ForEach(p => p.IsDislikedByUser = postServices.IsReactedByUser(p.Id, user.Id, "dislike"));
 
-            return View(posts);
+            return View(homeViewModel);
         }
 
         [Authorize(Roles = "User, Admin")]

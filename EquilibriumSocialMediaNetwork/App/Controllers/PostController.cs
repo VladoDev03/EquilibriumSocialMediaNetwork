@@ -89,7 +89,7 @@ namespace App.Controllers
                 cloudinaryServices.DeleteImage(post.ImagePublicId);
             }
 
-            return RedirectToAction("Profile", "User");
+            return Redirect(Request.Headers["Referer"].ToString());
         }
 
         [HttpGet]

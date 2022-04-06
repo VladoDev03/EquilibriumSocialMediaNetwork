@@ -56,7 +56,7 @@ namespace App.Controllers
         {
             commentServices.DeleteComment(id);
 
-            return RedirectToAction("Profile", "User");
+            return Redirect(Request.Headers["Referer"].ToString());
         }
     }
 }

@@ -77,7 +77,7 @@ else
                             {
                                 <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId" style="color:green;text-decoration:none;">@comment.User.FirstName @comment.User.LastName (@comment.User.UserName)</a>
                             }
-                            @if (User.IsInRole("Admin"))
+                            @if (User.IsInRole("Admin") || Model.LoggedUserId == comment.UserId)
                             {
                                 <a class="text-danger" asp-action="DeleteComment" asp-controller="Comment" asp-route-id="@comment.Id">Delete</a>
                             }

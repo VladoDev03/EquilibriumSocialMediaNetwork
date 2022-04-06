@@ -108,7 +108,12 @@ namespace App.Controllers
                 .GetUserById(id);
 
             UserViewModel result = user.ToUserViewModel();
-            result.CanSendInvitation = userServices.IsUserFriend(loggedUser.Id, id) && userServices.IsUserInvited(loggedUser.Id, id);
+
+            result.CanSendInvitation = userServices
+                .IsUserFriend(loggedUser.Id, id)
+                    && userServices.IsUserInvited(loggedUser.Id, id);
+
+            result.LoggedUserId = user.Id;
 
             List<PostViewModel> posts = postServices
                 .GetUserPosts(id)
