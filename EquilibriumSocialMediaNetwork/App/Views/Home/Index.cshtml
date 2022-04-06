@@ -73,6 +73,10 @@
                             {
                                 <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId" style="color:green;text-decoration:none;">@comment.User.FirstName @comment.User.LastName (@comment.User.UserName)</a>
                             }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a class="text-danger" asp-action="DeleteComment" asp-controller="Comment" asp-route-id="@comment.Id">Delete</a>
+                            }
 
                             <p class="text-info">@comment.TimeCommented</p>
                             <div style="padding-top: 4px;">@comment.Content</div>
@@ -93,14 +97,22 @@
                 </form>
             </div>
             <div>
-                @if (!item.IsLikedByUser)
-                {
-                    <a asp-controller="Reaction" asp-action="AddReaction" asp-route-name="like" asp-route-postId="@item.Id">like</a>
+                @{
+                    string likeStyle = "text-success";
+                    string dislikeStyle = "text-danger";
                 }
-                @if (!item.IsDislikedByUser)
+
+                @if (item.IsLikedByUser)
                 {
-                    <a asp-controller="Reaction" asp-action="AddReaction" asp-route-name="dislike" asp-route-postId="@item.Id">dislike</a>
+                    likeStyle += " font-weight-bold";
                 }
+                @if (item.IsDislikedByUser)
+                {
+                    dislikeStyle += " font-weight-bold";
+                }
+
+                <a class=@likeStyle asp-controller="Reaction" asp-action="AddReaction" asp-route-name="like" asp-route-postId="@item.Id">like</a>
+                <a class=@dislikeStyle asp-controller="Reaction" asp-action="AddReaction" asp-route-name="dislike" asp-route-postId="@item.Id">dislike</a>
             </div>
         </div>
     </div>

@@ -99,8 +99,22 @@ else
                 </form>
             </div>
             <div>
-                <a asp-controller="Reaction" asp-action="AddReaction" asp-route-name="like" asp-route-postId="@item.Id">like</a>
-                <a asp-controller="Reaction" asp-action="AddReaction" asp-route-name="dislike" asp-route-postId="@item.Id">dislike</a>
+                @{
+                    string likeStyle = "text-success";
+                    string dislikeStyle = "text-danger";
+                }
+
+                @if (item.IsLikedByUser)
+                {
+                    likeStyle += " font-weight-bold";
+                }
+                @if (item.IsDislikedByUser)
+                {
+                    dislikeStyle += " font-weight-bold";
+                }
+
+                <a class=@likeStyle asp-controller="Reaction" asp-action="AddReaction" asp-route-name="like" asp-route-postId="@item.Id">like</a>
+                <a class=@dislikeStyle asp-controller="Reaction" asp-action="AddReaction" asp-route-name="dislike" asp-route-postId="@item.Id">dislike</a>
             </div>
         </div>
     </div>

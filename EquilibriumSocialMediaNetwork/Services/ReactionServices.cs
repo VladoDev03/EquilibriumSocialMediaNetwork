@@ -23,6 +23,18 @@ namespace Services
 
         public ReactionServiceModel AddReaction(ReactionServiceModel reaction)
         {
+            Reaction isSameReaction = db.Reactions
+                .FirstOrDefault(r => r.UserId == reaction.UserId
+                    && r.PostId == reaction.PostId
+                    && r.Name == reaction.Name);
+
+            if (isSameReaction != null)
+            {
+                db.Reactions.Remove(isSameReaction);
+                db.SaveChanges();
+                return reaction;
+            }
+
             Reaction oldReaction = db.Reactions
                 .FirstOrDefault(r => r.UserId == reaction.UserId
                     && r.PostId == reaction.PostId

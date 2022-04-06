@@ -78,13 +78,13 @@ namespace App.Controllers
                 .GetUsers()
                 .Where(u => u.Id != user.Id)
                 .Select(u => new UserSearchView()
-            {
-                UserName = u.UserName,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                Email = u.Email,
-                Url = $"https://localhost:44366/User/Details/{u.Id}"
-            }).ToList();
+                {
+                    UserName = u.UserName,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    Url = $"https://localhost:44366/User/Details/{u.Id}"
+                }).ToList();
 
             string result = userJsonServices.AllUsersToJson(users);
 

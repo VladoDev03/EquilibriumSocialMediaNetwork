@@ -213,10 +213,10 @@ namespace Services
         private Reaction FindReactionByPostIdAndUserId(string postId, string userId)
         {
             User user = db.Users
-                .SingleOrDefault(u => u.Id == userId);
+                .FirstOrDefault(u => u.Id == userId);
 
             Reaction reaction = db.Reactions
-                .SingleOrDefault(r => r.UserId == userId && r.PostId == postId);
+                .FirstOrDefault(r => r.UserId == userId && r.PostId == postId);
 
             return reaction;
         }

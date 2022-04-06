@@ -60,6 +60,9 @@ namespace App.Controllers
                 .Select(p => postServices.SetReactionsCount(p))
                 .ToList();
 
+            posts.ForEach(p => p.IsLikedByUser = postServices.IsReactedByUser(p.Id, user.Id, "like"));
+            posts.ForEach(p => p.IsDislikedByUser = postServices.IsReactedByUser(p.Id, user.Id, "dislike"));
+
             UserViewModel result = new UserViewModel()
             {
                 FirstName = user.FirstName,
@@ -112,6 +115,9 @@ namespace App.Controllers
                 .Select(p => p.ToPostViewModel())
                 .Select(p => postServices.SetReactionsCount(p))
                 .ToList();
+
+            posts.ForEach(p => p.IsLikedByUser = postServices.IsReactedByUser(p.Id, loggedUser.Id, "like"));
+            posts.ForEach(p => p.IsDislikedByUser = postServices.IsReactedByUser(p.Id, loggedUser.Id, "dislike"));
 
             ProfilePictureServiceModel image = imageServices.GetProfilePictureByUserId(id);
             ProfilePictureViewModel profilePicture;
