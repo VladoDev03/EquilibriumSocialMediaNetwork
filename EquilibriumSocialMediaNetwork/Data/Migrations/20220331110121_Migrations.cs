@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace Data.Migrations
 {
-    public partial class ProfilePicture : Migration
+    public partial class Migrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -110,8 +110,8 @@ namespace Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "varchar(256)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "varchar(256)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
                     UserId = table.Column<string>(type: "varchar(256)", nullable: false)
                 },
@@ -155,8 +155,8 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "varchar(256)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(256)", nullable: false),
                     Value = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>

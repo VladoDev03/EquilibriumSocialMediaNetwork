@@ -34,11 +34,12 @@ namespace Data
         {
         }
 
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySQL("server=localhost;port=3306;user=root;password=T0rta@s@marmaladi7;database=equilibrium;");
+                optionsBuilder.UseMySQL("server=127.0.0.1;port=3306;user=root;password=Bibicen3103.;database=equilibrium;");
             }
 
             base.OnConfiguring(optionsBuilder);

@@ -41,7 +41,7 @@ namespace App
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddScoped<IUserServices, UserServices>();
-            services.AddScoped<IPostServices, PostServices>();
+            services.AddScoped<IPostServices, PostServicesModel>();
             services.AddScoped<ICommentServices, CommentServices>();
             services.AddScoped<IDescriptionServices, DescriptionServices>();
             services.AddScoped<IFriendRequestServices, FriendRequestServices>();
@@ -73,7 +73,7 @@ namespace App
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                                   builder =>
                                   {
-                                      builder.WithOrigins("http://127.0.0.1:5500");
+                                      builder.WithOrigins("http://localhost:5001");
                                   });
             });
         }

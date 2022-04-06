@@ -18,7 +18,7 @@ searchInput.addEventListener("input", (e) => {
     })
 })
 
-fetch("https://localhost:44366/users")
+fetch("https://localhost:5001/users")
     .then(res => res.json())
     .then(data => {
         users = data.map(user => {

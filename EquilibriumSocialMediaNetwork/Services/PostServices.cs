@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public class PostServices : IPostServices
+    public class PostServicesModel : IPostServices
     {
         private EquilibriumDbContext db;
 
-        public PostServices(EquilibriumDbContext db)
+        public PostServicesModel(EquilibriumDbContext db)
         {
             this.db = db;
         }
