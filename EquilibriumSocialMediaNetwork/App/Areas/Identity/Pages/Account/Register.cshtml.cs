@@ -141,16 +141,6 @@ namespace App.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, "User");
                     }
 
-                    //if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    //{
-                    //    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    //}
-                    //else
-                    //{
-                    //    await _signInManager.SignInAsync(user, isPersistent: false);
-                    //    return LocalRedirect(returnUrl);
-                    //}
-
                     return RedirectToAction("Index", "Home");
                 }
 

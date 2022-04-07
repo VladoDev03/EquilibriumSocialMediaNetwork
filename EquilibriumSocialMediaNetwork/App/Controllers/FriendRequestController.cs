@@ -42,7 +42,7 @@ namespace App.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Invites()
+        public async Task<IActionResult> InvitesAndRequests()
         {
             User currentUser = await _userManager.GetUserAsync(User);
 
@@ -51,20 +51,18 @@ namespace App.Controllers
                 .Select(fr => fr.ToFriendRequestViewModel())
                 .ToList();
 
-            return View(invites);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> PendingRequests()
-        {
-            User currentUser = await _userManager.GetUserAsync(User);
-
-            List<FriendRequestViewModel> invites = friendRequestServices
+            List<FriendRequestViewModel> pending = friendRequestServices
                 .GetPendingRequests(currentUser.Id)
                 .Select(fr => fr.ToFriendRequestViewModel())
                 .ToList();
 
-            return View(invites);
+            InvitesViewModel invitesViewModel = new InvitesViewModel()
+            {
+                Invites = invites,
+                Pending = pending
+            };
+
+            return View(invitesViewModel);
         }
 
         [HttpGet]
@@ -72,7 +70,7 @@ namespace App.Controllers
         {
             friendRequestServices.ApproveFriendRequest(id);
 
-            return RedirectToAction(nameof(Invites));
+            return Redirect(Request.Headers["Referer"].ToString());
         }
 
         [HttpGet]
@@ -80,14 +78,14 @@ namespace App.Controllers
         {
             friendRequestServices.RejectFriendRequest(id);
 
-            return RedirectToAction("Profile", "User");
+            return Redirect(Request.Headers["Referer"].ToString());
         }
 
         public IActionResult Delete(string id)
         {
             friendRequestServices.DeleteFriendRequest(id);
 
-            return RedirectToAction("Profile", "User");
+            return Redirect(Request.Headers["Referer"].ToString());
         }
     }
 }

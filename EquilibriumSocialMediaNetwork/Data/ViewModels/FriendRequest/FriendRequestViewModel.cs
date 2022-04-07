@@ -11,6 +11,8 @@ namespace Data.ViewModels.FriendRequest
     {
         public string Id { get; set; }
 
+        public string Status { get; set; }
+
         public UserViewModel RequestedFrom { get; set; }
 
         public UserViewModel RequestedTo { get; set; }

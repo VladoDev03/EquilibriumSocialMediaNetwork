@@ -83,6 +83,7 @@ namespace App
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<EquilibriumDbContext>();
+
             services.AddControllersWithViews();
 
             services.AddSignalR();
