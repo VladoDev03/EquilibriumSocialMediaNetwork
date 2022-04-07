@@ -31,10 +31,11 @@ const attemptChatLogin = () => {
     });
 
     async function sendMessage() {
-        const message = document.getElementById('message').value
+        const message = document.getElementById('message')
+        message.focus()
 
-        if (message) {
-            await connection.invoke("SendMessage", config.idTwo, message);
+        if (message.value) {
+            await connection.invoke("SendMessage", config.idTwo, message.value);
             document.getElementById('message').value = ""
         }
     }
@@ -62,6 +63,9 @@ const displayChatWrapper = () => {
                 h1.textContent = `[${message.usernameOne}] ${message.content}`
                 document.getElementById('messages').appendChild(h1)
             })
+
+            const scrollHeight = document.body.scrollHeight;
+            window.scrollTo(0, scrollHeight);
         })
 }
 
