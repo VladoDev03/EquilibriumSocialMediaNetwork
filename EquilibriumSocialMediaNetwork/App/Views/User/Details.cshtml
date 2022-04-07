@@ -24,17 +24,15 @@ else
 
 @if (Model.IsFriend)
 {
-    //Fix
     <a class="text-danger" asp-route-id="@Model.Id" asp-controller="Friend" asp-action="RemoveFriend">Remove friend</a>
 }
 else if (Model.HasRequest)
 {
-    //Fix
+    <a class="nav-link text-success" asp-area="" asp-controller="FriendRequest" asp-action="Accept" asp-route-id="@Model.Id">Accept</a>
     <a class="nav-link text-danger" asp-area="" asp-controller="FriendRequest" asp-action="Reject" asp-route-id="@Model.Id">Reject</a>
 }
 else if (Model.HasInvite)
 {
-    //Fix
     <a class="text-danger" asp-route-id="@Model.Id" asp-controller="FriendRequest" asp-action="Delete">Cancel</a>
 }
 else

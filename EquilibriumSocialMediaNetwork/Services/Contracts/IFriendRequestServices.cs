@@ -16,17 +16,17 @@ namespace Services.Contracts
 
         FriendRequestServiceModel SentFriendRequestToUser(UserServiceModel sender, UserServiceModel receiver);
 
-        FriendRequestServiceModel ApproveFriendRequest(string id);
+        FriendRequestServiceModel ApproveFriendRequest(string sentToId, string sentFromId);
 
-        FriendRequestServiceModel RejectFriendRequest(string id);
+        FriendRequestServiceModel RejectFriendRequest(string sentToId, string sentFromId);
 
-        FriendRequestServiceModel UpdateRequestStatus(string id, string newStatus);
+        FriendRequestServiceModel UpdateRequestStatus(string requestId, string newStatus);
 
         List<FriendRequestServiceModel> GetPendingRequests(string senderId);
 
         List<FriendRequestServiceModel> GetUserInvitations(string receiverId);
 
-        void DeleteFriendRequest(string id);
+        void DeleteFriendRequest(string sentFromId, string sentToId);
 
         void DeleteAllFriendRequestBySenderId(string id);
 

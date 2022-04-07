@@ -41,50 +41,87 @@ namespace Services
             return friendRequest;
         }
 
-        public FriendRequestServiceModel ApproveFriendRequest(string id)
+        public FriendRequestServiceModel ApproveFriendRequest(string sentToId, string sentFromId)
         {
-            FriendRequest request = db.FriendRequests
-                .FirstOrDefault(fr => fr.Id == id);
+            List<FriendRequest> requests = db.FriendRequests
+                .Where(fr => ((fr.RequestedToId == sentToId && fr.RequestedFromId == sentFromId)
+                            || fr.RequestedToId == sentFromId && fr.RequestedFromId == sentToId)
+                            && fr.RequestStatus != "Pending")
+
+                .ToList();
+
+            db.RemoveRange(requests);
+            db.SaveChanges();
+
+            FriendRequestServiceModel requestToApprove = db.FriendRequests
+                .FirstOrDefault(fr => fr.RequestedToId == sentToId
+                                    && fr.RequestedFromId == sentFromId)
+                .ToFriendRequestServiceModel();
+
+            if (requestToApprove.RequestStatus == "Approved")
+            {
+                return requestToApprove;
+            }
 
             UserFriend user = new UserFriend()
             {
-                User = request.RequestedFrom,
-                Friend = request.RequestedTo,
-                UserId = request.RequestedFromId,
-                FriendId = request.RequestedToId
+                User = requestToApprove.RequestedFrom,
+                Friend = requestToApprove.RequestedTo,
+                UserId = requestToApprove.RequestedFromId,
+                FriendId = requestToApprove.RequestedToId
             };
 
             UserFriend friend = new UserFriend()
             {
-                User = request.RequestedTo,
-                Friend = request.RequestedFrom,
-                UserId = request.RequestedToId,
-                FriendId = request.RequestedFromId
+                User = requestToApprove.RequestedTo,
+                Friend = requestToApprove.RequestedFrom,
+                UserId = requestToApprove.RequestedToId,
+                FriendId = requestToApprove.RequestedFromId
             };
 
             db.UsersFriends.Add(user);
             db.UsersFriends.Add(friend);
 
-            FriendRequestServiceModel result = UpdateRequestStatus(id, "Approved");
+            FriendRequestServiceModel result = UpdateRequestStatus(requestToApprove.Id, "Approved");
 
             db.SaveChanges();
 
             return result;
         }
 
-        public FriendRequestServiceModel RejectFriendRequest(string id)
+        public FriendRequestServiceModel RejectFriendRequest(string sentToId, string sentFromId)
         {
-            FriendRequestServiceModel request = UpdateRequestStatus(id, "Rejected");
+            List<FriendRequest> requests = db.FriendRequests
+                .Where(fr => ((fr.RequestedToId == sentToId && fr.RequestedFromId == sentFromId)
+                            || fr.RequestedToId == sentFromId && fr.RequestedFromId == sentToId)
+                            && fr.RequestStatus != "Pending")
+
+                .ToList();
+
+            db.RemoveRange(requests);
+            db.SaveChanges();
+
+            FriendRequestServiceModel requestToReject = db.FriendRequests
+                .FirstOrDefault(fr => fr.RequestedToId == sentToId
+                                    && fr.RequestedFromId == sentFromId)
+                .ToFriendRequestServiceModel();
+
+            if (requestToReject.RequestStatus == "Rejected")
+            {
+                return requestToReject;
+            }
+
+            FriendRequestServiceModel result = UpdateRequestStatus(requestToReject.Id, "Rejected");
 
             db.SaveChanges();
 
-            return request;
+            return result;
         }
 
-        public FriendRequestServiceModel UpdateRequestStatus(string id, string newStatus)
+        public FriendRequestServiceModel UpdateRequestStatus(string requestId, string newStatus)
         {
             FriendRequest request = db.FriendRequests
-                .FirstOrDefault(fr => fr.Id == id);
+                .FirstOrDefault(fr => fr.Id == requestId);
 
             request.RequestStatus = newStatus;
 
@@ -93,11 +130,13 @@ namespace Services
             return request.ToFriendRequestServiceModel();
         }
 
-        public void DeleteFriendRequest(string id)
+        public void DeleteFriendRequest(string sentFromId, string sentToId)
         {
-            FriendRequest request = db.FriendRequests.FirstOrDefault(fr => fr.Id == id);
+            FriendRequest result = db.FriendRequests
+                .FirstOrDefault(fr => fr.RequestedFromId == sentFromId
+                                    && fr.RequestedToId == sentToId);
 
-            db.FriendRequests.Remove(request);
+            db.FriendRequests.Remove(result);
             db.SaveChanges();
         }
 
@@ -105,13 +144,9 @@ namespace Services
         {
             FriendRequestServiceModel request = new FriendRequestServiceModel();
 
-            //request.RequestedFrom = sender.ToUser();
             request.RequestedFromId = sender.Id;
-            //request.RequestedTo = receiver.ToUser();
             request.RequestedToId = receiver.Id;
             request.RequestStatus = "Pending";
-
-            //AddToDatabase(request)
 
             FriendRequest frReq = request.ToFriendRequest();
             db.FriendRequests.Add(frReq);

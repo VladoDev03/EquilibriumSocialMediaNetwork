@@ -66,24 +66,30 @@ namespace App.Controllers
         }
 
         [HttpGet]
-        public IActionResult Accept(string id)
+        public async Task<IActionResult> Accept(string id)
         {
-            friendRequestServices.ApproveFriendRequest(id);
+            User user = await _userManager.GetUserAsync(User);
+
+            friendRequestServices.ApproveFriendRequest(user.Id, id);
 
             return Redirect(Request.Headers["Referer"].ToString());
         }
 
         [HttpGet]
-        public IActionResult Reject(string id)
+        public async Task<IActionResult> Reject(string id)
         {
-            friendRequestServices.RejectFriendRequest(id);
+            User user = await _userManager.GetUserAsync(User);
+
+            friendRequestServices.RejectFriendRequest(user.Id, id);
 
             return Redirect(Request.Headers["Referer"].ToString());
         }
 
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            friendRequestServices.DeleteFriendRequest(id);
+            User user = await _userManager.GetUserAsync(User);
+
+            friendRequestServices.DeleteFriendRequest(user.Id, id);
 
             return Redirect(Request.Headers["Referer"].ToString());
         }
