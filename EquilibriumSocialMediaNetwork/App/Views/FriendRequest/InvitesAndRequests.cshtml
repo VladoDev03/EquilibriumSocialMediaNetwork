@@ -12,7 +12,7 @@ else
         <summary class="summarySize">You have @Model.Invites.Count @invites.</summary>
         @foreach (var item in Model.Invites)
         {
-            <p>@item.RequestedFrom.FirstName @item.RequestedFrom.LastName (@item.RequestedFrom.UserName)</p>
+            <a asp-controller="User" asp-action="Details" asp-route-id="@item.RequestedFrom.Id">@item.RequestedFrom.FirstName @item.RequestedFrom.LastName (@item.RequestedFrom.UserName)</a>
             <a class="nav-link text-success" asp-area="" asp-controller="FriendRequest" asp-action="Accept" asp-route-id="@item.Id">Accept</a>
             <a class="nav-link text-danger" asp-area="" asp-controller="FriendRequest" asp-action="Reject" asp-route-id="@item.Id">Reject</a>
         }
@@ -33,8 +33,8 @@ else
         <summary class="summarySize">You've sent @Model.Pending.Count @requests.</summary>
         @foreach (var item in Model.Pending)
         {
-            <p>@item.RequestedTo.FirstName @item.RequestedTo.LastName (@item.RequestedTo.UserName)</p>
-            <a class="text-danger" asp-route-id="@item.Id" asp-controller="FriendRequest" asp-action="Delete">Delete</a>
+            <a asp-controller="User" asp-action="Details" asp-route-id="@item.RequestedTo.Id">@item.RequestedTo.FirstName @item.RequestedTo.LastName (@item.RequestedTo.UserName)</a>
+            <a class="text-danger" asp-route-id="@item.Id" asp-controller="FriendRequest" asp-action="Delete">Cancel</a>
         }
     </details>
 }

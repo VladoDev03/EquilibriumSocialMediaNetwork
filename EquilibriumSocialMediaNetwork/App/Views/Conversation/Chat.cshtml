@@ -13,7 +13,7 @@
     <div id="messages"></div>
     <hr class="message-divider" />
     <div id="send-wrapper">
-        <p>@Model.UserTwoFirstName @Model.UserTwoLastName (@Model.UserTwoUserName)</p>
+        <a asp-action="Details" asp-controller="User" asp-route-id="@Model.UserTwoId">@Model.UserTwoFirstName @Model.UserTwoLastName (@Model.UserTwoUserName)</a>
         <p class="hide" id="userTwo">@Model.UserTwoId</p>
         <p class="hide" id="conversation-to-find">@Model.ConversationId</p>
         <input type="text" class="form-control" id="message" placeholder="Type message..." autofocus>

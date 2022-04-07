@@ -25,7 +25,11 @@ namespace Data.ViewModels.User
 
         public string UserName { get; set; }
 
-        public bool CanSendInvitation { get; set; }
+        public bool IsFriend { get; set; }
+
+        public bool HasRequest { get; set; }
+
+        public bool HasInvite { get; set; }
 
         public bool IsAdmin { get; set; }
 

@@ -91,9 +91,14 @@ namespace App.Controllers
 
             UserViewModel result = user.ToUserViewModel();
 
-            result.CanSendInvitation = userServices
-                .IsUserFriend(loggedUser.Id, id)
-                    && userServices.IsUserInvited(loggedUser.Id, id);
+            result.IsFriend = userServices
+                .IsUserFriend(loggedUser.Id, id);
+
+            result.HasRequest = userServices
+                .HasUserInvitedUs(loggedUser.Id, id);
+
+            result.HasInvite = userServices
+                .IsUserInvited(loggedUser.Id, id);
 
             result.LoggedUserId = user.Id;
 
