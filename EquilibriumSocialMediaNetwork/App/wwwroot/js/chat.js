@@ -24,9 +24,19 @@ const attemptChatLogin = () => {
     });
 
     connection.on("ReceiveMessage", (message) => {
-        const h1 = document.createElement("h1")
-        h1.textContent = `${message}`
+        const h1 = document.createElement('h1')
+        const h4 = document.createElement('h4')
+
+        let input = message.split(' ')
+        let user = input[0]
+        let mess = input[1]
+
+        h1.textContent = `${mess}`
+        h4.textContent = `${user}`
+
+        document.getElementById('messages').appendChild(h4)
         document.getElementById('messages').appendChild(h1)
+
         window.scroll(0, document.documentElement.scrollHeight)
     });
 
@@ -59,8 +69,13 @@ const displayChatWrapper = () => {
     getConversation(config.conversationId)
         .then(conversation => {
             conversation.messages.forEach(message => {
-                const h1 = document.createElement("h1")
-                h1.textContent = `[${message.usernameOne}] ${message.content}`
+                const h1 = document.createElement('h1')
+                const h4 = document.createElement('h4')
+
+                h1.textContent = `${message.content}`
+                h4.textContent = `${message.usernameOne}`
+
+                document.getElementById('messages').appendChild(h4)
                 document.getElementById('messages').appendChild(h1)
             })
 

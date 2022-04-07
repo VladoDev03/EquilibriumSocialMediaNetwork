@@ -3,6 +3,7 @@
     outline-offset: 17px;
     border-radius: 17px;
     margin: 50px;
+    margin-top: 32px;
     margin-left: 0px;
 }
 
@@ -16,7 +17,4 @@
 #send-button {
     width: 10%;
     height: 40px;
-}
-
-#send-button {
 }
