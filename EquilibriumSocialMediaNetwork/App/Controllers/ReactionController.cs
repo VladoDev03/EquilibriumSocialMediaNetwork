@@ -38,7 +38,7 @@ namespace App.Controllers
 
             reactionServices.AddReaction(reaction);
 
-            return RedirectToAction("Index", "Home");
+            return Redirect(Request.Headers["Referer"].ToString());
         }
     }
 }

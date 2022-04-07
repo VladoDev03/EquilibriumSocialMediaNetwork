@@ -68,7 +68,7 @@ namespace App.Controllers
             cloudinaryServices.DeleteImage(image.ImagePublicId);
             imageServices.DeleteProfilePicture(image.Id);
 
-            return RedirectToAction(nameof(AllUsers));
+            return Redirect(Request.Headers["Referer"].ToString());
         }
 
         [Authorize(Roles = "Admin")]
