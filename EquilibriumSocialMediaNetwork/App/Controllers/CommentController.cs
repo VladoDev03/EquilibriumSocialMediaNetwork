@@ -27,8 +27,8 @@ namespace App.Controllers
             this.commentServices = commentServices;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromForm]CreateCommentBindingModel comment, string id)
+        [HttpPost("/comment")]
+        public async Task<IActionResult> Create([FromBody]CreateCommentBindingModel comment)
         {
             if (comment.Content == null)
             {
@@ -37,12 +37,12 @@ namespace App.Controllers
             }
 
             User user = await _userManager.GetUserAsync(User);
-            PostServiceModel post = postServices.GetPostById(id);
+            PostServiceModel post = postServices.GetPostById(comment.Id);
 
             CommentServiceModel commentToAdd = new CommentServiceModel()
             {
                 Content = comment.Content,
-                PostId = id,
+                PostId = comment.Id,
                 UserId = user.Id,
                 User = user
             };
@@ -50,6 +50,32 @@ namespace App.Controllers
             commentServices.AddComment(post, commentToAdd);
 
             return Redirect(Request.Headers["Referer"].ToString());
+        }
+
+        [HttpPost("/createComment")]
+        public async Task<IActionResult> JsonCreateComment([FromBody] CreateCommentBindingModel comment)
+        {
+            if (comment.Content == null)
+            {
+                TempData.Add("NotEmptyComment", "You can't create empty comments.");
+                return new BadRequestResult();
+            }
+
+            User user = await _userManager.GetUserAsync(User);
+            PostServiceModel post = postServices.GetPostById(comment.Id);
+
+            CommentServiceModel commentToAdd = new CommentServiceModel()
+            {
+                Content = comment.Content,
+                PostId = comment.Id,
+                UserId = user.Id,
+                User = user
+            };
+
+            commentServices.AddComment(post, commentToAdd);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return new JsonResult(new {Comment = commentToAdd, Roles = roles});
         }
 
         public IActionResult DeleteComment(string id)
