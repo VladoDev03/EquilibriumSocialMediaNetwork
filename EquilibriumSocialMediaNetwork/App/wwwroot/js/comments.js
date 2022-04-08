@@ -34,7 +34,6 @@ function generateComment(commentResponse, id) {
     commentDiv.style.padding = '3px'
 
     let comment = commentResponse.comment
-    let roles = commentResponse.roles
 
     let divContent = ''
 

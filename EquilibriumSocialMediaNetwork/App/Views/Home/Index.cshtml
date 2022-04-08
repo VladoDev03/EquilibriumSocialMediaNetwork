@@ -5,6 +5,7 @@
 
 <script src="~/js/search.js" defer></script>
 <script src="~/js/comments.js" defer></script>
+<script src="~/js/reactions.js" defer></script>
 <link href="~/css/search.css" rel="stylesheet" />
 
 <button id="search-button" class="search-btn" style="background-color: #ace29e; color: #ffffff; border-radius: 50%; margin: 23px 10px 29px 0; text-align: center; width: 35px; height: 35px; padding: 5px; user-select: none;"><i class="fas fa-search"></i></button>
@@ -51,18 +52,20 @@
             <div style="border: 2px;">
                 <details>
                     <summary>(likes: @item.LikesCount) (dislikes: @item.DislikesCount)</summary>
-                    @foreach (var reaction in item.Reactions)
-                    {
-                        <div style="border: 2px solid #808080; padding: 3px">
+                    <div id="reactions-@item.Id">
+                        @foreach (var reaction in item.Reactions)
+                        {
+                            <div style="border: 2px solid #808080; padding: 3px">
 
-                            @if (reaction.User != null)
-                            {
-                                <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@reaction.UserId" style="color:green;text-decoration:none;">@reaction.User.FirstName @reaction.User.LastName (@reaction.User.UserName)</a>
-                            }
+                                @if (reaction.User != null)
+                                {
+                                    <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@reaction.UserId" style="color:green;text-decoration:none;">@reaction.User.FirstName @reaction.User.LastName (@reaction.User.UserName)</a>
+                                }
 
-                            <div style="padding-top: 4px;">@reaction.Name</div>
-                        </div>
-                    }
+                                <div style="padding-top: 4px;">@reaction.Name</div>
+                            </div>
+                        }
+                    </div>
                 </details>
                 <details>
                     <summary>@item.Comments.Count comments</summary>
@@ -116,16 +119,10 @@
                     dislikeStyle += " font-weight-bold";
                 }
 
-                <a class=@likeStyle asp-controller="Reaction" asp-action="AddReaction" asp-route-name="like" asp-route-postId="@item.Id">like</a>
-                <a class=@dislikeStyle asp-controller="Reaction" asp-action="AddReaction" asp-route-name="dislike" asp-route-postId="@item.Id">dislike</a>
+                <button id="like-sender-@item.Id" class="@likeStyle likes" asp-controller="Reaction" asp-action="JsonAddReaction" asp-route-name="like" asp-route-postId="@item.Id">like</button>
+                <button id="dislike-sender-@item.Id" class="@dislikeStyle dislikes" asp-controller="Reaction" asp-action="JsonAddReaction" asp-route-name="dislike" asp-route-postId="@item.Id">dislike</button>
             </div>
         </div>
     </div>
     <hr />
 }
-
-<style>
-    #inputaId {
-        display: none;
-    }
-</style>
