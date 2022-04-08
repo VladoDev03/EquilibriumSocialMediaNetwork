@@ -45,16 +45,9 @@ Object.values(dislikes).forEach(dislike => dislike.addEventListener('click', (e)
         .then(data => generateReaction(data, id))
 }))
 
-let hasReacted = false
+let isCreated = false
 
 function generateReaction(reactionResponse, id) {
-    if (hasReacted) {
-        let itemToRemove = document.getElementById('reactions-' + id).lastChild
-        document.getElementById('reactions-' + id).removeChild(itemToRemove)
-    }
-
-    hasReacted = true
-
     let postUrl = `https://localhost:44366/addPost/${id}`
 
     fetch(postUrl)
@@ -79,20 +72,27 @@ function generateReaction(reactionResponse, id) {
             }
         })
 
-    let reactionDiv = document.createElement('div')
-    reactionDiv.style.border = '2px solid #808080'
-    reactionDiv.style.padding = '3px'
+    if (isCreated) {
+        let itemToRemove = document.getElementById('reactions-' + id).lastChild
+        document.getElementById('reactions-' + id).removeChild(itemToRemove)
+    } else {
+        let reactionDiv = document.createElement('div')
+        reactionDiv.style.border = '2px solid #808080'
+        reactionDiv.style.padding = '3px'
 
-    let reaction = reactionResponse.reaction
-    let divContent = ''
+        let reaction = reactionResponse.reaction
+        let divContent = ''
 
-    if (reaction.user) {
-        divContent += `<a type="button" href="User/Details/${reaction.userId}" style="color:green;text-decoration:none;">${reaction.user.firstName} ${reaction.user.lastName} (${reaction.user.userName})</a>`
+        if (reaction.user) {
+            divContent += `<a type="button" href="User/Details/${reaction.userId}" style="color:green;text-decoration:none;">${reaction.user.firstName} ${reaction.user.lastName} (${reaction.user.userName})</a>`
+        }
+
+        divContent += `<div style="padding-top: 4px;">${reaction.name}</div>`
+
+        reactionDiv.innerHTML = divContent;
+        reactionDiv.id = 'newData-' + reaction.id
+        document.getElementById('reactions-' + id).append(reactionDiv)
     }
 
-    divContent += `<div style="padding-top: 4px;">${reaction.name}</div>`
-
-    reactionDiv.innerHTML = divContent;
-    reactionDiv.id = 'newData-' + reaction.id
-    document.getElementById('reactions-' + id).append(reactionDiv)
+    isCreated = !isCreated
 }
