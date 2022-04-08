@@ -116,7 +116,7 @@ namespace App.Controllers
             return RedirectToAction("Profile", "User");
         }
 
-        [HttpGet("/post/{id}")]
+        [HttpGet("/addPost/{id}")]
         public async Task<IActionResult> GetPost(string id)
         {
             User user = await _userManager.GetUserAsync(User);

@@ -37,7 +37,7 @@ function generateComment(commentResponse, id) {
     commentDiv.style.border = '2px solid #808080'
     commentDiv.style.padding = '3px'
 
-    let postUrl = `https://localhost:44366/post/${id}`
+    let postUrl = `https://localhost:44366/addPost/${id}`
 
     fetch(postUrl)
         .then(res => res.json())

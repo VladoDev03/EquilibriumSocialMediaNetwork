@@ -55,7 +55,7 @@ function generateReaction(reactionResponse, id) {
 
     hasReacted = true
 
-    let postUrl = `https://localhost:44366/post/${id}`
+    let postUrl = `https://localhost:44366/addPost/${id}`
 
     fetch(postUrl)
         .then(res => res.json())
@@ -63,9 +63,6 @@ function generateReaction(reactionResponse, id) {
             let summaryContent = `<i class="far fa-thumbs-up"></i> ${data.likes} <i class="far fa-thumbs-down"></i> ${data.dislikes}`
             let summary = document.getElementById(`reaction-summary-${reactionResponse.reaction.postId}`)
             summary.innerHTML = summaryContent
-
-            console.log('like ' + data.isLiked)
-            console.log('dislike ' + data.isDisliked)
 
             if (data.isLiked) {
                 document.getElementById('like-sender-' + data.id).classList.add('font-weight-bold')
