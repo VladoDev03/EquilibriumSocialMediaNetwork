@@ -28,15 +28,27 @@ p {
 }
 
 
+/*--------------------The problem with the background:--------------------*/
+
+/*body*/
 .full-page {
-    height: 100%;
-    width: 100%;
-    background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('../Images/From app/colorful.png');
-    opacity: 0.8;
-    background-position: center;
-    background-size: cover;
-    position: absolute;
+    min-height: 100%;
 }
+    /*body:before*/
+    .full-page:before {
+        background-image: url('../Images/From app/colorful.png');
+        background-repeat: no-repeat;
+        opacity: 0.8;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: "";
+        background-position: center;
+        background-size: cover;
+        position: absolute;
+    }
+/*------------------------------------------------------------------------*/
 
 .navbar {
     display: flex;
