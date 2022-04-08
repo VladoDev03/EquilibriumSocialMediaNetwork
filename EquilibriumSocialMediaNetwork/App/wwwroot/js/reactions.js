@@ -45,7 +45,16 @@ Object.values(dislikes).forEach(dislike => dislike.addEventListener('click', (e)
         .then(data => generateReaction(data, id))
 }))
 
+let hasReacted = false
+
 function generateReaction(reactionResponse, id) {
+    if (hasReacted) {
+        let itemToRemove = document.getElementById('reactions-' + id).lastChild
+        document.getElementById('reactions-' + id).removeChild(itemToRemove)
+    }
+
+    hasReacted = true
+
     let reactionDiv = document.createElement('div')
     reactionDiv.style.border = '2px solid #808080'
     reactionDiv.style.padding = '3px'
@@ -60,5 +69,6 @@ function generateReaction(reactionResponse, id) {
     divContent += `<div style="padding-top: 4px;">${reaction.name}</div>`
 
     reactionDiv.innerHTML = divContent;
+    reactionDiv.id = 'newData-' + reaction.id
     document.getElementById('reactions-' + id).append(reactionDiv)
 }
