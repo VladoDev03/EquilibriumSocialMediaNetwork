@@ -53,10 +53,10 @@ function generateComment(commentResponse, id) {
     let divContent = ''
 
     if (comment.user) {
-        divContent += `<a type="button" asp-controller="User" asp-action="Details" asp-route-id="${comment.userId}" style="color:green;text-decoration:none;">${comment.user.firstName} ${comment.user.lastName} (${comment.user.userName})</a>`
+        divContent += `<a type="button" href="User/Details/${comment.userId}" style="color:green;text-decoration:none;">${comment.user.firstName} ${comment.user.lastName} (${comment.user.userName})</a>`
     }
 
-    divContent += `<a class="text-danger" asp-action="DeleteComment" asp-controller="Comment" asp-route-id="${comment.id}">Delete</a>`
+    divContent += `<a class="text-danger" href="Comment/DeleteComment/${comment.id}">Delete</a>`
 
     divContent += `<p class="text-info">${comment.timeCommented}</p>
                                 <div style="padding-top: 4px;">${comment.content}</div>`

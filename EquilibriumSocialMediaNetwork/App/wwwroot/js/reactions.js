@@ -90,7 +90,7 @@ function generateReaction(reactionResponse, id) {
     let divContent = ''
 
     if (reaction.user) {
-        divContent += `<a type="button" asp-controller="User" asp-action="Details" asp-route-id="${reaction.id}" style="color:green;text-decoration:none;">${reaction.user.firstName} ${reaction.user.lastName} (${reaction.user.userName})</a>`
+        divContent += `<a type="button" href="User/Details/${reaction.userId}" style="color:green;text-decoration:none;">${reaction.user.firstName} ${reaction.user.lastName} (${reaction.user.userName})</a>`
     }
 
     divContent += `<div style="padding-top: 4px;">${reaction.name}</div>`
