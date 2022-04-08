@@ -81,12 +81,14 @@ namespace App.Hubs
 
             if (userOneConnectionId != null)
             {
-                await Clients.Client(userOneConnectionId).SendAsync("ReceiveMessage", $"{userOne.UserName} {messageEntity.Content}");
+                //await Clients.Client(userOneConnectionId).SendAsync("ReceiveMessage", $"{userOne.UserName} {messageEntity.Content}");
+                await Clients.Client(userOneConnectionId).SendAsync("ReceiveMessage", new { UserName = userOne.UserName, Message = messageEntity.Content });
             }
 
             if (userTwoConnectionId != null)
             {
-                await Clients.Client(userTwoConnectionId).SendAsync("ReceiveMessage", $"{userOne.UserName} {messageEntity.Content}");
+                //await Clients.Client(userTwoConnectionId).SendAsync("ReceiveMessage", $"{userOne.UserName} {messageEntity.Content}");
+                await Clients.Client(userTwoConnectionId).SendAsync("ReceiveMessage", new { UserName = userOne.UserName, Message = messageEntity.Content });
             }
         }
     }
