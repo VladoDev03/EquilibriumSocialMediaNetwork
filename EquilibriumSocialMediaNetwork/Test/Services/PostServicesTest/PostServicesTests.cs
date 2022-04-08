@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using App.Areas.Identity.Pages.Account;
 using App.Controllers;
@@ -67,18 +68,5 @@ namespace Test.Services.PostServicesTest
             Assert.AreEqual(1, this.context.Posts.ToList().Count);
         }
 
-        [Test]
-        public void UpdatePost_Test()
-        {
-            PostServicesModel postServicesModel = new PostServicesModel(this.context);
-
-            this.context.Posts.Add(new Post() { Id = "1" });
-
-            this.context.SaveChanges();
-
-
-
-            
-        }
     }
 }

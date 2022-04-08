@@ -26,10 +26,14 @@
     <None Remove="Services\" />
     <None Remove="Services\PostServices\" />
     <None Remove="Services\CommentServicesTest\" />
+    <None Remove="Services\DescriptionServicesTest\" />
+    <None Remove="Services\RactionServicesTest\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Services\PostServicesTest\" />
     <Folder Include="Services\CommentServicesTest\" />
+    <Folder Include="Services\DescriptionServicesTest\" />
+    <Folder Include="Services\RactionServicesTest\" />
   </ItemGroup>
 </Project>

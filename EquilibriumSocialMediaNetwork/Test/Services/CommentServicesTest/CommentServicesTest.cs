@@ -54,7 +54,6 @@ namespace Test.Services
             commentServices.DeleteComment("21");
 
             Assert.AreEqual(1, this.context.Comments.ToList().Count);
-
         }
     }
     
