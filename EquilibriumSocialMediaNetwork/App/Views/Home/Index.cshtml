@@ -51,7 +51,7 @@
         <div style="padding: 3px;">
             <div style="border: 2px;">
                 <details>
-                    <summary>(likes: @item.LikesCount) (dislikes: @item.DislikesCount)</summary>
+                    <summary id="reaction-summary-@item.Id">(likes: @item.LikesCount) (dislikes: @item.DislikesCount)</summary>
                     <div id="reactions-@item.Id">
                         @foreach (var reaction in item.Reactions)
                         {
@@ -68,7 +68,7 @@
                     </div>
                 </details>
                 <details>
-                    <summary>@item.Comments.Count comments</summary>
+                    <summary id="comment-summary-@item.Id">@item.Comments.Count comments</summary>
                     <div id="comments-@item.Id">
                         @foreach (var comment in item.Comments)
                         {

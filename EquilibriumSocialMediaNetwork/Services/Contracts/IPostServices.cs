@@ -28,6 +28,8 @@ namespace Services.Contracts
 
         PostViewModel SetReactionsCount(PostViewModel post);
 
+        PostViewModel SetCommentsCount(PostViewModel post);
+
         /// <summary>
         /// Returns true if post is reacted by user with the given reaction.
         /// Reactions are likely to be: "like" and "dislike".

@@ -55,6 +55,33 @@ function generateReaction(reactionResponse, id) {
 
     hasReacted = true
 
+    let postUrl = `https://localhost:44366/post/${id}`
+
+    fetch(postUrl)
+        .then(res => res.json())
+        .then(data => {
+            let summaryContent = `(likes: ${data.likes}) (dislikes: ${data.dislikes})`
+            let summary = document.getElementById(`reaction-summary-${reactionResponse.reaction.postId}`)
+            summary.innerText = summaryContent
+
+            console.log('like ' + data.isLiked)
+            console.log('dislike ' + data.isDisliked)
+
+            if (data.isLiked) {
+                document.getElementById('like-sender-' + data.id).classList.add('font-weight-bold')
+                document.getElementById('dislike-sender-' + data.id).classList.remove('font-weight-bold')
+            } else {
+                document.getElementById('like-sender-' + data.id).classList.remove('font-weight-bold')
+            }
+
+            if (data.isDisliked) {
+                document.getElementById('dislike-sender-' + data.id).classList.add('font-weight-bold')
+                document.getElementById('like-sender-' + data.id).classList.remove('font-weight-bold')
+            } else {
+                document.getElementById('dislike-sender-' + data.id).classList.remove('font-weight-bold')
+            }
+        })
+
     let reactionDiv = document.createElement('div')
     reactionDiv.style.border = '2px solid #808080'
     reactionDiv.style.padding = '3px'

@@ -103,7 +103,7 @@ namespace App.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdatePost([FromForm]EditPostBindingModel newData, string id)
+        public IActionResult UpdatePost([FromForm] EditPostBindingModel newData, string id)
         {
             PostServiceModel post = new PostServiceModel()
             {
@@ -114,6 +114,35 @@ namespace App.Controllers
             postServices.UpdatePost(post);
 
             return RedirectToAction("Profile", "User");
+        }
+
+        [HttpGet("/post/{id}")]
+        public async Task<IActionResult> GetPost(string id)
+        {
+            User user = await _userManager.GetUserAsync(User);
+
+            PostViewModel post = postServices
+                .GetPostById(id)
+                .ToPostViewModel();
+
+            post = postServices.SetReactionsCount(post);
+            post = postServices.SetCommentsCount(post);
+
+            post.IsLikedByUser = post.IsLikedByUser = postServices
+                .IsReactedByUser(post.Id, user.Id, "like");
+
+            post.IsDislikedByUser = post.IsDislikedByUser = postServices
+                .IsReactedByUser(post.Id, user.Id, "dislike");
+
+            return new JsonResult(new
+            {
+                Id = post.Id,
+                Likes = post.LikesCount,
+                Dislikes = post.DislikesCount,
+                Comments = post.Comments.Count,
+                IsLiked = post.IsLikedByUser,
+                IsDisliked = post.IsDislikedByUser
+            });
         }
     }
 }

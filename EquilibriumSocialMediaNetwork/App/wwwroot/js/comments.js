@@ -10,6 +10,10 @@ Object.values(buttons).forEach(button => button.addEventListener('click', (e) =>
 
     document.getElementById('content-' + id).value = ''
 
+    if (input === '') {
+        return
+    }
+
     const comment = {
         Id: id,
         Content: input
@@ -33,6 +37,17 @@ function generateComment(commentResponse, id) {
     commentDiv.style.border = '2px solid #808080'
     commentDiv.style.padding = '3px'
 
+    let postUrl = `https://localhost:44366/post/${id}`
+
+    fetch(postUrl)
+        .then(res => res.json())
+        .then(data => {
+            let summaryContent = `${data.comments} comments`
+            console.log(summaryContent)
+            let summary = document.getElementById(`comment-summary-${id}`)
+            summary.innerText = summaryContent
+        })
+
     let comment = commentResponse.comment
 
     let divContent = ''
@@ -41,7 +56,7 @@ function generateComment(commentResponse, id) {
         divContent += `<a type="button" asp-controller="User" asp-action="Details" asp-route-id="${comment.userId}" style="color:green;text-decoration:none;">${comment.user.firstName} ${comment.user.lastName} (${comment.user.userName})</a>`
     }
 
-    divContent += ` <a class="text-danger" asp-action="DeleteComment" asp-controller="Comment" asp-route-id="${comment.id}">Delete</a>`
+    divContent += `<a class="text-danger" asp-action="DeleteComment" asp-controller="Comment" asp-route-id="${comment.id}">Delete</a>`
 
     divContent += `<p class="text-info">${comment.timeCommented}</p>
                                 <div style="padding-top: 4px;">${comment.content}</div>`
