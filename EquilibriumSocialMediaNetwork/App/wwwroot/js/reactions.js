@@ -60,9 +60,9 @@ function generateReaction(reactionResponse, id) {
     fetch(postUrl)
         .then(res => res.json())
         .then(data => {
-            let summaryContent = `(likes: ${data.likes}) (dislikes: ${data.dislikes})`
+            let summaryContent = `<i class="far fa-thumbs-up"></i> ${data.likes} <i class="far fa-thumbs-down"></i> ${data.dislikes}`
             let summary = document.getElementById(`reaction-summary-${reactionResponse.reaction.postId}`)
-            summary.innerText = summaryContent
+            summary.innerHTML = summaryContent
 
             console.log('like ' + data.isLiked)
             console.log('dislike ' + data.isDisliked)
