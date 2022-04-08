@@ -37,16 +37,13 @@ namespace App.Controllers
             return View(friends);
         }
 
-        public IActionResult RemoveFriend(string id)
+        public async Task<IActionResult> RemoveFriend(string id)
         {
-            string[] ids = id.Split();
+            User user = await _userManager.GetUserAsync(User);
 
-            string userId = ids[0];
-            string friendId = ids[1];
+            userFriendServices.RemoveUserFriend(user.Id, id);
 
-            userFriendServices.RemoveUserFriend(userId, friendId);
-
-            return RedirectToAction(nameof(FriendsList));
+            return Redirect(Request.Headers["Referer"].ToString());
         }
     }
 }

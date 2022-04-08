@@ -91,19 +91,22 @@ namespace Services
 
         public bool IsUserInvited(string loggedUserId, string userId)
         {
-            bool isSender = db.FriendRequests
+            bool isReceiver = db.FriendRequests
                 .Any(fr => fr.RequestedFromId == loggedUserId
                     && fr.RequestedToId == userId
-                    && fr.RequestStatus != "Rejected");
+                    && fr.RequestStatus == "Pending");
 
-            bool isReceiver = db.FriendRequests
+            return isReceiver;
+        }
+
+        public bool HasUserInvitedUs(string loggedUserId, string userId)
+        {
+            bool isSender = db.FriendRequests
                 .Any(fr => fr.RequestedToId == loggedUserId
                     && fr.RequestedFromId == userId
-                    && fr.RequestStatus != "Rejected");
+                    && fr.RequestStatus == "Pending");
 
-            bool result = !isSender && !isReceiver;
-
-            return result;
+            return isSender;
         }
 
         public bool IsUserFriend(string loggedUserId, string userId)
@@ -111,7 +114,7 @@ namespace Services
             bool isFriend = db.UsersFriends.FirstOrDefault(ur => ur.UserId == loggedUserId && ur.FriendId == userId) != null;
             bool isUser = db.UsersFriends.FirstOrDefault(ur => ur.FriendId == loggedUserId && ur.UserId == userId) != null;
 
-            bool result = !isFriend && !isUser;
+            bool result = isFriend && isUser;
 
             return result;
         }

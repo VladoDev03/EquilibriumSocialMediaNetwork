@@ -8,10 +8,9 @@
 @foreach (var friend in Model)
 {
     string names = $"{friend.Friend.FirstName} {friend.Friend.LastName} ({(friend.Friend.UserName)})";
-    string idToDelete = $"{friend.UserId} {friend.FriendId}";
 
     <a asp-controller="User" asp-action="Details" asp-route-id="@friend.FriendId">@names</a>
-    <a class="text-danger" asp-route-id="@idToDelete" asp-controller="Friend" asp-action="RemoveFriend">Delete</a>
+    <a class="text-danger" asp-route-id="@friend.FriendId" asp-controller="Friend" asp-action="RemoveFriend">Remove friend</a>
     <a class="text-success" asp-controller="Conversation" asp-action="Chat" asp-route-id="@friend.FriendId">Chat</a>
 
     <br />

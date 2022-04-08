@@ -1,0 +1,20 @@
+﻿h1 {
+    outline: 2px ridge #D9D9D9;
+    outline-offset: 17px;
+    border-radius: 17px;
+    margin: 50px;
+    margin-top: 32px;
+    margin-left: 0px;
+}
+
+#send-wrapper {
+    display: flex;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+}
+
+#send-button {
+    width: 10%;
+    height: 40px;
+}

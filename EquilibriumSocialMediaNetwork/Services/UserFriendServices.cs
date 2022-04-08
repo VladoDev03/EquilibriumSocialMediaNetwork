@@ -34,6 +34,16 @@ namespace Services
 
         public void RemoveUserFriend(string userId, string friendId)
         {
+            List<FriendRequest> requests = db.FriendRequests
+                .Where(fr => ((fr.RequestedToId == userId && fr.RequestedFromId == friendId)
+                            || fr.RequestedToId == friendId && fr.RequestedFromId == userId)
+                            && fr.RequestStatus != "Pending")
+
+                .ToList();
+
+            db.RemoveRange(requests);
+            db.SaveChanges();
+
             UserFriend friendToRemove = db.UsersFriends
                 .FirstOrDefault(fr => fr.UserId == userId && fr.FriendId == friendId);
 

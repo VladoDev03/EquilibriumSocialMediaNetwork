@@ -46,7 +46,7 @@ namespace App.Hubs
             return base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendMessage(/*string idOne, */string idTwo, string message)
+        public async Task SendMessage(string idTwo, string message)
         {
             string idOne = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             User userOne = userServices.GetUserById(idOne).ToUser();
@@ -81,12 +81,12 @@ namespace App.Hubs
 
             if (userOneConnectionId != null)
             {
-                await Clients.Client(userOneConnectionId).SendAsync("ReceiveMessage", $"[{userOne.UserName}] {messageEntity.Content}");
+                await Clients.Client(userOneConnectionId).SendAsync("ReceiveMessage", $"{userOne.UserName} {messageEntity.Content}");
             }
 
             if (userTwoConnectionId != null)
             {
-                await Clients.Client(userTwoConnectionId).SendAsync("ReceiveMessage", $"[{userOne.UserName}] {messageEntity.Content}");
+                await Clients.Client(userTwoConnectionId).SendAsync("ReceiveMessage", $"{userOne.UserName} {messageEntity.Content}");
             }
         }
     }

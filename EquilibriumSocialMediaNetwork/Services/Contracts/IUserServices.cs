@@ -24,6 +24,8 @@ namespace Services.Contracts
 
         bool IsUserInvited(string loggedUserId, string userId);
 
+        bool HasUserInvitedUs(string loggedUserId, string userId);
+
         bool IsUserFriend(string loggedUserId, string userId);
 
         void DeleteUser(string userId);

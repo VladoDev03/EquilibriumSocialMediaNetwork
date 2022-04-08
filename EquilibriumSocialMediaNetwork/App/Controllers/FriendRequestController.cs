@@ -42,7 +42,7 @@ namespace App.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Invites()
+        public async Task<IActionResult> InvitesAndRequests()
         {
             User currentUser = await _userManager.GetUserAsync(User);
 
@@ -51,43 +51,47 @@ namespace App.Controllers
                 .Select(fr => fr.ToFriendRequestViewModel())
                 .ToList();
 
-            return View(invites);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> PendingRequests()
-        {
-            User currentUser = await _userManager.GetUserAsync(User);
-
-            List<FriendRequestViewModel> invites = friendRequestServices
+            List<FriendRequestViewModel> pending = friendRequestServices
                 .GetPendingRequests(currentUser.Id)
                 .Select(fr => fr.ToFriendRequestViewModel())
                 .ToList();
 
-            return View(invites);
+            InvitesViewModel invitesViewModel = new InvitesViewModel()
+            {
+                Invites = invites,
+                Pending = pending
+            };
+
+            return View(invitesViewModel);
         }
 
         [HttpGet]
-        public IActionResult Accept(string id)
+        public async Task<IActionResult> Accept(string id)
         {
-            friendRequestServices.ApproveFriendRequest(id);
+            User user = await _userManager.GetUserAsync(User);
 
-            return RedirectToAction(nameof(Invites));
+            friendRequestServices.ApproveFriendRequest(user.Id, id);
+
+            return Redirect(Request.Headers["Referer"].ToString());
         }
 
         [HttpGet]
-        public IActionResult Reject(string id)
+        public async Task<IActionResult> Reject(string id)
         {
-            friendRequestServices.RejectFriendRequest(id);
+            User user = await _userManager.GetUserAsync(User);
 
-            return RedirectToAction("Profile", "User");
+            friendRequestServices.RejectFriendRequest(user.Id, id);
+
+            return Redirect(Request.Headers["Referer"].ToString());
         }
 
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            friendRequestServices.DeleteFriendRequest(id);
+            User user = await _userManager.GetUserAsync(User);
 
-            return RedirectToAction("Profile", "User");
+            friendRequestServices.DeleteFriendRequest(user.Id, id);
+
+            return Redirect(Request.Headers["Referer"].ToString());
         }
     }
 }

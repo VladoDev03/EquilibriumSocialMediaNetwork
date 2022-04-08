@@ -22,11 +22,25 @@ else
 <h1>@Model.FirstName @Model.LastName</h1>
 <h2>@Model.UserName</h2>
 
-@if (Model.CanSendInvitation)
+@if (Model.IsFriend)
+{
+    <a class="text-danger" asp-route-id="@Model.Id" asp-controller="Friend" asp-action="RemoveFriend">Remove friend</a>
+}
+else if (Model.HasRequest)
+{
+    <a class="nav-link text-success" asp-area="" asp-controller="FriendRequest" asp-action="Accept" asp-route-id="@Model.Id">Accept</a>
+    <a class="nav-link text-danger" asp-area="" asp-controller="FriendRequest" asp-action="Reject" asp-route-id="@Model.Id">Reject</a>
+}
+else if (Model.HasInvite)
+{
+    <a class="text-danger" asp-route-id="@Model.Id" asp-controller="FriendRequest" asp-action="Delete">Cancel</a>
+}
+else
 {
     <a type="button" asp-controller="FriendRequest" asp-action="SendRequest" asp-route-id="@Model.Id" style="color:green;text-decoration:none;">Add friend</a>
-    <br />
 }
+
+<br />
 
 @foreach (var item in Model.Posts)
 {

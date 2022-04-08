@@ -46,6 +46,7 @@ namespace Services.Mappers
             FriendRequestViewModel result = new FriendRequestViewModel()
             {
                 Id = request.Id,
+                Status = request.RequestStatus,
                 RequestedFrom = request.RequestedFrom.ToUserViewModel(),
                 RequestedTo = request.RequestedTo.ToUserViewModel()
             };
