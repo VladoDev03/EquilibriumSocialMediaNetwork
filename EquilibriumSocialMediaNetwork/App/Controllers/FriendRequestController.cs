@@ -36,7 +36,7 @@ namespace App.Controllers
             User currentUser = await _userManager.GetUserAsync(User);
             UserServiceModel sender = currentUser.ToUserServiceModel();
 
-            friendRequestServices.SentFriendRequestToUser(sender, receiver);
+            friendRequestServices.SendFriendRequestToUser(sender, receiver);
 
             return RedirectToAction("Details", "User", new { Id = id });
         }
