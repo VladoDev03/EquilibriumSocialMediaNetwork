@@ -167,36 +167,9 @@ namespace App.Controllers
             return RedirectToAction(nameof(Profile));
         }
 
-        public async Task<IActionResult> QrCode()
+        public IActionResult QrCode()
         {
-            User user = await _userManager.GetUserAsync(User);
-            string userId = user.Id;
-
-            QrCodeViewModel qrCodeViewModel = null;
-            QrCodeServiceModel qrCode = qrCodeServices.GetQrCodeByUserId(userId);
-
-            if (qrCode != null)
-            {
-                qrCodeViewModel = new QrCodeViewModel(qrCode.ImageUrl, qrCode.ImageDownloadUrl);
-                return View(qrCodeViewModel);
-            }
-
-            string dataForCode = $"https://equilibriumsocialmedia.herokuapp.com/User/Details/{userId}";
-            byte[] finalImage = qrCodeServices.MakeQrCode(dataForCode);
-            string[] imageData = cloudinaryServices.UploadImage(finalImage, "Social media images/Qr codes").Split("*");
-
-            qrCode = new QrCodeServiceModel();
-
-            qrCode.ImageUrl = imageData[0];
-            qrCode.PublicId = imageData[1];
-            qrCode.ImageDownloadUrl = cloudinaryServices.GetDownloadLink(imageData[0]);
-            qrCode.UserId = userId;
-
-            qrCodeViewModel = new QrCodeViewModel(qrCode.ImageUrl, qrCode.ImageDownloadUrl);
-
-            qrCodeServices.AddQrCode(qrCode, user);
-
-            return View(qrCodeViewModel);
+            return View();
         }
 
         private List<PostViewModel> GetUserPosts(string id)
