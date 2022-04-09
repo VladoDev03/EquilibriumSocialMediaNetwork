@@ -1,10 +1,23 @@
-﻿<form asp-action="ProfilePictureUpload" asp-controller="User" method="post" enctype="multipart/form-data">
-    <input type="file" name="profilePicture" style="padding-top: 20px; padding-bottom: 20px; " />
-    <br />
+﻿<div class="user-posts">
+    <form asp-action="ProfilePictureUpload" asp-controller="User" method="post" enctype="multipart/form-data">
+        <input id="imgInp" type="file" accept="image/*" name="profilePicture" style="padding-top: 20px; padding-bottom: 20px; " />
+        <br />
 
-    <input type="checkbox" name="isDownloadable" value="checked" />
-    <span>Will other users be able to download this image?</span>
-    <br />
+        <input type="checkbox" name="isDownloadable" value="checked" />
+        <span>Will other users be able to download this image?</span>
+        <br />
 
-    <button type="submit" class="btn btn-secondary btn-lg">Change profile picture</button>
-</form>
+        <img id="show_Image" style="height:25%; width:25%;" />
+
+        <button type="submit" class="btn btn-secondary btn-lg">Change profile picture</button>
+    </form>
+</div>
+
+<script>
+    imgInp.onchange = evt => {
+        const [file] = imgInp.files
+        if (file) {
+            show_Image.src = URL.createObjectURL(file)
+        }
+    }
+</script>

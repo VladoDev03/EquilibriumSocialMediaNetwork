@@ -2,23 +2,64 @@
     ViewData["Title"] = "Add post";
 }
 
-<h1 style="padding-bottom: 20px;">@ViewData["Title"]</h1>
-<form asp-action="Create" asp-controller="Post" method="post" enctype="multipart/form-data">
+<link href="~/css/outlook.css" rel="stylesheet" />
+<script src="~/js/preview.js" defer></script>
 
-    @if (ViewData["NotEmptyContent"] != null || (string)ViewData["NotEmptyContent"] != "")
-    {
-        <p class="text-danger">@ViewData["NotEmptyContent"]</p>
-    }
+<div style="background-color: white; flex:100%; text-align:center; padding-top: 10px;">
+    <h1 style="padding-bottom: 20px;">@ViewData["Title"]</h1>
+</div>
+<div class="user-data" style="flex: 50%; background-color: white;">
+    <form asp-action="Create" asp-controller="Post" method="post" enctype="multipart/form-data">
 
-    <textarea name="content" value="" placeholder="Add some content..." rows="10" cols="35" style=" resize: both;"></textarea>
-    <br />
+        @if (ViewData["NotEmptyContent"] != null || (string)ViewData["NotEmptyContent"] != "")
+        {
+            <p class="text-danger">@ViewData["NotEmptyContent"]</p>
+        }
 
-    <input type="file" name="image" style="padding-top: 20px; padding-bottom: 20px; " />
-    <br />
+        <textarea id="textcontent" name="content" value="" placeholder="Add some content..." rows="10" cols="35" style=" resize: both;"></textarea>
+        <br />
 
-    <input type="checkbox" name="isDownloadable" value="checked" />
-    <span>Will other users be able to download this image?</span>
-    <br />
+        <input id="imgInp" type="file" name="image" accept="image/*" style="padding-top: 20px; padding-bottom: 20px; " />
+        <br />
 
-    <button type="submit" class="btn btn-secondary btn-lg">Post</button>
-</form>
+        <input type="checkbox" name="isDownloadable" value="checked" />
+        <span>Will other users be able to download this image?</span>
+        <br />
+
+        <button type="submit" class="btn btn-secondary btn-lg">Post</button>
+    </form>
+</div>
+<div class="user-posts" style="flex: 50%;">
+    <div id="border">
+        <div style="padding: 10px;">
+
+            <div id="showtext" style="font-size:20px; margin-top: 10px;"></div>
+
+            <img id="show_Image" style="height:70%; width:70%;" />
+
+            <div style="padding: 3px;">
+                <div style="border: 2px;">
+                    <details>
+                        <summary>(<i class="far fa-thumbs-up"></i> 0) (<i class="far fa-thumbs-down"></i> 0)</summary>
+                    </details>
+                    <details>
+                        <summary>0 comments</summary>
+                    </details>
+                </div>
+                <div style="padding-top: 5px;">
+                    <input type="text" name="content" disabled />
+                    <button type="submit">Comment</button>
+                </div>
+                <div>
+                    @{
+                        string likeStyle = "text-success";
+                        string dislikeStyle = "text-danger";
+                    }
+
+                    <a class=@likeStyle>like</a>
+                    <a class=@dislikeStyle>dislike</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,14 +1,26 @@
 ﻿@model List<UserViewModel>
-
-@foreach (UserViewModel user in Model)
-{
-    <a asp-action="Details" asp-controller="User" asp-route-id="@user.Id">@user.FirstName @user.LastName (@user.UserName)</a>
-
-    @if (!user.IsAdmin)
-    {
-        <a class="text-danger" asp-action="BanUser" asp-controller="Admin" asp-route-userId="@user.Id">Delete</a>
-        <a class="text-success" asp-action="MakeAdmin" asp-controller="Admin" asp-route-userId="@user.Id">Make admin</a>
-    }
-
-    <br />
+@{
+    ViewData["Title"] = "All Users";
 }
+
+<div class="user-posts">
+    @foreach (UserViewModel user in Model)
+    {
+        <table>
+            <tr>
+                <th style="padding-right: 10px;">
+                    <a asp-action="Details" asp-controller="User" asp-route-id="@user.Id">@user.FirstName @user.LastName (@user.UserName)</a>
+                </th>
+                <th>
+                    @if (!user.IsAdmin)
+                    {
+                        <a class="text-danger" asp-action="BanUser" asp-controller="Admin" asp-route-userId="@user.Id">Delete</a>
+                        <a class="text-success" asp-action="MakeAdmin" asp-controller="Admin" asp-route-userId="@user.Id">Make admin</a>
+                    }
+                </th>
+            </tr>
+        </table>
+
+        <br />
+    }
+</div>
