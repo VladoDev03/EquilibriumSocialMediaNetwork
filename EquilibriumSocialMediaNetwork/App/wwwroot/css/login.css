@@ -1,5 +1,13 @@
 ﻿@import url('https://use.fontawesome.com/releases/v5.15.3/css/all.css');
 
+html, body, .full-page-background {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -31,23 +39,24 @@ p {
 /*--------------------The problem with the background:--------------------*/
 
 /*body*/
-.full-page {
-    min-height: 100%;
+.full-page-background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-image: url('../Images/From app/colorful.png');
+    background-size: cover;
+    opacity: 0.8;
 }
-    /*body:before*/
-    .full-page:before {
-        background-image: url('../Images/From app/colorful.png');
-        background-repeat: no-repeat;
-        opacity: 0.8;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        content: "";
-        background-position: center;
-        background-size: cover;
-        position: absolute;
-    }
+
+.full-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+}
+
 /*------------------------------------------------------------------------*/
 
 .navbar {
