@@ -45,10 +45,10 @@
                 {
                     @if (item.IsDownloadable)
                     {
-                        <a href="@item.ImageDownloadUrl" download="image">Save post</a>
+                        <a href="@item.ImageDownloadUrl" download="image"><i class="fas fa-download twoPx" style="margin-right: 4px;"></i>Save post</a>
                     }
 
-                    <img src="@item.ImageUrl" alt="image" asp-append-version="true" />
+                    <img style="height:25%; width:25%;" src="@item.ImageUrl" alt="image" asp-append-version="true" />
                 }
 
                 <div style="padding: 3px;">

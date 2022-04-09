@@ -1,4 +1,7 @@
 ﻿@model List<UserViewModel>
+@{
+    ViewData["title"] = "Your chats";
+}
 
 <div class="user-posts">
     @foreach (UserViewModel user in Model)
