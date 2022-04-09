@@ -1,10 +1,61 @@
 ﻿@model PostViewModel
+@{ ViewData["Title"] = "Edit Post"; }
 
 <link href="~/css/search.css" rel="stylesheet" />
 
-<h3>@Model.Content</h3>
+<div style="background-color: white; flex:100%; text-align:center; padding-top: 10px;">
+    <h1 style="padding-bottom: 20px;">@ViewData["Title"]</h1>
+</div>
 
-<form asp-route-id="@Model.Id" asp-action="UpdatePost" asp-controller="Post" method="post">
-    <input type="text" name="content" />
-    <button type="submit">Edit</button>
-</form>
+<div class="user-data" style="flex: 50%; background-color: white;">
+    <form asp-route-id="@Model.Id" asp-action="UpdatePost" asp-controller="Post" method="post">
+        <textarea id="textcontent" name="content" value="" rows="10" cols="35" style="resize: both;" asp-for="@Model.Content"></textarea>
+        <br /><br />
+        <button type="submit" class="btn btn-secondary btn-lg">Edit</button>
+    </form>
+</div>
+
+<div class="user-posts" style="flex: 50%;">
+    <div id="border">
+        <div style="padding: 10px;">
+
+            <div id="showtext" style="font-size:20px; margin-top: 10px;"></div>
+
+            <div style="padding: 3px;">
+                <div style="border: 2px;">
+                    <details>
+                        <summary>(<i class="far fa-thumbs-up"></i> 0) (<i class="far fa-thumbs-down"></i> 0)</summary>
+                    </details>
+                    <details>
+                        <summary>0 comments</summary>
+                    </details>
+                </div>
+                <div style="padding-top: 5px;">
+
+                    <input type="text" name="content" disabled />
+                    <button type="submit">Comment</button>
+                </div>
+                <div>
+                    @{
+                        string likeStyle = "text-success";
+                        string dislikeStyle = "text-danger";
+                    }
+
+                    <a class=@likeStyle>like</a>
+                    <a class=@dislikeStyle>dislike</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var textcontent = document.getElementById('textcontent')
+
+    let showtext = document.getElementById('showtext')
+    showtext.innerHTML = textcontent.innerHTML
+
+    textcontent.onkeyup = textcontent.onkeypress = function () {
+        showtext.innerHTML = this.value;
+    }
+</script>

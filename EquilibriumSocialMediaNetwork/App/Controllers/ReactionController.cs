@@ -1,4 +1,5 @@
-﻿using Data.Entities;
+﻿using App.BindingModels.Reactions;
+using Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
@@ -39,6 +40,24 @@ namespace App.Controllers
             reactionServices.AddReaction(reaction);
 
             return Redirect(Request.Headers["Referer"].ToString());
+        }
+
+        [HttpPost("/addReaction")]
+        public async Task<IActionResult> JsonAddReaction([FromBody] CreateReactionBindingModel newReaction)
+        {
+            User currentUser = await _userManager.GetUserAsync(User);
+
+            ReactionServiceModel reaction = new ReactionServiceModel()
+            {
+                Name = newReaction.Name,
+                PostId = newReaction.PostId,
+                User = currentUser,
+                UserId = currentUser.Id
+            };
+
+            reactionServices.AddReaction(reaction);
+
+            return new JsonResult(new { Reaction = reaction });
         }
     }
 }

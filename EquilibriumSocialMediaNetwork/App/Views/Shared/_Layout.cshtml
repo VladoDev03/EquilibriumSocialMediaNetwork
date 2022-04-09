@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Equilibrium</title>
+    <link rel="stylesheet" href="~/css/outlook.css" />
     <link rel="SHORTCUT ICON" href="~/Images/From app/logo.ico" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -12,9 +13,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="font-family: 'Dancing Script'; font-size: 24px">Equilibrium</a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3" style="user-select: none;">
+            <div class="container shadow-lg">
+                <a class="navbar-brand text-navbar" asp-area="" asp-controller="Home" asp-action="Index" style="font-family: 'Dancing Script'; font-size: 24px;">Equilibrium</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -24,35 +25,29 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="Create">Add Post</a>
+                                <a class="nav-link text-navbar" asp-area="" asp-controller="Post" asp-action="Create" title="Create Post"><i class="far fa-plus-square amn"></i></a>
                             </li>
                         }
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Profile">My Profile</a>
-                            </li>
-                        }
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UsersToChatWith">My Chats</a>
+                                <a class="nav-link text-navbar" asp-area="" asp-controller="Home" asp-action="UsersToChatWith" title="Chats"><i class="far fa-comments amn"></i></a>
                             </li>
                         }
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AllUsers">All Users</a>
+                                <a class="nav-link text-navbar" asp-area="" asp-controller="Admin" asp-action="AllUsers"><i class="fas fa-users amn twoPx"></i>All Users</a>
                             </li>
                         }
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="far fa-user" style="margin-right: 2px;"></i> @User.Identity.Name</a>
+                            <a class="nav-link text-navbar" asp-area="" asp-controller="User" asp-action="Profile"><i class="far fa-user twoPx"></i> @User.Identity.Name</a>
                         </li>
                         <li class="nav-item">
                             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                <button type="submit" class="nav-link btn btn-link text-dark"><i class="fas fa-sign-out-alt"></i></button>
+                                <button type="submit" class="nav-link btn btn-link text-navbar"><i class="fas fa-sign-out-alt"></i></button>
                             </form>
                         </li>
                     </ul>
@@ -62,7 +57,9 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
-            @RenderBody()
+            <div class="grid">
+                @RenderBody()
+            </div>
         </main>
     </div>
 

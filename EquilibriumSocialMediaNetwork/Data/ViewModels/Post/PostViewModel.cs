@@ -33,6 +33,8 @@ namespace Data.ViewModels.Post
 
         public string TimePosted { get; set; }
 
+        public int CommentsCount { get; set; }
+
         public int LikesCount { get; set; }
 
         public int DislikesCount { get; set; }

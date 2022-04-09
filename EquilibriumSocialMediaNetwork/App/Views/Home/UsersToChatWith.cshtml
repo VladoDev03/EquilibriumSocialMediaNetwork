@@ -1,9 +1,11 @@
 ﻿@model List<UserViewModel>
 
-@foreach (UserViewModel user in Model)
-{
-    string names = $"{@user.FirstName} {@user.LastName} ({@user.UserName})";
+<div class="user-posts">
+    @foreach (UserViewModel user in Model)
+    {
+        string names = $"{@user.FirstName} {@user.LastName} ({@user.UserName})";
 
-    <a asp-controller="Conversation" asp-action="Chat" asp-route-id="@user.Id">@names</a>
-    <br />
-}
+        <a asp-controller="Conversation" asp-action="Chat" asp-route-id="@user.Id">@names</a>
+        <br />
+    }
+</div>

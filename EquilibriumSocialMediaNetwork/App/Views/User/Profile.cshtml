@@ -1,120 +1,145 @@
 ﻿@model UserViewModel
 @{
-    ViewData["Title"] = @Model.UserName;
+    ViewData["Title"] = "Your profile";
 }
 
-@if (Model.ProfilePicture != null)
-{
-    <img src=@Model.ProfilePicture.ImageUrl alt="Profile picture" asp-append-version="true" />
-
-    @if (Model.ProfilePicture.IsDownloadable)
-    {
-        <a href=@Model.ProfilePicture.ImageDownloadUrl>Save</a>
-        <br />
-    }
-
-    <a type="button" asp-controller="User" asp-action="DeleteProfilePicture" style="color:red; text-decoration:none;">Remove</a>
-    <br />
-}
-else
-{
-    <img src="~/Images/From app/Default profile picture.jpeg" alt="Alternate Text" />
-}
-
-<a asp-controller="User" asp-action="CreateProfilePicture">Change profile picture</a>
-
-<h1>@Model.FirstName @Model.LastName</h1>
-<h2>@Model.UserName</h2>
-
-<a class="nav-link text-dark" asp-area="" asp-controller="FriendRequest" asp-action="InvitesAndRequests">Invites</a>
-<a class="nav-link text-dark" asp-area="" asp-controller="Friend" asp-action="FriendsList">Friends</a>
-<a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="QrCode">Qr code</a>
-
-@foreach (var item in Model.Posts)
-{
-    <hr />
-    <a type="button" asp-controller="Post" asp-action="DeletePost" asp-route-id="@item.Id" style="color:red;text-decoration:none;">Remove</a>
-    <a type="button" asp-controller="Post" asp-action="Update" asp-route-id="@item.Id" style="color:deepskyblue;text-decoration:none;">Edit</a>
-
-    <div style="padding: 10px;">
-        <p class="text-info">@item.TimePosted</p>
-        <p class="bg-success">@item.Content</p>
-
-        @if (item.ImageUrl != null)
-        {
-            @if (item.IsDownloadable)
+<div class="user-data">
+    <div style="transform: translate(21%, -2%);">
+        <div class="centered-data">
+            @if (Model.ProfilePicture != null)
             {
-                <a href="@item.ImageDownloadUrl" download="image">Save post</a>
+                <div class="box">
+                    <a asp-controller="User" asp-action="CreateProfilePicture">
+                        <img class="prof-img" src=@Model.ProfilePicture.ImageUrl alt="Profile picture" asp-append-version="true" />
+                        <div class="middle">
+                            <div class="edit-img"><i class="fas fa-pencil-alt"></i></div>
+                        </div>
+                    </a>
+                </div>
+                @if (Model.ProfilePicture.IsDownloadable)
+                {
+                    <a style="transform: translate(25%, -30%); text-align:left;" href=@Model.ProfilePicture.ImageDownloadUrl><i class="fas fa-download twoPx" style="margin-right: 4px;"></i>Save</a>
+                    <br />
+                }
+
+                <a asp-controller="User" asp-action="DeleteProfilePicture" style="color:red; text-decoration:none;"><i class="fas fa-user-times twoPx" style="margin-right: 4px;"></i>Remove</a>
+                <br />
             }
-
-            <img src="@item.ImageUrl" alt="image" asp-append-version="true" />
-        }
-
-        <div style="padding: 3px;">
-            <div style="border: 2px;">
-                <details>
-                    <summary>(likes: @item.LikesCount) (dislikes: @item.DislikesCount)</summary>
-                    @foreach (var reaction in item.Reactions)
-                    {
-                        <div style="border: 2px solid #808080; padding: 3px">
-
-                            @if (reaction.User != null)
-                            {
-                                <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@reaction.UserId" style="color:green;text-decoration:none;">@reaction.User.FirstName @reaction.User.LastName (@reaction.User.UserName)</a>
-                            }
-
-                            <div style="padding-top: 4px;">@reaction.Name</div>
+            else
+            {
+                <div class="box" style="cursor: pointer;">
+                    <a asp-controller="User" asp-action="CreateProfilePicture">
+                        <img class="prof-img" rofile" src="~/Images/From app/Default profile picture.jpeg" alt="Alternate Text" />
+                        <div class="middle">
+                            <div class="edit-img"><i class="fas fa-pencil-alt"></i></div>
                         </div>
-                    }
-                </details>
-                <details>
-                    <summary>@item.Comments.Count comments</summary>
-                    @foreach (var comment in item.Comments)
-                    {
-                        <div style="border: 2px solid #808080; padding: 3px">
-
-                            @if (comment.User != null)
-                            {
-                                <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId" style="color:green;text-decoration:none;">@comment.User.FirstName @comment.User.LastName (@comment.User.UserName)</a>
-                            }
-
-                            <a class="text-danger" asp-action="DeleteComment" asp-controller="Comment" asp-route-id="@comment.Id">Delete</a>
-                            <p class="text-info">@comment.TimeCommented</p>
-                            <div style="padding-top: 4px;">@comment.Content</div>
-                        </div>
-                    }
-                </details>
-            </div>
-            <div style="padding-top: 5px;">
-
-                @if (TempData["NotEmptyComment"] != null || (string)TempData["NotEmptyComment"] != null)
-                {
-                    <p class="text-danger">@TempData["NotEmptyComment"]</p>
-                }
-
-                <form asp-route-id="@item.Id" asp-action="Create" asp-controller="Comment" method="post">
-                    <input type="text" name="content" />
-                    <button type="submit">Comment</button>
-                </form>
-            </div>
-            <div>
-                @{
-                    string likeStyle = "text-success";
-                    string dislikeStyle = "text-danger";
-                }
-
-                @if (item.IsLikedByUser)
-                {
-                    likeStyle += " font-weight-bold";
-                }
-                @if (item.IsDislikedByUser)
-                {
-                    dislikeStyle += " font-weight-bold";
-                }
-
-                <a class=@likeStyle asp-controller="Reaction" asp-action="AddReaction" asp-route-name="like" asp-route-postId="@item.Id">like</a>
-                <a class=@dislikeStyle asp-controller="Reaction" asp-action="AddReaction" asp-route-name="dislike" asp-route-postId="@item.Id">dislike</a>
-            </div>
+                    </a>
+                </div>
+            }
         </div>
     </div>
-}
+    <br />
+    <div style="text-align:center">
+        <h2>@Model.FirstName @Model.LastName</h2>
+        <h3><i>@Model.UserName</i></h3>
+    </div>
+    <div style="transform: translate(21%, -2%); padding-left: 30px">
+        <a class="nav-link text-dark blockk" asp-area="" asp-controller="FriendRequest" asp-action="InvitesAndRequests"><i class="fas fa-envelope-open-text twoPx"></i> Invites</a>
+        <a class="nav-link text-dark blockk" asp-area="" asp-controller="Friend" asp-action="FriendsList"><i class="fas fa-user-friends twoPx"></i> Friends</a>
+        <a class="nav-link text-dark blockk" asp-area="" asp-controller="User" asp-action="QrCode"><i class="fas fa-qrcode twoPx"></i> Qr code</a>
+        <a class="nav-link text-dark blockk" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="fas fa-user-cog twoPx"></i> Settings</a>
+    </div>
+
+</div>
+<div class="user-posts">
+    @foreach (var item in Model.Posts)
+    {
+        <div id="border">
+            <a type="button" asp-controller="Post" asp-action="DeletePost" asp-route-id="@item.Id" style="color:red;text-decoration:none;" class="twoPx" title="Remove"><i class="far fa-trash-alt twoPx"></i>Delete</a>
+            <a type="button" asp-controller="Post" asp-action="Update" asp-route-id="@item.Id" style="color:deepskyblue;text-decoration:none;" title="Edit"><i class="fas fa-pencil-alt twoPx"></i>Edit</a>
+
+            <p class="text-info float-right">@item.TimePosted</p>
+            <div style="padding: 10px;">
+                <p style="font-size: 20px; margin-top: 10px;">@item.Content</p>
+
+                @if (item.ImageUrl != null)
+                {
+                    @if (item.IsDownloadable)
+                    {
+                        <a href="@item.ImageDownloadUrl" download="image"><i class="fas fa-download twoPx" style="margin-right: 4px;"></i>Save image</a>
+                    }
+
+                    <img style="height:40%; width: 40%;" src="@item.ImageUrl" alt="image" asp-append-version="true" />
+                }
+
+                <div style="padding: 3px;">
+                    <div style="border: 2px;">
+                        <details>
+                            <summary>(<i class="far fa-thumbs-up"></i> @item.LikesCount) (<i class="far fa-thumbs-down"></i> @item.DislikesCount)</summary>
+                            @foreach (var reaction in item.Reactions)
+                            {
+                                <div style="border: 2px solid #808080; padding: 3px">
+
+                                    @if (reaction.User != null)
+                                    {
+                                        <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@reaction.UserId" style="color:green;text-decoration:none;">@reaction.User.FirstName @reaction.User.LastName (@reaction.User.UserName)</a>
+                                    }
+
+                                    <div style="padding-top: 4px;">@reaction.Name</div>
+                                </div>
+                            }
+                        </details>
+                        <details>
+                            <summary>@item.Comments.Count comments</summary>
+                            @foreach (var comment in item.Comments)
+                            {
+                                <div style="border: 2px solid #808080; padding: 3px">
+
+                                    @if (comment.User != null)
+                                    {
+                                        <a type="button" asp-controller="User" asp-action="Details" asp-route-id="@comment.UserId" style="color:green;text-decoration:none;">@comment.User.FirstName @comment.User.LastName (@comment.User.UserName)</a>
+                                    }
+
+                                    <a class="text-danger" asp-action="DeleteComment" asp-controller="Comment" asp-route-id="@comment.Id">Delete</a>
+                                    <p class="text-info">@comment.TimeCommented</p>
+                                    <div style="padding-top: 4px;">@comment.Content</div>
+                                </div>
+                            }
+                        </details>
+                    </div>
+                    <div style="padding-top: 5px;">
+
+                        @if (TempData["NotEmptyComment"] != null || (string)TempData["NotEmptyComment"] != null)
+                        {
+                            <p class="text-danger">@TempData["NotEmptyComment"]</p>
+                        }
+
+                        <form asp-route-id="@item.Id" asp-action="Create" asp-controller="Comment" method="post">
+                            <input type="text" name="content" />
+                            <button type="submit">Comment</button>
+                        </form>
+                    </div>
+                    <div>
+                        @{
+                            string likeStyle = "text-success";
+                            string dislikeStyle = "text-danger";
+                        }
+
+                        @if (item.IsLikedByUser)
+                        {
+                            likeStyle += " font-weight-bold";
+                        }
+                        @if (item.IsDislikedByUser)
+                        {
+                            dislikeStyle += " font-weight-bold";
+                        }
+
+                        <a class=@likeStyle asp-controller="Reaction" asp-action="AddReaction" asp-route-name="like" asp-route-postId="@item.Id">like</a>
+                        <a class=@dislikeStyle asp-controller="Reaction" asp-action="AddReaction" asp-route-name="dislike" asp-route-postId="@item.Id">dislike</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    }
+</div>

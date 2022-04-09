@@ -7,6 +7,8 @@ namespace App.Models.Comments
 {
     public class CreateCommentBindingModel
     {
+        public string Id { get; set; }
+
         public string Content { get; set; }
     }
 }

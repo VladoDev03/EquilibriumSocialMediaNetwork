@@ -61,6 +61,17 @@ namespace Services
             return post;
         }
 
+        public PostViewModel SetCommentsCount(PostViewModel post)
+        {
+            int commentsCount = db.Posts
+                .Include(p => p.Comments)
+                .FirstOrDefault(p => p.Id == post.Id)
+                .Comments.Count;
+
+            post.CommentsCount = commentsCount;
+            return post;
+        }
+
         public List<CommentServiceModel> GetPostComments(PostServiceModel post)
         {
             List<CommentServiceModel> comments = db.Comments
@@ -105,6 +116,8 @@ namespace Services
         {
             PostServiceModel post = db.Posts
                 .Include(p => p.User)
+                .Include(p => p.Comments)
+                .Include(p => p.Reactions)
                 .FirstOrDefault(p => p.Id == id)
                 .ToPostServiceModel();
 

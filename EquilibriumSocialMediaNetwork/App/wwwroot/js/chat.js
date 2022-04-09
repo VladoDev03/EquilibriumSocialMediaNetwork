@@ -27,9 +27,8 @@ const attemptChatLogin = () => {
         const h1 = document.createElement('h1')
         const h4 = document.createElement('h4')
 
-        let input = message.split(' ')
-        let user = input[0]
-        let mess = input[1]
+        let user = message.userName
+        let mess = message.message
 
         h1.textContent = `${mess}`
         h4.textContent = `${user}`

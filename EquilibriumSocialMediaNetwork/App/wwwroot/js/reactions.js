@@ -1,0 +1,98 @@
+﻿const likes = document.getElementsByClassName('likes')
+const dislikes = document.getElementsByClassName('dislikes')
+
+const reactionUrl = 'https://localhost:44366/addReaction'
+
+Object.values(likes).forEach(like => like.addEventListener('click', (e) => {
+    let id = e.target.getAttribute('id').replace('like-sender-', '')
+
+    const reaction = {
+        PostId: id,
+        Name: 'like'
+    }
+
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(reaction),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    fetch(reactionUrl, options)
+        .then(res => res.json())
+        .then(data => generateReaction(data, id))
+}))
+
+Object.values(dislikes).forEach(dislike => dislike.addEventListener('click', (e) => {
+    let id = e.target.getAttribute('id').replace('dislike-sender-', '')
+
+    const reaction = {
+        PostId: id,
+        Name: 'dislike'
+    }
+
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(reaction),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    fetch(reactionUrl, options)
+        .then(res => res.json())
+        .then(data => generateReaction(data, id))
+}))
+
+let isCreated = false
+
+function generateReaction(reactionResponse, id) {
+    let postUrl = `https://localhost:44366/addPost/${id}`
+
+    fetch(postUrl)
+        .then(res => res.json())
+        .then(data => {
+            let summaryContent = `<i class="far fa-thumbs-up"></i> ${data.likes} <i class="far fa-thumbs-down"></i> ${data.dislikes}`
+            let summary = document.getElementById(`reaction-summary-${reactionResponse.reaction.postId}`)
+            summary.innerHTML = summaryContent
+
+            if (data.isLiked) {
+                document.getElementById('like-sender-' + data.id).classList.add('font-weight-bold')
+                document.getElementById('dislike-sender-' + data.id).classList.remove('font-weight-bold')
+            } else {
+                document.getElementById('like-sender-' + data.id).classList.remove('font-weight-bold')
+            }
+
+            if (data.isDisliked) {
+                document.getElementById('dislike-sender-' + data.id).classList.add('font-weight-bold')
+                document.getElementById('like-sender-' + data.id).classList.remove('font-weight-bold')
+            } else {
+                document.getElementById('dislike-sender-' + data.id).classList.remove('font-weight-bold')
+            }
+        })
+
+    if (isCreated) {
+        let itemToRemove = document.getElementById('reactions-' + id).lastChild
+        document.getElementById('reactions-' + id).removeChild(itemToRemove)
+    } else {
+        let reactionDiv = document.createElement('div')
+        reactionDiv.style.border = '2px solid #808080'
+        reactionDiv.style.padding = '3px'
+
+        let reaction = reactionResponse.reaction
+        let divContent = ''
+
+        if (reaction.user) {
+            divContent += `<a type="button" href="User/Details/${reaction.userId}" style="color:green;text-decoration:none;">${reaction.user.firstName} ${reaction.user.lastName} (${reaction.user.userName})</a>`
+        }
+
+        divContent += `<div style="padding-top: 4px;">${reaction.name}</div>`
+
+        reactionDiv.innerHTML = divContent;
+        reactionDiv.id = 'newData-' + reaction.id
+        document.getElementById('reactions-' + id).append(reactionDiv)
+    }
+
+    isCreated = !isCreated
+}
