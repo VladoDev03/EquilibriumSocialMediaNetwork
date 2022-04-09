@@ -45,7 +45,7 @@ namespace Services
             db.SaveChanges();
         }
 
-        public List<CommentServiceModel> GetAllComments(string userId)
+        public List<CommentServiceModel> GetAllComments()
         {
             List<CommentServiceModel> comments = db.Comments
                 .Select(c => c.ToCommentServiceModel())

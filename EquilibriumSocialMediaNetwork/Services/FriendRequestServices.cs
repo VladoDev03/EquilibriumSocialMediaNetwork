@@ -140,7 +140,7 @@ namespace Services
             db.SaveChanges();
         }
 
-        public FriendRequestServiceModel SentFriendRequestToUser(UserServiceModel sender, UserServiceModel receiver)
+        public FriendRequestServiceModel SendFriendRequestToUser(UserServiceModel sender, UserServiceModel receiver)
         {
             FriendRequestServiceModel request = new FriendRequestServiceModel();
 
