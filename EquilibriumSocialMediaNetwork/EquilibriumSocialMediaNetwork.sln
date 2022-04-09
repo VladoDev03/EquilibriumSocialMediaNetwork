@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31829.152
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{8B5127B0-BB0B-4E50-98CA-6BF491D7E7D7}"
 EndProject
@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App", "App\App.csproj", "{F7D876E4-077F-4057-8FB3-15237A5B64FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonManager", "JsonManager\JsonManager.csproj", "{FE416C69-0D6D-4AAB-849B-3248F241B526}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonManager", "JsonManager\JsonManager.csproj", "{FE416C69-0D6D-4AAB-849B-3248F241B526}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{0CCDF46A-EB60-4F33-8D15-AB82BEE5EC71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{FE416C69-0D6D-4AAB-849B-3248F241B526}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE416C69-0D6D-4AAB-849B-3248F241B526}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE416C69-0D6D-4AAB-849B-3248F241B526}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CCDF46A-EB60-4F33-8D15-AB82BEE5EC71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CCDF46A-EB60-4F33-8D15-AB82BEE5EC71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CCDF46A-EB60-4F33-8D15-AB82BEE5EC71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CCDF46A-EB60-4F33-8D15-AB82BEE5EC71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
