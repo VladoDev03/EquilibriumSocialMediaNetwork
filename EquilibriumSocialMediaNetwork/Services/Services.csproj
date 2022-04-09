@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <DocumentationFile>E:\GitRepositories\EquilibriumSocialMediaNetwork\services-documentation.txt</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <FileAlignment>8192</FileAlignment>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <FileAlignment>8192</FileAlignment>
   </PropertyGroup>
 
   <ItemGroup>

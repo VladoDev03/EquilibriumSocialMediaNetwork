@@ -19,6 +19,8 @@ The application is created as an alternative for facebook, twitter and instagram
 
 ## Used services
 
+***Visual studio*** - the Integrated Development Environment (IDE) used for the development of the app and the creation of the Service's project XML documentation.
+
 ***Heroku*** - deployment.
 
 ***GitHub*** - source-controll.

@@ -1,0 +1,622 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Services</name>
+    </assembly>
+    <members>
+        <member name="M:Services.Contracts.IAdminServices.DeleteUserProfile(System.String)">
+            <summary>
+            Deletes the profile of the given user.
+            </summary>
+            <param name="userId">Id of the user that is going to be deleted.</param>
+        </member>
+        <member name="M:Services.Contracts.ICloudinaryServices.UploadImage(System.Byte[],System.String)">
+            <summary>
+            Uploads image to cloudinary.
+            </summary>
+            <param name="data">Image as byte[].</param>
+            <param name="path">Path to save the image: Social media images/Posts, Social media images/Qr codes, Social media images/Profile pictures.</param>
+            <returns>Public id and url to Cloudinary of the uploaded image.</returns>
+        </member>
+        <member name="M:Services.Contracts.ICloudinaryServices.DeleteImage(System.String)">
+            <summary>
+            Deletes image from Cloudinary.
+            </summary>
+            <param name="publicId">Public id of the image that is going to be deleted.</param>
+        </member>
+        <member name="M:Services.Contracts.ICloudinaryServices.GetDownloadLink(System.String)">
+            <summary>
+            Generates link that can be used to download an image from Cloudinary.
+            </summary>
+            <param name="url">Url of the image.</param>
+            <returns>Url that can be used in order to download an image.</returns>
+        </member>
+        <member name="M:Services.Contracts.ICloudinaryServices.FindQrCodePublicIdById(System.String)">
+            <summary>
+            Finds the public id of a qr code by its id.
+            </summary>
+            <param name="id">The id, in the database, of the qr code.</param>
+            <returns>Qr code's public id.</returns>
+        </member>
+        <member name="M:Services.Contracts.ICloudinaryServices.FindProfilePicturePublicIdById(System.String)">
+            <summary>
+            Finds the public id of a profile picture by its id.
+            </summary>
+            <param name="id">The id, in the database, of the profile picture.</param>
+            <returns>Profile picture's public id.</returns>
+        </member>
+        <member name="M:Services.Contracts.ICommentServices.GetAllComments">
+            <summary>
+            Gets all comments stored in the database.
+            </summary>
+            <returns>All comments in the database.</returns>
+        </member>
+        <member name="M:Services.Contracts.ICommentServices.GetUserComments(System.String)">
+            <summary>
+            Gets all comments of the give user.
+            </summary>
+            <param name="userId">The id of the user.</param>
+            <returns>User's comments.</returns>
+        </member>
+        <member name="M:Services.Contracts.ICommentServices.AddComment(Services.Models.PostServiceModel,Services.Models.CommentServiceModel)">
+            <summary>
+            Adds comment to post.
+            </summary>
+            <param name="post">The post, the comment will be added to.</param>
+            <param name="comment">The comments that we are going to add.</param>
+            <returns>The added comment.</returns>
+        </member>
+        <member name="M:Services.Contracts.ICommentServices.UpdateComment(Services.Models.CommentServiceModel)">
+            <summary>
+            Updates comment.
+            </summary>
+            <param name="updatedComment">The new data of the comment.</param>
+            <returns>The new comment.</returns>
+        </member>
+        <member name="M:Services.Contracts.ICommentServices.DeleteComment(System.String)">
+            <summary>
+            Removes the given comment from the database.
+            </summary>
+            <param name="id">Id of the comment.</param>
+        </member>
+        <member name="M:Services.Contracts.ICommentServices.DeleteUserComments(System.String)">
+            <summary>
+            Removes all user's comments from database.
+            </summary>
+            <param name="id">Id of the user.</param>
+        </member>
+        <member name="M:Services.Contracts.IConversationServices.GetAllConversations">
+            <summary>
+            Gets all conversations in the database.
+            </summary>
+            <returns>All conversations from the database.</returns>
+        </member>
+        <member name="M:Services.Contracts.IConversationServices.GetUserConversations(System.String)">
+            <summary>
+            Gets all conversations of a given user.
+            </summary>
+            <param name="userId">Id of the user.</param>
+            <returns>All conversations of a user.</returns>
+        </member>
+        <member name="M:Services.Contracts.IConversationServices.GetConversationByTwoUserIds(System.String,System.String)">
+            <summary>
+            Gets the conversation between two users.
+            </summary>
+            <param name="userIdOne">First user id.</param>
+            <param name="userIdTwo">Second user id.</param>
+            <returns>Conversation between both users.</returns>
+        </member>
+        <member name="M:Services.Contracts.IConversationServices.GetConversationById(System.String)">
+            <summary>
+            Finds conversation by a given id.
+            </summary>
+            <param name="id">Id of the searched conversation.</param>
+            <returns>The searched conversation.</returns>
+        </member>
+        <member name="M:Services.Contracts.IConversationServices.AddConversation(Services.Models.ConversationServiceModel)">
+            <summary>
+            Adds conversation to the database.
+            </summary>
+            <param name="conversation">The conversation that we want to add to the database.</param>
+            <returns>The added conversation.</returns>
+        </member>
+        <member name="M:Services.Contracts.IConversationServices.RemoveConversation(System.String)">
+            <summary>
+            Removes a conversation by its id.
+            </summary>
+            <param name="conversationId">Id of the conversation we want to remove.</param>
+        </member>
+        <member name="M:Services.Contracts.IConversationServices.DeleteConversationByUserIds(System.String,System.String)">
+            <summary>
+            Removes a conversation by its two users.
+            </summary>
+            <param name="userIdOne">Id of the first user.</param>
+            <param name="userIdTwo">Id of the second user.</param>
+        </member>
+        <member name="M:Services.Contracts.IConversationServices.DeleteAllUserConversations(System.String)">
+            <summary>
+            Removes all conversations that a user has participated in.
+            </summary>
+            <param name="userId">User id.</param>
+        </member>
+        <member name="M:Services.Contracts.IDescriptionServices.AddDescription(Services.Models.DescriptionServiceModel)">
+            <summary>
+            Adds user's description to database.
+            </summary>
+            <param name="description">The description we want to add.</param>
+            <returns>The description that has just been added.</returns>
+        </member>
+        <member name="M:Services.Contracts.IDescriptionServices.UpdateDescription(Services.Models.DescriptionServiceModel)">
+            <summary>
+            Updates description.
+            </summary>
+            <param name="updatedDescription">The new data of the description.</param>
+            <returns>The updated description.</returns>
+        </member>
+        <member name="M:Services.Contracts.IDescriptionServices.DeleteDescription(System.String)">
+            <summary>
+            Removes description by it's id.
+            </summary>
+            <param name="id">Id of the description.</param>
+        </member>
+        <member name="M:Services.Contracts.IEmailServices.SendEmail(Services.Models.EmailServiceModel)">
+            <summary>
+            Sends email to user.
+            </summary>
+            <param name="email">The emails address that the email is going to be sent.</param>
+            <returns>The email that has just been sent.</returns>
+        </member>
+        <member name="M:Services.Contracts.IEmailServices.SendConfirmEmail(Services.Models.EmailServiceModel)">
+            <summary>
+            Sends confirmation email to user when new account is created.
+            </summary>
+            <param name="email">Email that is going to be sent.</param>
+            <returns>The email that has just been sent.</returns>
+        </member>
+        <member name="M:Services.Contracts.IEmailServices.AddEmailToDatabase(Services.Models.EmailServiceModel)">
+            <summary>
+            Adds sent email to database.
+            </summary>
+            <param name="email">The email that is being added to the database.</param>
+            <returns>The email that has just been sent.</returns>
+        </member>
+        <member name="M:Services.Contracts.IEmailServices.GetEmailById(System.String)">
+            <summary>
+            Gets email by its id.
+            </summary>
+            <param name="id">Id of the searched email.</param>
+            <returns>The searched email if is found.</returns>
+        </member>
+        <member name="M:Services.Contracts.IEmailServices.DeleteEmailById(System.String)">
+            <summary>
+            Deletes email by its id.
+            </summary>
+            <param name="id">Id of the email that we want to delete.</param>
+        </member>
+        <member name="M:Services.Contracts.IEmailServices.DeleteEmailByUserEmail(System.String)">
+            <summary>
+            Deletes email by the user it was sent to.
+            </summary>
+            <param name="userEmail">User's email.</param>
+        </member>
+        <member name="M:Services.Contracts.IEmailServices.DeleteAllUserEmails(System.String)">
+            <summary>
+            Deletes all emails that have ever been sent to the given user.
+            </summary>
+            <param name="userId"></param>
+        </member>
+        <member name="M:Services.Contracts.IFriendRequestServices.FindFriendRequest(System.String)">
+            <summary>
+            Finds a friend request by its id.
+            </summary>
+            <param name="id">The friend request's id</param>
+            <returns>The searched friend request.</returns>
+        </member>
+        <member name="M:Services.Contracts.IFriendRequestServices.AddToDatabase(Services.Models.FriendRequestServiceModel)">
+            <summary>
+            Adds friend requests to the database.
+            </summary>
+            <param name="friendRequest"></param>
+            <returns>The added friend request.</returns>
+        </member>
+        <member name="M:Services.Contracts.IFriendRequestServices.SendFriendRequestToUser(Services.Models.UserServiceModel,Services.Models.UserServiceModel)">
+            <summary>
+            Sends friend request from one user to another user.
+            </summary>
+            <param name="sender">The user who sent the request.</param>
+            <param name="receiver">The user the request was sent to.</param>
+            <returns>The sent friend request.</returns>
+        </member>
+        <member name="M:Services.Contracts.IFriendRequestServices.ApproveFriendRequest(System.String,System.String)">
+            <summary>
+            Approves friend request by sender id and recceiver id.
+            </summary>
+            <param name="sentToId">Id of the user the request was sent to.</param>
+            <param name="sentFromId">Id of the user who sent the request.</param>
+            <returns>The approved friend request.</returns>
+        </member>
+        <member name="M:Services.Contracts.IFriendRequestServices.RejectFriendRequest(System.String,System.String)">
+            <summary>
+            Rejects friend request by sender id and receiver id.
+            </summary>
+            <param name="sentToId">Id of the user the request was sent to.</param>
+            <param name="sentFromId">Id of the user who sent the request.</param>
+            <returns>The rejected friend request.</returns>
+        </member>
+        <member name="M:Services.Contracts.IFriendRequestServices.UpdateRequestStatus(System.String,System.String)">
+            <summary>
+            Updates the status of a friend request - ("Pending", "Rejected", "Approved")
+            </summary>
+            <param name="requestId">Id of the friend request.</param>
+            <param name="newStatus">The new status of the friend request.</param>
+            <returns>The updated friend request.</returns>
+        </member>
+        <member name="M:Services.Contracts.IFriendRequestServices.GetPendingRequests(System.String)">
+            <summary>
+            Gets all friend requests with status "Pending" of the given user.
+            </summary>
+            <param name="senderId">The id of the sender.</param>
+            <returns>All pending friend requests of the given user.</returns>
+        </member>
+        <member name="M:Services.Contracts.IFriendRequestServices.GetUserInvitations(System.String)">
+            <summary>
+            Gets all invites sent to the given user.
+            </summary>
+            <param name="receiverId">The id of the receiver.</param>
+            <returns>All invites an user has.</returns>
+        </member>
+        <member name="M:Services.Contracts.IFriendRequestServices.DeleteFriendRequest(System.String,System.String)">
+            <summary>
+            Removes request by the sender's and receiver's ids.
+            </summary>
+            <param name="sentFromId">Sender id.</param>
+            <param name="sentToId">Receiver id.</param>
+        </member>
+        <member name="M:Services.Contracts.IFriendRequestServices.DeleteAllFriendRequestBySenderId(System.String)">
+            <summary>
+            Removes all requests by theirs sender id.
+            </summary>
+            <param name="id">Sender id.</param>
+        </member>
+        <member name="M:Services.Contracts.IFriendRequestServices.DeleteAllFriendRequestByReveiverId(System.String)">
+            <summary>
+            Removes all requests by theirs receiver id.
+            </summary>
+            <param name="id">Receiver id.</param>
+        </member>
+        <member name="M:Services.Contracts.IMessageServices.GetAllMessages">
+            <summary>
+            Gets all messages from the database.
+            </summary>
+            <returns>All messages in the database.</returns>
+        </member>
+        <member name="M:Services.Contracts.IMessageServices.GetMessageById(System.String)">
+            <summary>
+            Gets a message by its id.
+            </summary>
+            <param name="id">Message id.</param>
+            <returns>The searched message.</returns>
+        </member>
+        <member name="M:Services.Contracts.IMessageServices.AddMessage(Services.Models.MessageServiceModel)">
+            <summary>
+            Adds message to the database.
+            </summary>
+            <param name="message">The message to be added.</param>
+            <returns>The added message.</returns>
+        </member>
+        <member name="M:Services.Contracts.IMessageServices.RemoveMessage(System.String)">
+            <summary>
+            Removes message from the database.
+            </summary>
+            <param name="messageId">Id of the message that is going to be removed.</param>
+        </member>
+        <member name="M:Services.Contracts.IMessageServices.DeleteAllUserMessages(System.String)">
+            <summary>
+            Removes all messages, from the database, ever sent by a given user or sent to a user.
+            </summary>
+            <param name="userId">The user that has sent the message or it was sent to.</param>
+        </member>
+        <member name="M:Services.Contracts.IPostServices.GetAllPosts">
+            <summary>
+            Gets all posts from the database.
+            </summary>
+            <returns>All the posts from the database.</returns>
+        </member>
+        <member name="M:Services.Contracts.IPostServices.GetPostsForUser(System.String)">
+            <summary>
+            Gets the posts that the given user hasn't reacted on and hasn't commented on.
+            </summary>
+            <param name="userId">Id of the user.</param>
+            <returns>Posts that the user hasn't seen.</returns>
+        </member>
+        <member name="M:Services.Contracts.IPostServices.GetPostComments(Services.Models.PostServiceModel)">
+            <summary>
+            Gets all comments of the given post.
+            </summary>
+            <param name="post">The post which comments are being searched.</param>
+            <returns>All the comments on the given post.</returns>
+        </member>
+        <member name="M:Services.Contracts.IPostServices.GetPostReactions(Services.Models.PostServiceModel)">
+            <summary>
+            Gets all reactions of the given post.
+            </summary>
+            <param name="post">The post which reactions are being searched.</param>
+            <returns>All the reactions on the given post.</returns>
+        </member>
+        <member name="M:Services.Contracts.IPostServices.AddPost(Services.Models.PostServiceModel)">
+            <summary>
+            Adds post to the database.
+            </summary>
+            <param name="post">The post to be added.</param>
+            <returns>The added post.</returns>
+        </member>
+        <member name="M:Services.Contracts.IPostServices.GetPostById(System.String)">
+            <summary>
+            Gets the post by its id.
+            </summary>
+            <param name="id">Id of the post.</param>
+            <returns>The searched post if it exists.</returns>
+        </member>
+        <member name="M:Services.Contracts.IPostServices.GetUserPosts(System.String)">
+            <summary>
+            Gets all posts published by the given user.
+            </summary>
+            <param name="userId">The publisher's id.</param>
+            <returns>All user's posts.</returns>
+        </member>
+        <member name="M:Services.Contracts.IPostServices.UpdatePost(Services.Models.PostServiceModel)">
+            <summary>
+            Updates the given post in the database.
+            </summary>
+            <param name="updatedPost">The new data of the post.</param>
+            <returns>The updated post.</returns>
+        </member>
+        <member name="M:Services.Contracts.IPostServices.SetReactionsCount(Data.ViewModels.Post.PostViewModel)">
+            <summary>
+            Sets likes count and dislikes count on the given post.
+            </summary>
+            <param name="post">The post whose likes and dislikes are searched.</param>
+            <returns>The updated post.</returns>
+        </member>
+        <member name="M:Services.Contracts.IPostServices.SetCommentsCount(Data.ViewModels.Post.PostViewModel)">
+            <summary>
+            Finds the comments count of the given post.
+            </summary>
+            <param name="post">The posts which comments' count is searched.</param>
+            <returns>The updated post.</returns>
+        </member>
+        <member name="M:Services.Contracts.IPostServices.IsReactedByUser(System.String,System.String,System.String)">
+            <summary>
+            Returns true if post is reacted by user with the given reaction.
+            Reactions are likely to be: "like" and "dislike".
+            </summary>
+            <param name="postId">Searched post's id</param>
+            <param name="userId">Searched user's id</param>
+            <param name="reactionName">Name of reaction</param>
+            <returns></returns>
+        </member>
+        <member name="M:Services.Contracts.IPostServices.DeletePost(System.String)">
+            <summary>
+            Removes post from the database.
+            </summary>
+            <param name="id">Id of the post that is deleted.</param>
+        </member>
+        <member name="M:Services.Contracts.IPostServices.DeleteUserPosts(System.String)">
+            <summary>
+            Removes all posts of the given user.
+            </summary>
+            <param name="userId">Id of the user.</param>
+        </member>
+        <member name="M:Services.Contracts.IPostServices.DeletePostComments(System.String)">
+            <summary>
+            Deletes all comments on the given post.
+            </summary>
+            <param name="id">Post's id.</param>
+        </member>
+        <member name="M:Services.Contracts.IProfilePictureServices.AddProfilePicture(Services.Models.ProfilePictureServiceModel)">
+            <summary>
+            Adds profile picture to the database.
+            </summary>
+            <param name="image">Profile picture to be added.</param>
+            <returns>The added profile picture.</returns>
+        </member>
+        <member name="M:Services.Contracts.IProfilePictureServices.AddProfilePicture(Services.Models.ProfilePictureServiceModel,Data.Entities.User)">
+            <summary>
+            Sets the profile picture to the given user.
+            </summary>
+            <param name="profilePicture">The profile picture of the user.</param>
+            <param name="user">The user that the profiles picture is being set to.</param>
+            <returns>Returns the profile picture.</returns>
+        </member>
+        <member name="M:Services.Contracts.IProfilePictureServices.GetProfilePictureByUserId(System.String)">
+            <summary>
+            Gets the profile picture of the given user.
+            </summary>
+            <param name="userId">Id of the user.</param>
+            <returns>The user's profile picture.</returns>
+        </member>
+        <member name="M:Services.Contracts.IProfilePictureServices.DeleteProfilePicture(System.String)">
+            <summary>
+            Removes the given profile picture from the database.
+            </summary>
+            <param name="imageId">The profile picture's id.</param>
+        </member>
+        <member name="M:Services.Contracts.IQrCodeServices.MakeQrCode(System.String)">
+            <summary>
+            Creates byte array from the given data.
+            </summary>
+            <param name="content">The data that is used for the qr code.</param>
+            <returns>Qr code generated from the given data.</returns>
+        </member>
+        <member name="M:Services.Contracts.IQrCodeServices.AddQrCode(Services.Models.QrCodeServiceModel,Data.Entities.User)">
+            <summary>
+            Sets the qr code to the given user.
+            </summary>
+            <param name="qrCode">Qr code to be set to the user.</param>
+            <param name="user">User to whom the qr code is set to.</param>
+            <returns>The updated qr code.</returns>
+        </member>
+        <member name="M:Services.Contracts.IQrCodeServices.GetQrCodeByUserId(System.String)">
+            <summary>
+            Gets the qr code of the given user's id.
+            </summary>
+            <param name="userId">The id of the user.</param>
+            <returns>The qr code.</returns>
+        </member>
+        <member name="M:Services.Contracts.IQrCodeServices.GetImageBytes(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Converts the input image to byte array.
+            </summary>
+            <param name="file">The user's input.</param>
+            <returns>The generated image.</returns>
+        </member>
+        <member name="M:Services.Contracts.IQrCodeServices.DeleteQrCode(System.String)">
+            <summary>
+            Removes qr code from the database.
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Services.Contracts.IReactionServices.AddReaction(Services.Models.ReactionServiceModel)">
+            <summary>
+            Adds the given reaction to the database.
+            </summary>
+            <param name="reaction">The reaction to be added.</param>
+            <returns>The added reaction.</returns>
+        </member>
+        <member name="M:Services.Contracts.IReactionServices.GetPostReactions(System.String)">
+            <summary>
+            Gets all reactions of a given post.
+            </summary>
+            <param name="postId">Id of the post.</param>
+            <returns>All reactions on the post.</returns>
+        </member>
+        <member name="M:Services.Contracts.IReactionServices.DeleteUserReactions(System.String)">
+            <summary>
+            Removes all reactions of a given user.
+            </summary>
+            <param name="userId">The user's id.</param>
+        </member>
+        <member name="M:Services.Contracts.IReactionServices.DeletePostReactions(System.String)">
+            <summary>
+            Removes all reactions on a given post.
+            </summary>
+            <param name="postId">Post's id.</param>
+        </member>
+        <member name="M:Services.Contracts.ISessionServices.GetSession(System.String)">
+            <summary>
+            Gets current session of a given user.
+            </summary>
+            <param name="userId">User's id.</param>
+            <returns>Session's id.</returns>
+        </member>
+        <member name="M:Services.Contracts.ISessionServices.AddSession(System.String,System.String)">
+            <summary>
+            Adds a session to the sessions dictionary by user' id and connection's id.
+            </summary>
+            <param name="connectionId">The connection's id.</param>
+            <param name="userId">The user's id.</param>
+        </member>
+        <member name="M:Services.Contracts.IUserFriendServices.GetUserFriends(System.String)">
+            <summary>
+            Gets all friends of a given user's id.
+            </summary>
+            <param name="userId">Id of the user.</param>
+            <returns>All user's friends.</returns>
+        </member>
+        <member name="M:Services.Contracts.IUserFriendServices.RemoveUserFriend(System.String,System.String)">
+            <summary>
+            Removes a user from the given user's friend list.
+            </summary>
+            <param name="userId">User's id.</param>
+            <param name="friendId">Friend's id.</param>
+        </member>
+        <member name="M:Services.Contracts.IUserFriendServices.RemoveAllFriends(System.String)">
+            <summary>
+            Removes all friends of a given user.
+            </summary>
+            <param name="userId">User's id.</param>
+        </member>
+        <member name="M:Services.Contracts.IUserServices.GetUsers">
+            <summary>
+            Gets all users from the database.
+            </summary>
+            <returns>All registered users.</returns>
+        </member>
+        <member name="M:Services.Contracts.IUserServices.GetUsersExceptAdmins">
+            <summary>
+            Gets all users that don't have the role of the Admin.
+            </summary>
+            <returns>All regular users.</returns>
+        </member>
+        <member name="M:Services.Contracts.IUserServices.GetUserById(System.String)">
+            <summary>
+            Gets user by his id.
+            </summary>
+            <param name="id">User's id</param>
+            <returns>The searched user.</returns>
+        </member>
+        <member name="M:Services.Contracts.IUserServices.GetUserByUsername(System.String)">
+            <summary>
+            Gets user by his username.
+            </summary>
+            <param name="id">User's username</param>
+            <returns>The searched user.</returns>
+        </member>
+        <member name="M:Services.Contracts.IUserServices.GetUserByEmail(System.String)">
+            <summary>
+            Gets user by his email address.
+            </summary>
+            <param name="id">User's email address.</param>
+            <returns>The searched user.</returns>
+        </member>
+        <member name="M:Services.Contracts.IUserServices.IsUserAdmin(System.String)">
+            <summary>
+            Checks if the given user is admin.
+            </summary>
+            <param name="userId">User's id.</param>
+            <returns>True if the user is admin.</returns>
+        </member>
+        <member name="M:Services.Contracts.IUserServices.IsUserInvited(System.String,System.String)">
+            <summary>
+            Checks if the given user is invited by another user.
+            </summary>
+            <param name="loggedUserId">Current user's id.</param>
+            <param name="userId">Searched user's id.</param>
+            <returns>True if the current user has an invite from the searched user.</returns>
+        </member>
+        <member name="M:Services.Contracts.IUserServices.HasUserInvitedUs(System.String,System.String)">
+            <summary>
+            Checks if the given user has invited the current user.
+            </summary>
+            <param name="loggedUserId">Current user's id.</param>
+            <param name="userId">Searched user's id.</param>
+            <returns>True if the searched user has sent an invitation to the current user.</returns>
+        </member>
+        <member name="M:Services.Contracts.IUserServices.IsUserFriend(System.String,System.String)">
+            <summary>
+            Checks if the given user is a friend of the current user.
+            </summary>
+            <param name="loggedUserId">Current user's id.</param>
+            <param name="userId">Searched user's id.</param>
+            <returns>True if the searched user is a friend with the current user.</returns>
+        </member>
+        <member name="M:Services.Contracts.IUserServices.DeleteUser(System.String)">
+            <summary>
+            Removes user from the database.
+            </summary>
+            <param name="userId">The searched user's id.</param>
+        </member>
+        <member name="M:Services.Contracts.IUserServices.MakeUserAdmin(System.String)">
+            <summary>
+            Makes user an admin.
+            </summary>
+            <param name="userId">The searched user's id.</param>
+        </member>
+        <member name="M:Services.Contracts.IUserServices.ConfirmAccount(System.String)">
+            <summary>
+            Confirms the account of the given user.
+            </summary>
+            <param name="userId">The searched user's id.</param>
+        </member>
+    </members>
+</doc>
