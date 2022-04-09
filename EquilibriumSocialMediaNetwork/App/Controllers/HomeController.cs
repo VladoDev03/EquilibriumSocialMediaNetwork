@@ -88,7 +88,7 @@ namespace App.Controllers
                     FirstName = u.FirstName,
                     LastName = u.LastName,
                     Email = u.Email,
-                    Url = $"https://localhost:44366/User/Details/{u.Id}"
+                    Url = $"https://equilibriumsocialmedia.herokuapp.com/User/Details/{u.Id}"
                 }).ToList();
 
             string result = userJsonServices.AllUsersToJson(users);

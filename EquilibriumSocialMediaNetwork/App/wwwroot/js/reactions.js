@@ -1,7 +1,7 @@
 ﻿const likes = document.getElementsByClassName('likes')
 const dislikes = document.getElementsByClassName('dislikes')
 
-const reactionUrl = 'https://localhost:44366/addReaction'
+const reactionUrl = 'https://equilibriumsocialmedia.herokuapp.com/addReaction'
 
 Object.values(likes).forEach(like => like.addEventListener('click', (e) => {
     let id = e.target.getAttribute('id').replace('like-sender-', '')
@@ -48,7 +48,7 @@ Object.values(dislikes).forEach(dislike => dislike.addEventListener('click', (e)
 let isCreated = false
 
 function generateReaction(reactionResponse, id) {
-    let postUrl = `https://localhost:44366/addPost/${id}`
+    let postUrl = `https://equilibriumsocialmedia.herokuapp.com/addPost/${id}`
 
     fetch(postUrl)
         .then(res => res.json())

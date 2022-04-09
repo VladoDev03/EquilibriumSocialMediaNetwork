@@ -5,7 +5,7 @@
 
 const attemptChatLogin = () => {
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl("https://localhost:44366/chat")
+        .withUrl("https://equilibriumsocialmedia.herokuapp.com/chat")
         .configureLogging(signalR.LogLevel.Information)
         .build()
 

@@ -2,7 +2,7 @@
 const idInputs = document.getElementsByClassName('inputaId')
 const inputs = document.getElementsByClassName('inputa')
 
-const url = 'https://localhost:44366/createComment'
+const url = 'https://equilibriumsocialmedia.herokuapp.com/createComment'
 
 Object.values(buttons).forEach(button => button.addEventListener('click', (e) => {
     let id = e.target.getAttribute('id').replace('sender-', '')
@@ -37,7 +37,7 @@ function generateComment(commentResponse, id) {
     commentDiv.style.border = '2px solid #808080'
     commentDiv.style.padding = '3px'
 
-    let postUrl = `https://localhost:44366/addPost/${id}`
+    let postUrl = `https://equilibriumsocialmedia.herokuapp.com/addPost/${id}`
 
     fetch(postUrl)
         .then(res => res.json())

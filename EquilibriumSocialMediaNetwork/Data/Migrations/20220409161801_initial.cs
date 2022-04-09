@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using MySql.EntityFrameworkCore.Metadata;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Data.Migrations
 {
-    public partial class Emails : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,9 +12,9 @@ namespace Data.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
-                    Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -26,26 +26,26 @@ namespace Data.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     LastName = table.Column<string>(type: "text", nullable: true),
-                    Age = table.Column<int>(type: "int", nullable: false),
+                    Age = table.Column<int>(type: "integer", nullable: false),
                     QrCodeId = table.Column<string>(type: "text", nullable: true),
                     ProfilePictureId = table.Column<string>(type: "text", nullable: true),
-                    UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
                     PasswordHash = table.Column<string>(type: "text", nullable: true),
                     SecurityStamp = table.Column<string>(type: "text", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "text", nullable: true),
                     PhoneNumber = table.Column<string>(type: "text", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                    PhoneNumberConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,7 +56,7 @@ namespace Data.Migrations
                 name: "Conversations",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     UserOneId = table.Column<string>(type: "text", nullable: true),
                     UserTwoId = table.Column<string>(type: "text", nullable: true)
                 },
@@ -69,7 +69,7 @@ namespace Data.Migrations
                 name: "Emails",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     To = table.Column<string>(type: "text", nullable: true),
                     Subject = table.Column<string>(type: "text", nullable: true),
                     Content = table.Column<string>(type: "text", nullable: true)
@@ -83,7 +83,7 @@ namespace Data.Migrations
                 name: "Groups",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -95,9 +95,9 @@ namespace Data.Migrations
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    RoleId = table.Column<string>(type: "text", nullable: false),
                     ClaimType = table.Column<string>(type: "text", nullable: true),
                     ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
@@ -116,9 +116,9 @@ namespace Data.Migrations
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<string>(type: "text", nullable: false),
                     ClaimType = table.Column<string>(type: "text", nullable: true),
                     ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
@@ -137,10 +137,10 @@ namespace Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "varchar(256)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "varchar(256)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
-                    UserId = table.Column<string>(type: "varchar(256)", nullable: false)
+                    UserId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -157,8 +157,8 @@ namespace Data.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "varchar(256)", nullable: false),
-                    RoleId = table.Column<string>(type: "varchar(256)", nullable: false)
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    RoleId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -181,9 +181,9 @@ namespace Data.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "varchar(256)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "varchar(256)", nullable: false),
-                    Name = table.Column<string>(type: "varchar(256)", nullable: false),
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    LoginProvider = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -201,8 +201,8 @@ namespace Data.Migrations
                 name: "Covers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
-                    UserId = table.Column<string>(type: "varchar(256)", nullable: true)
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -219,9 +219,9 @@ namespace Data.Migrations
                 name: "Descriptions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     Content = table.Column<string>(type: "text", nullable: true),
-                    UserId = table.Column<string>(type: "varchar(256)", nullable: true)
+                    UserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -238,10 +238,10 @@ namespace Data.Migrations
                 name: "FriendRequests",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     RequestStatus = table.Column<string>(type: "text", nullable: true),
-                    RequestedFromId = table.Column<string>(type: "varchar(256)", nullable: true),
-                    RequestedToId = table.Column<string>(type: "varchar(256)", nullable: true)
+                    RequestedFromId = table.Column<string>(type: "text", nullable: true),
+                    RequestedToId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -264,14 +264,14 @@ namespace Data.Migrations
                 name: "Posts",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     Content = table.Column<string>(type: "text", nullable: true),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
                     ImageDownloadUrl = table.Column<string>(type: "text", nullable: true),
                     ImagePublicId = table.Column<string>(type: "text", nullable: true),
-                    IsDownloadable = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    TimePosted = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UserId = table.Column<string>(type: "varchar(256)", nullable: true)
+                    IsDownloadable = table.Column<bool>(type: "boolean", nullable: false),
+                    TimePosted = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -288,12 +288,12 @@ namespace Data.Migrations
                 name: "ProfilePictures",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
                     ImageDownloadUrl = table.Column<string>(type: "text", nullable: true),
                     ImagePublicId = table.Column<string>(type: "text", nullable: true),
-                    IsDownloadable = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    UserId = table.Column<string>(type: "varchar(256)", nullable: true)
+                    IsDownloadable = table.Column<bool>(type: "boolean", nullable: false),
+                    UserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -310,11 +310,11 @@ namespace Data.Migrations
                 name: "QrCodes",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
                     ImageDownloadUrl = table.Column<string>(type: "text", nullable: true),
                     PublicId = table.Column<string>(type: "text", nullable: true),
-                    UserId = table.Column<string>(type: "varchar(256)", nullable: true)
+                    UserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -331,9 +331,9 @@ namespace Data.Migrations
                 name: "Statuses",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
-                    UserId = table.Column<string>(type: "varchar(256)", nullable: true)
+                    UserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -350,8 +350,8 @@ namespace Data.Migrations
                 name: "UsersFriends",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "varchar(256)", nullable: false),
-                    FriendId = table.Column<string>(type: "varchar(256)", nullable: false)
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    FriendId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -374,12 +374,12 @@ namespace Data.Migrations
                 name: "Messages",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     Content = table.Column<string>(type: "text", nullable: true),
-                    ConversationId = table.Column<string>(type: "varchar(256)", nullable: true),
-                    UserOneId = table.Column<string>(type: "varchar(256)", nullable: true),
-                    UserTwoId = table.Column<string>(type: "varchar(256)", nullable: true),
-                    TimeSent = table.Column<DateTime>(type: "datetime", nullable: false)
+                    ConversationId = table.Column<string>(type: "text", nullable: true),
+                    UserOneId = table.Column<string>(type: "text", nullable: true),
+                    UserTwoId = table.Column<string>(type: "text", nullable: true),
+                    TimeSent = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -408,11 +408,11 @@ namespace Data.Migrations
                 name: "UsersGroups",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    GroupId = table.Column<int>(type: "int", nullable: false),
-                    GroupId1 = table.Column<string>(type: "varchar(256)", nullable: true),
-                    UserId1 = table.Column<string>(type: "varchar(256)", nullable: true)
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    GroupId = table.Column<int>(type: "integer", nullable: false),
+                    GroupId1 = table.Column<string>(type: "text", nullable: true),
+                    UserId1 = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -435,11 +435,11 @@ namespace Data.Migrations
                 name: "Comments",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     Content = table.Column<string>(type: "text", nullable: true),
-                    TimeCommented = table.Column<DateTime>(type: "datetime", nullable: false),
-                    PostId = table.Column<string>(type: "varchar(256)", nullable: true),
-                    UserId = table.Column<string>(type: "varchar(256)", nullable: true)
+                    TimeCommented = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    PostId = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -462,10 +462,10 @@ namespace Data.Migrations
                 name: "Reactions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
-                    PostId = table.Column<string>(type: "varchar(256)", nullable: true),
-                    UserId = table.Column<string>(type: "varchar(256)", nullable: true)
+                    PostId = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -488,10 +488,10 @@ namespace Data.Migrations
                 name: "Reports",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     Reason = table.Column<string>(type: "text", nullable: true),
-                    PostId = table.Column<string>(type: "varchar(256)", nullable: true),
-                    UserId = table.Column<string>(type: "varchar(256)", nullable: true)
+                    PostId = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -514,10 +514,10 @@ namespace Data.Migrations
                 name: "Replies",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     Content = table.Column<string>(type: "text", nullable: true),
-                    CommentId = table.Column<string>(type: "varchar(256)", nullable: true),
-                    UserId = table.Column<string>(type: "varchar(256)", nullable: true)
+                    CommentId = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {

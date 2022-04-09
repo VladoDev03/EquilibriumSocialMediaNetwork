@@ -33,7 +33,7 @@ namespace Services
 
         public EmailServiceModel SendConfirmEmail(EmailServiceModel email)
         {
-            string confirmUrl = $"https://localhost:44366/ConfirmEmail/{email.Id}";
+            string confirmUrl = $"https://equilibriumsocialmedia.herokuapp.com/ConfirmEmail/{email.Id}";
             string confirmation = "Please, confirm your account by clicking on the fowolling url:";
 
             email.Content = $"{email.Content}\n{confirmation}\n{confirmUrl}";

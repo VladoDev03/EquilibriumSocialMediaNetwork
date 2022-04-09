@@ -45,7 +45,7 @@ namespace App
                 .Get<OutlookConfigurationModel>();
 
             services.AddDbContext<EquilibriumDbContext>(options =>
-                options.UseMySQL(
+                options.UseNpgsql(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 

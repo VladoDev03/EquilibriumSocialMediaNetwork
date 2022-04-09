@@ -18,7 +18,7 @@ searchInput.addEventListener("input", (e) => {
     })
 })
 
-fetch("https://localhost:44366/users")
+fetch("https://equilibriumsocialmedia.herokuapp.com/users")
     .then(res => res.json())
     .then(data => {
         users = data.map(user => {

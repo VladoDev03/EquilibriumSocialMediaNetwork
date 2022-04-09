@@ -181,7 +181,7 @@ namespace App.Controllers
                 return View(qrCodeViewModel);
             }
 
-            string dataForCode = $"https://localhost:44366/User/Details/{userId}";
+            string dataForCode = $"https://equilibriumsocialmedia.herokuapp.com/User/Details/{userId}";
             byte[] finalImage = qrCodeServices.MakeQrCode(dataForCode);
             string[] imageData = cloudinaryServices.UploadImage(finalImage, "Social media images/Qr codes").Split("*");
 

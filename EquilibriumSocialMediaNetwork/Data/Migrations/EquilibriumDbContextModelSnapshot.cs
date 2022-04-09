@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Data.Migrations
 {
@@ -14,25 +15,26 @@ namespace Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.12");
+                .HasAnnotation("Relational:MaxIdentifierLength", 63)
+                .HasAnnotation("ProductVersion", "5.0.15")
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("Data.Entities.Comment", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Content")
                         .HasColumnType("text");
 
                     b.Property<string>("PostId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("TimeCommented")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -46,7 +48,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Conversation", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserOneId")
                         .HasColumnType("text");
@@ -62,10 +64,10 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Cover", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -77,13 +79,13 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Description", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Content")
                         .HasColumnType("text");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -95,7 +97,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Email", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Content")
                         .HasColumnType("text");
@@ -114,16 +116,16 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.FriendRequest", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RequestStatus")
                         .HasColumnType("text");
 
                     b.Property<string>("RequestedFromId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RequestedToId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -137,7 +139,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Group", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -150,22 +152,22 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Message", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Content")
                         .HasColumnType("text");
 
                     b.Property<string>("ConversationId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("TimeSent")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UserOneId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserTwoId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -181,7 +183,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Post", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Content")
                         .HasColumnType("text");
@@ -196,13 +198,13 @@ namespace Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<bool>("IsDownloadable")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("TimePosted")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -214,7 +216,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.ProfilePicture", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ImageDownloadUrl")
                         .HasColumnType("text");
@@ -226,10 +228,10 @@ namespace Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<bool>("IsDownloadable")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -242,7 +244,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.QrCode", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ImageDownloadUrl")
                         .HasColumnType("text");
@@ -254,7 +256,7 @@ namespace Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -267,16 +269,16 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Reaction", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.Property<string>("PostId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -290,16 +292,16 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Reply", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("CommentId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Content")
                         .HasColumnType("text");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -313,16 +315,16 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Report", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PostId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Reason")
                         .HasColumnType("text");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -336,13 +338,13 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Status", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -354,13 +356,13 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.User", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Age")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -368,10 +370,10 @@ namespace Data.Migrations
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
@@ -380,18 +382,18 @@ namespace Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
@@ -400,7 +402,7 @@ namespace Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("ProfilePictureId")
                         .HasColumnType("text");
@@ -412,11 +414,11 @@ namespace Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -433,10 +435,10 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.UserFriend", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FriendId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "FriendId")
                         .HasName("PRIMARY");
@@ -449,19 +451,19 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.UserGroup", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<int>("GroupId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("GroupId1")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("UserId1")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -475,7 +477,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -483,11 +485,11 @@ namespace Data.Migrations
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -502,7 +504,8 @@ namespace Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("text");
@@ -512,7 +515,7 @@ namespace Data.Migrations
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -525,7 +528,8 @@ namespace Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("text");
@@ -535,7 +539,7 @@ namespace Data.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -547,17 +551,19 @@ namespace Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(256)");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("varchar(256)");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -569,10 +575,10 @@ namespace Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -584,13 +590,15 @@ namespace Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(256)");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("varchar(256)");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("text");
