@@ -2,25 +2,82 @@
     ViewData["Title"] = "Add post";
 }
 
-<div class="user-posts">
-    <h1 style="padding-bottom: 20px;">@ViewData["Title"]</h1>
-    <form asp-action="Create" asp-controller="Post" method="post" enctype="multipart/form-data">
+<div class="grid">
+    <div style="background-color: white; flex:100%; text-align:center; padding-top: 10px;">
+        <h1 style="padding-bottom: 20px;">@ViewData["Title"]</h1>
+    </div>
+    <div class="user-data" style="flex: 50%; background-color: white;">
+        <form asp-action="Create" asp-controller="Post" method="post" enctype="multipart/form-data">
 
-        @if (ViewData["NotEmptyContent"] != null || (string)ViewData["NotEmptyContent"] != "")
-        {
-            <p class="text-danger">@ViewData["NotEmptyContent"]</p>
+            @if (ViewData["NotEmptyContent"] != null || (string)ViewData["NotEmptyContent"] != "")
+            {
+                <p class="text-danger">@ViewData["NotEmptyContent"]</p>
+            }
+
+            <textarea id="textcontent" name="content" value="" placeholder="Add some content..." rows="10" cols="35" style=" resize: both;"></textarea>
+            <br />
+
+            <input id="imgInp" type="file" name="image" accept="image/*" style="padding-top: 20px; padding-bottom: 20px; " />
+            <br />
+
+            <input type="checkbox" name="isDownloadable" value="checked" />
+            <span>Will other users be able to download this image?</span>
+            <br />
+
+            <button type="submit" class="btn btn-secondary btn-lg">Post</button>
+        </form>
+    </div>
+    <div class="user-posts" style="flex: 50%;">
+        <div id="border">
+            <div style="padding: 10px;">
+
+                <div id="showtext" style="font-size:20px; margin-top: 10px;"></div>
+
+                <img id="show_Image" style="height:25%; width:25%;" />
+
+                <div style="padding: 3px;">
+                    <div style="border: 2px;">
+                        <details>
+                            <summary>(<i class="far fa-thumbs-up"></i> 0) (<i class="far fa-thumbs-down"></i> 0)</summary>
+                        </details>
+                        <details>
+                            <summary>0 comments</summary>
+                        </details>
+                    </div>
+                    <div style="padding-top: 5px;">
+
+
+                        @*<form asp-route-id="@Model.Id" asp-action="Create" asp-controller="Comment" method="post">*@
+                        <input type="text" name="content" disabled />
+                        <button type="submit">Comment</button>
+                        @*</form>*@
+                    </div>
+                    <div>
+                        @{
+                            string likeStyle = "text-success";
+                            string dislikeStyle = "text-danger";
+                        }
+
+                        <a class=@likeStyle>like</a>
+                        <a class=@dislikeStyle>dislike</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var textcontent = document.getElementById('textcontent');
+
+        textcontent.onkeyup = textcontent.onkeypress = function () {
+            document.getElementById('showtext').innerHTML = this.value;
         }
 
-        <textarea name="content" value="" placeholder="Add some content..." rows="10" cols="35" style=" resize: both;"></textarea>
-        <br />
-
-        <input type="file" name="image" accept="image/*" style="padding-top: 20px; padding-bottom: 20px; " />
-        <br />
-
-        <input type="checkbox" name="isDownloadable" value="checked" />
-        <span>Will other users be able to download this image?</span>
-        <br />
-
-        <button type="submit" class="btn btn-secondary btn-lg">Post</button>
-    </form>
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                show_Image.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
 </div>

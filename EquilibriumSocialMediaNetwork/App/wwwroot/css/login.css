@@ -38,7 +38,6 @@ p {
 
 /*--------------------The problem with the background:--------------------*/
 
-/*body*/
 .full-page-background {
     position: fixed;
     width: 100%;
@@ -55,6 +54,16 @@ p {
     bottom: 0;
     right: 0;
     width: 100%;
+}
+
+.full-page-login-logout {
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('../Images/From app/colorful.png');
+    opacity: 0.8;
+    background-position: center;
+    background-size: cover;
+    position: absolute;
 }
 
 /*------------------------------------------------------------------------*/
