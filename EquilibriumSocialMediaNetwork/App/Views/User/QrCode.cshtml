@@ -1,6 +1,17 @@
 ﻿@model QrCodeViewModel
+@{
+    ViewData["Title"] = "QrCode";
+}
 
-<h1>Other users can scan this qr code so they can view your profile</h1>
+<div class="user-posts">
+    <center>
+    <h2>Other users can scan this Qr Code so they can find your profile easier</h2>
+        <h4>
+            <i>
+                <i class="fas fa-angle-double-right"></i> Or you can <a href=@Model.DownloadUrl>dowload</a> it and send it to them <i class="fas fa-angle-double-left"></i>
+            </i>
+        </h4>
 
-<img src="@Model.Url" alt="Qr code" asp-append-version="true" />
-<a href="@Model.DownloadUrl">Save</a>
+        <img style="height: 30%; width:30%;" src="@Model.Url" alt="Qr code" asp-append-version="true" />
+    </center>
+</div>

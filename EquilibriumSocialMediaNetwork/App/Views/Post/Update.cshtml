@@ -3,10 +3,12 @@
 
 <link href="~/css/search.css" rel="stylesheet" />
 
-<h1 style="padding-bottom: 20px;">@ViewData["Title"]</h1>
+<div class="user-posts">
+    <h1 style="padding-bottom: 20px;">@ViewData["Title"]</h1>
 
-<form asp-route-id="@Model.Id" asp-action="UpdatePost" asp-controller="Post" method="post">
-    <textarea name="content" value="" rows="10" cols="35" style="resize: both;" asp-for="@Model.Content"></textarea>
-    <br /><br />
-    <button type="submit" class="btn btn-secondary btn-lg">Edit</button>
-</form>
+    <form asp-route-id="@Model.Id" asp-action="UpdatePost" asp-controller="Post" method="post">
+        <textarea name="content" value="" rows="10" cols="35" style="resize: both;" asp-for="@Model.Content"></textarea>
+        <br /><br />
+        <button type="submit" class="btn btn-secondary btn-lg">Edit</button>
+    </form>
+</div>

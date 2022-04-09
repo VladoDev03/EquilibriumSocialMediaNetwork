@@ -1,5 +1,4 @@
 ﻿@model ConversationViewModel
-
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -9,21 +8,23 @@
 <script src="~/js/messages.js" defer></script>
 <script src="~/js/chat.js" defer></script>
 
-<div id="chat-wrapper">
-    <div id="messages"></div>
-    <hr class="message-divider" />
-    <div id="send-wrapper">
-        <a asp-action="Details" asp-controller="User" asp-route-id="@Model.UserTwoId">@Model.UserTwoFirstName @Model.UserTwoLastName (@Model.UserTwoUserName)</a>
-        <p class="hide" id="userTwo">@Model.UserTwoId</p>
-        <p class="hide" id="conversation-to-find">@Model.ConversationId</p>
+<div class="user-posts">
+    <div id="chat-wrapper">
+        <div id="messages"></div>
+        <hr class="message-divider" />
+        <div id="send-wrapper">
+            <a asp-action="Details" asp-controller="User" asp-route-id="@Model.UserTwoId">@Model.UserTwoFirstName @Model.UserTwoLastName (@Model.UserTwoUserName)</a>
+            <p class="hide" id="userTwo">@Model.UserTwoId</p>
+            <p class="hide" id="conversation-to-find">@Model.ConversationId</p>
 
-        <input type="text" class="form-control" id="message" placeholder="Type message..." autofocus>
-        <button type="button" id="send-button" class="btn btn-info">Send</button>
+            <input type="text" class="form-control" id="message" placeholder="Type a message..." autofocus>
+            <button type="button" id="send-button" class="btn btn-info"><i class="far fa-paper-plane twoPx"></i> Send</button>
+        </div>
     </div>
-</div>
 
-<style>
-    .hide {
-        display: none;
-    }
-</style>
+    <style>
+        .hide {
+            display: none;
+        }
+    </style>
+</div>

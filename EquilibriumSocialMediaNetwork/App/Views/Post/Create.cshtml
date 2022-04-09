@@ -2,23 +2,25 @@
     ViewData["Title"] = "Add post";
 }
 
-<h1 style="padding-bottom: 20px;">@ViewData["Title"]</h1>
-<form asp-action="Create" asp-controller="Post" method="post" enctype="multipart/form-data">
+<div class="user-posts">
+    <h1 style="padding-bottom: 20px;">@ViewData["Title"]</h1>
+    <form asp-action="Create" asp-controller="Post" method="post" enctype="multipart/form-data">
 
-    @if (ViewData["NotEmptyContent"] != null || (string)ViewData["NotEmptyContent"] != "")
-    {
-        <p class="text-danger">@ViewData["NotEmptyContent"]</p>
-    }
+        @if (ViewData["NotEmptyContent"] != null || (string)ViewData["NotEmptyContent"] != "")
+        {
+            <p class="text-danger">@ViewData["NotEmptyContent"]</p>
+        }
 
-    <textarea name="content" value="" placeholder="Add some content..." rows="10" cols="35" style=" resize: both;"></textarea>
-    <br />
+        <textarea name="content" value="" placeholder="Add some content..." rows="10" cols="35" style=" resize: both;"></textarea>
+        <br />
 
-    <input type="file" name="image" style="padding-top: 20px; padding-bottom: 20px; " />
-    <br />
+        <input type="file" name="image" accept="image/*" style="padding-top: 20px; padding-bottom: 20px; " />
+        <br />
 
-    <input type="checkbox" name="isDownloadable" value="checked" />
-    <span>Will other users be able to download this image?</span>
-    <br />
+        <input type="checkbox" name="isDownloadable" value="checked" />
+        <span>Will other users be able to download this image?</span>
+        <br />
 
-    <button type="submit" class="btn btn-secondary btn-lg">Post</button>
-</form>
+        <button type="submit" class="btn btn-secondary btn-lg">Post</button>
+    </form>
+</div>

@@ -18,8 +18,8 @@
                 color: rgb(161, 221, 219);
             }
         </style>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom mb-3" style="user-select: none;">
-            <div class="container">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3" style="user-select: none;">
+            <div class="container shadow-lg">
                 <a class="navbar-brand text-navbar" asp-area="" asp-controller="Home" asp-action="Index" style="font-family: 'Dancing Script'; font-size: 24px;">Equilibrium</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,7 @@
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-navbar" asp-area="" asp-controller="Admin" asp-action="AllUsers"><i class="fas fa-users amn twoPx"></i>All Users</a>
+                                <a class="nav-link text-navbar" asp-area="" asp-controller="Admin" asp-action="AllUsers"><i class="fas fa-users amn twoPx"></i> All Users</a>
                             </li>
                         }
                     </ul>
@@ -62,7 +62,9 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
-            @RenderBody()
+            <div class="grid">
+                @RenderBody()
+            </div>
         </main>
     </div>
 

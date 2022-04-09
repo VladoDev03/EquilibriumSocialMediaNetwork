@@ -1,9 +1,4 @@
-﻿.amn {
-    font-size: 20px;
-    padding-top: 6px;
-}
-
-#tinyAvatar {
+﻿#tinyAvatar {
     width: 23px;
     height: 23px;
     border-radius: 50%;
@@ -47,13 +42,18 @@ body {
         flex: 70%;
         background-color: white;
         padding: 20px;
-    }
+    }  
 
 #border {
     outline: 2px ridge #D9D9D9;
     outline-offset: 17px;
     border-radius: 17px;
     margin: 2%;
+}
+
+.amn {
+    font-size: 20px;
+    padding-top: 6px;
 }
 
 .blockk {

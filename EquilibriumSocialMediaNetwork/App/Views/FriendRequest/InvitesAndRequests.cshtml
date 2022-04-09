@@ -1,47 +1,55 @@
 ﻿@model InvitesViewModel
-
-@if (Model.Invites.Count <= 0)
-{
-    <p class="summarySize">You don't have any invites.</p>
-}
-else
-{
-    string invites = Model.Invites.Count > 1 ? "invites" : "invite";
-
-    <details>
-        <summary class="summarySize">You have @Model.Invites.Count @invites.</summary>
-        @foreach (var item in Model.Invites)
-        {
-            <a asp-controller="User" asp-action="Details" asp-route-id="@item.RequestedFrom.Id">@item.RequestedFrom.FirstName @item.RequestedFrom.LastName (@item.RequestedFrom.UserName)</a>
-            <a class="nav-link text-success" asp-area="" asp-controller="FriendRequest" asp-action="Accept" asp-route-id="@item.RequestedFrom.Id">Accept</a>
-            <a class="nav-link text-danger" asp-area="" asp-controller="FriendRequest" asp-action="Reject" asp-route-id="@item.RequestedFrom.Id">Reject</a>
-        }
-    </details>
+@{
+    ViewData["Title"] = "Ivites";
 }
 
-<hr />
-
-@if (Model.Pending.Count <= 0)
-{
-    <p class="summarySize">You haven't made any requests recently.</p>
-}
-else
-{
-    string requests = Model.Pending.Count > 1 ? "requests" : "request";
-
-    <details>
-        <summary class="summarySize">You've sent @Model.Pending.Count @requests.</summary>
-        @foreach (var item in Model.Pending)
-        {
-            <a asp-controller="User" asp-action="Details" asp-route-id="@item.RequestedTo.Id">@item.RequestedTo.FirstName @item.RequestedTo.LastName (@item.RequestedTo.UserName)</a>
-            <a class="text-danger" asp-route-id="@item.RequestedTo.Id" asp-controller="FriendRequest" asp-action="Delete">Cancel</a>
-        }
-    </details>
-}
-
-<style>
-    .summarySize {
-        font-size: 40px;
-        font-weight: bold;
+<div class="user-posts">
+    @if (Model.Invites.Count <= 0)
+    {
+        <p class="summarySize">You don't have any invites.</p>
     }
-</style>
+    else
+    {
+        string invites = Model.Invites.Count > 1 ? "invites" : "invite";
+
+        <details>
+            <summary class="summarySize">You have @Model.Invites.Count @invites.</summary>
+            @foreach (var item in Model.Invites)
+            {
+                <a asp-controller="User" asp-action="Details" asp-route-id="@item.RequestedFrom.Id">@item.RequestedFrom.FirstName @item.RequestedFrom.LastName (@item.RequestedFrom.UserName)</a>
+                <a class="nav-link text-success" asp-area="" asp-controller="FriendRequest" asp-action="Accept" asp-route-id="@item.RequestedFrom.Id">Accept</a>
+                <a class="nav-link text-danger" asp-area="" asp-controller="FriendRequest" asp-action="Reject" asp-route-id="@item.RequestedFrom.Id">Reject</a>
+            }
+        </details>
+    }
+
+    <hr />
+
+    @if (Model.Pending.Count <= 0)
+    {
+        <p class="summarySize">You haven't made any requests recently.</p>
+    }
+    else
+    {
+        string requests = Model.Pending.Count > 1 ? "requests" : "request";
+
+        <details>
+            <summary class="summarySize">You've sent @Model.Pending.Count @requests.</summary>
+            @foreach (var item in Model.Pending)
+            {
+                <a asp-controller="User" asp-action="Details" asp-route-id="@item.RequestedTo.Id">@item.RequestedTo.FirstName @item.RequestedTo.LastName (@item.RequestedTo.UserName)</a>
+                <a class="text-danger" asp-route-id="@item.RequestedTo.Id" asp-controller="FriendRequest" asp-action="Delete">Cancel</a>
+                <br />
+            }
+        </details>
+    }
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <style>
+        .summarySize {
+            font-size: 20px;
+            font-weight: bold;
+            font-family: 'Raleway';
+        }
+    </style>
+</div>
