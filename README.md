@@ -3,57 +3,60 @@ EquilibriumSocialMediaNetwork is a social media created by three students from I
 ## Usage
 The application is created as an alternative for facebook, twitter and instagram.
 ## Used technologies
-C# is used as server-side programming language.
+***C#*** - server-side programming language.
 
-ASP-CORE is used for the web environment.
+***ASP-NET-CORE*** - web environment.
 
-EntityFrameWork.Core is used as ORM to connect to the database.
+***EntityFrameWork.Core*** - ORM to connect to the app's database.
 
-SignalR was used for the chat's real-time communication.
+***SignalR*** - chat's real-time communication.
 
-REST-API metodology was used for dynamic pages.
+***MySql*** - database for development.
 
-MySql database was used for development.
+***PostgreSql*** - database for deployment.
 
-PostgreSql database was used for deployment.
-
-JavaScript, html, css, fontawesome and bootstrap were used for client-side development.
+***JavaScript***, ***HTML***, ***CSS***, ***fontawesome*** and ***bootstrap*** - client-side development.
 
 ## Used services
 
-Heroku was used for deployment.
+***Heroku*** - deployment.
 
-GitHub was used for source-controll.
+***GitHub*** - source-controll.
 
-Cloudinary was used as remote cloud, where images are stored.
+***Cloudinary*** - remote cloud, where files are stored.
 
-Trello was used for agile metodology and workflow tracking.
+***Trello*** - ***agile*** metodology and workflow tracking.
 
-Outlook was used as SMTP server for in-app email sending.
+***Outlook*** - SMTP server for in-app email sending.
 
-MySql workbench was used for MySql client app.
+***MySql workbench*** - MySql client app.
 
-PgAdmin was used for PostgreSql client app.
+***PgAdmin*** - PostgreSql client app.
 
 ## Used metodologies
 
-MVC architecture was used for the App project's architecture.
+***Model-View-Controller (MVC) architecture*** - App's project architecture.
 
-Three-tier-architecture was used for the solution's architecture.
+***Three-tier-architecture*** - solution's architecture.
 
-Git bash and Github Desktop were used for working with github locally and remotely.
+***Git bash*** and ***Github Desktop*** - working with the github repository locally and remotely.
+
+***REST-API*** - dynamic pages.
 
 ## Contributors
-Vladimir Stoyanov (VladoDev03) - https://github.com/VladoDev03
+***Vladimir Stoyanov*** (VladoDev03) - https://github.com/VladoDev03
 
-Anna Ilieva (ailieva124) - https://github.com/ailieva124
+***Anna Ilieva*** (ailieva124) - https://github.com/ailieva124
 
-Bilyana Atanasova (bibiatanasova) - https://github.com/bibiatanasova
+***Bilyana Atanasova*** (bibiatanasova) - https://github.com/bibiatanasova
 
 ## GitHub Repository:
-https://github.com/VladoDev03
+***https://github.com/VladoDev03/EquilibriumSocialMediaNetwork***
 
-## Special thanks for education and support to:
-Ivaylo Jelev (DCay) - https://github.com/Dcay
+## Hosted on
+***https://equilibriumsocialmedia.herokuapp.com***
 
-Galin Gospodinov (eoLFroZen) - https://github.com/eolfrozen
+## Special thanks, for the education and the support, to:
+***Ivaylo Jelev*** (DCay) - https://github.com/Dcay
+
+***Galin Gospodinov*** (eoLFroZen) - https://github.com/eolfrozen
