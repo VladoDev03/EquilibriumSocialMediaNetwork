@@ -5,7 +5,7 @@ The application is created as an alternative for facebook, twitter and instagram
 ## Used technologies
 ***C#*** - server-side programming language.
 
-***ASP-NET-CORE*** - web environment.
+***ASP NET CORE*** - web environment.
 
 ***EntityFrameWork.Core*** - ORM to connect to the app's database.
 
@@ -15,21 +15,27 @@ The application is created as an alternative for facebook, twitter and instagram
 
 ***PostgreSql*** - database for deployment.
 
-***JavaScript***, ***HTML***, ***CSS***, ***fontawesome*** and ***bootstrap*** - client-side development.
+***JavaScript***, ***HTML***, ***CSS***, ***fontawesome***, ***bootstrap*** and ***Ajax*** - client-side development.
+
+***nUnit*** - testing.
+
+***QrCoder*** - in-app cr code generation.
 
 ## Used services
 
 ***Visual studio*** - the Integrated Development Environment (IDE) used for the development of the app and the creation of the Service's project XML documentation.
 
-***Heroku*** - deployment.
+***Git bash*** and ***Github Desktop*** - working with the github repository locally and remotely.
 
-***GitHub*** - source-controll.
+***Heroku*** - deployment. https://www.heroku.com
 
-***Cloudinary*** - remote cloud, where files are stored.
+***GitHub*** - source-controll system. https://github.com
 
-***Trello*** - ***agile*** metodology and workflow tracking.
+***Cloudinary*** - remote cloud, where files are stored. https://cloudinary.com
 
-***Outlook*** - SMTP server for in-app email sending.
+***Trello*** - ***agile*** metodology and workflow tracking. https://trello.com
+
+***Outlook*** - SMTP server for in-app email sending. https://outlook.live.com
 
 ***MySql workbench*** - MySql client app.
 
@@ -41,9 +47,7 @@ The application is created as an alternative for facebook, twitter and instagram
 
 ***Three-tier-architecture*** - solution's architecture.
 
-***Git bash*** and ***Github Desktop*** - working with the github repository locally and remotely.
-
-***REST-API*** - dynamic pages.
+***REST API*** - dynamic pages.
 
 ## Contributors
 ***Vladimir Stoyanov*** (VladoDev03) - https://github.com/VladoDev03
